@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Maajanki Blog — Headless Next.js 15 Blog Frontend
 
-## Getting Started
+Welcome to the **Maajanki Blog Frontend** repository! Built with **Next.js 15 (App Router)**, **TailwindCSS v4**, and **TypeScript**, this high-performance web platform serves as a modern, decoupled frontend powered by a headless **WordPress REST API** backend (`blog.maajankiwebtech.com`).
 
-First, run the development server:
+---
+
+## ✨ Features & Architectural Highlights
+
+- **⚡ Next.js 15 App Router & ISR**: High-speed page rendering using Incremental Static Regeneration with fallback local JSON support.
+- **🎨 Glassmorphism & Modern UI**: Tailored Tailwind v4 design system featuring dark/light aesthetic, ambient glow spots, and interactive card components.
+- **🛡️ Hardened Security**: Full HTTP Security Headers (`X-Frame-Options`, `HSTS`, `Content-Security-Policy`, `Permissions-Policy`), XSS input sanitization, and server-only API configuration.
+- **🔍 10/10 Technical SEO**: Dynamic XML `sitemap.ts`, `robots.ts`, `metadataBase`, canonical URLs, OpenGraph tags, and Twitter Cards.
+- **🤖 AEO & GEO (AI Citation Optimization)**: Full `FAQPage`, `Organization`, `WebSite`, `BreadcrumbList`, and `BlogPosting` JSON-LD schemas for ChatGPT, Gemini, and Perplexity discoverability.
+- **♿ WCAG 2.1 AA Accessibility**: Semantic `<main id="main-content">` landmarks, skip-to-content keyboard navigation, full ARIA labelling, and interactive focus states.
+- **📱 Dynamic Pages**:
+  - **Homepage**: Hero highlights, trending posts, categories carousel, & ad placements.
+  - **Single Post (`/[slug]`)**: Reading progress bar, Table of Contents, inline ad integration, dynamic read times, & WordPress comments integration.
+  - **About (`/about`)**: Modern agency showcase, ecosystem partner cards, & mission pillars.
+  - **Newsletter (`/newsletter`)**: Subscription form, archive issue previews, & social proof highlights.
+  - **Search (`/search`)**: Real-time keyword query matching across article titles, content, categories, and tags.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [TailwindCSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
+- **Backend / CMS**: WordPress REST API (`/wp-json/wp/v2/`)
+- **Fonts**: `next/font/google` (Inter)
+
+---
+
+## 📁 Project Structure
+
+```text
+src/
+├── app/
+│   ├── [slug]/          # Dynamic blog post route & static page resolver
+│   ├── about/           # Redesigned About page with Ecosystem Ads
+│   ├── author/          # Author archive routes
+│   ├── category/        # Category filter routes
+│   ├── newsletter/      # Modern Newsletter page & SubscribeForm Client Component
+│   ├── search/          # Search listing route
+│   ├── tag/             # Tag filter routes
+│   ├── globals.css      # Custom Tailwind v4 theme tokens & styles
+│   ├── layout.tsx       # Root layout with Organization schema, Navbar & Footer
+│   ├── page.tsx         # Homepage layout & post grid
+│   ├── robots.ts        # Dynamic robots.txt generator
+│   └── sitemap.ts       # Dynamic XML sitemap generator
+├── components/          # Reusable UI components (BlogCard, FaqSection, Navbar, Footer, etc.)
+├── data/                # Fallback offline JSON content archive
+└── lib/
+    └── wordpress.ts     # WordPress REST API integration & JSON-LD generators
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+Ensure you have **Node.js 18.x** or higher installed.
+
+### 2. Environment Setup
+
+Rename `.env.local.example` or create a `.env.local` file in the root directory:
+
+```bash
+WORDPRESS_API_URL=https://blog.maajankiwebtech.com/wp-json/wp/v2
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the blog.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Type Checking & Verification
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx tsc --noEmit
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is ready for deployment on **Vercel**, **Netlify**, or **Hostinger Node.js Hosting**. Refer to [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md) for full step-by-step instructions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npm run start
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License & Attribution
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ by **Maajanki WebTech Digital Agency**.  
+Copyright © All rights reserved. | Maajanki by Maajanki WebTech Digital Agency.
