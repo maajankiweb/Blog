@@ -1,7 +1,6 @@
 import ContactForm from "@/components/ContactForm";
 import FaqSection from "@/components/FaqSection";
-import Image from "next/image";
-import { Mail, Phone, MapPin, ExternalLink, Globe, MessageSquare, Sparkles } from "lucide-react";
+import { Mail, MapPin, ExternalLink, Globe, MessageSquare, Sparkles } from "lucide-react";
 import { FaFacebookF } from "react-icons/fa6";
 
 export const metadata = {

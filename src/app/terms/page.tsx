@@ -1,5 +1,5 @@
 import FaqSection, { FAQItem } from "@/components/FaqSection";
-import Link from "next/link";
+
 
 export const metadata = {
   title: "Terms of Service | Maajanki",
@@ -13,7 +13,7 @@ const termsFaqs: FAQItem[] = [
       "Yes, brief excerpts up to 200 words and code snippets are allowed provided you include clear attribution and a backlink.",
   },
   {
-    question: "What guidelines govern user comments on Editorial?",
+    question: "What guidelines govern user comments on Maajanki?",
     answer:
       "Comments must remain respectful and relevant. We reserve the right to remove spam, offensive remarks, or promotional self-links.",
   },
@@ -77,7 +77,7 @@ export default function TermsPage() {
         {/* Main Content */}
         <main className="flex-1 max-w-3xl space-y-xl">
           <p className="text-body-md text-on-surface-variant leading-relaxed">
-            Welcome to Editorial. By accessing our website, you agree to comply with and
+            Welcome to Maajanki. By accessing our website, you agree to comply with and
             be bound by the following terms and conditions of use.
           </p>
 
@@ -86,8 +86,8 @@ export default function TermsPage() {
               1. Intellectual Property Rights
             </h2>
             <p className="text-on-surface-variant leading-relaxed">
-              Unless otherwise stated, Editorial and/or its licensors own the intellectual
-              property rights for all editorial content, logo graphics, design layouts,
+              Unless otherwise stated, Maajanki and/or its licensors own the intellectual
+              property rights for all content, logo graphics, design layouts,
               and technical analyses published on this website. All intellectual property
               rights are reserved.
             </p>
@@ -96,8 +96,8 @@ export default function TermsPage() {
               in these terms:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-on-surface-variant">
-              <li>You must not republish material from Editorial without attribution.</li>
-              <li>You must not sell, rent, or sub-license material from Editorial.</li>
+              <li>You must not republish material from Maajanki without attribution.</li>
+              <li>You must not sell, rent, or sub-license material from Maajanki.</li>
               <li>
                 You must not reproduce, duplicate, or copy content for commercial use.
               </li>
@@ -110,9 +110,9 @@ export default function TermsPage() {
             </h2>
             <p className="text-on-surface-variant leading-relaxed">
               Parts of this website offer an opportunity for users to post and exchange
-              opinions and information (&ldquo;Comments&rdquo;). Editorial does not
+              opinions and information (&ldquo;Comments&rdquo;). Maajanki does not
               filter, edit, publish, or review Comments prior to their appearance on the
-              website. Comments do not reflect the views and opinions of Editorial, its
+              website. Comments do not reflect the views and opinions of Maajanki, its
               agents, or affiliates.
             </p>
             <p className="text-on-surface-variant leading-relaxed">
@@ -128,7 +128,7 @@ export default function TermsPage() {
             </h2>
             <p className="text-on-surface-variant leading-relaxed">
               The information on this website is provided &ldquo;as is&rdquo;, with all
-              faults, and Editorial makes no express or implied representations or
+              faults, and Maajanki makes no express or implied representations or
               warranties of any kind related to this website or the materials contained on
               this website. We do not warrant its completeness or accuracy.
             </p>
@@ -141,10 +141,10 @@ export default function TermsPage() {
             <p className="text-on-surface-variant leading-relaxed">
               If you have any queries regarding any of our terms, please contact us at{" "}
               <a
-                href="mailto:legal@editorial.com"
+                href="mailto:maajankiweb@gmail.com"
                 className="text-primary-container hover:underline font-medium"
               >
-                legal@editorial.com
+                maajankiweb@gmail.com
               </a>
               .
             </p>

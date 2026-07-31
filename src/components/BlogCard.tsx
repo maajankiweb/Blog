@@ -22,7 +22,7 @@ export default function BlogCard({ post, priority = false }: BlogCardProps) {
   // Extract category details
   const postCategories = post._embedded?.['wp:term']?.[0] || [];
   const primaryCategory = postCategories[0];
-  const categoryName = primaryCategory?.name || "Editorial";
+  const categoryName = primaryCategory?.name || "Maajanki";
 
   // Format Date
   const dateObj = new Date(post.date);
@@ -46,7 +46,7 @@ export default function BlogCard({ post, priority = false }: BlogCardProps) {
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-[#1a0d07] to-[#2b140a] flex items-center justify-center p-6 text-center">
-            <span className="text-[#ff6b00] font-black text-xl tracking-tighter">EDITORIAL</span>
+            <span className="text-[#ff6b00] font-black text-xl tracking-tighter">MAAJANKI</span>
           </div>
         )}
         <div className="absolute top-3 left-3">

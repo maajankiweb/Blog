@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,6 +46,13 @@ export const metadata: Metadata = {
     title: "Maajanki Blog | Digital Growth, SEO & Web Development",
     description:
       "Practical, actionable insights on SEO, digital marketing, and web development.",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.jpg", type: "image/jpeg" },
+    ],
+    apple: "/apple-icon.jpg",
   },
 };
 
@@ -132,7 +140,10 @@ export default function RootLayout({
           {children}
         </main>
 
-        {/* Reusable Footer */}
+        {/* Floating WhatsApp Button */}
+        <WhatsAppFloatingButton />
+
+        {/* Global Footer */}
         <Footer />
       </body>
     </html>

@@ -17,22 +17,22 @@ export const defaultFaqs: FAQItem[] = [
   {
     question: "Do you accept guest contributions?",
     answer:
-      'Yes, we have a "Community Voice" program for lead engineers and CTOs. Please visit our \'Contribute\' page for submission guidelines and editorial standards.',
+      'Yes, we have a "Community Voice" program for lead engineers and CTOs. Please visit our \'Contribute\' page for submission guidelines and content standards.',
   },
   {
-    question: "Is there a paid premium subscription?",
+    question: "Are articles on Maajanki free to access?",
     answer:
-      "Currently, all our core insights are free. We plan to launch 'Editorial Pro' in late 2024, which will include private benchmarks and vendor reports.",
+      "Currently, all our core insights are free. We plan to launch 'Maajanki Pro' in late 2026, which will include private benchmarks and vendor reports.",
   },
   {
-    question: "How are your technical deep dives researched?",
+    question: "How are articles verified and researched?",
     answer:
-      "Our editorial team collaborates directly with principal engineers, open-source maintainers, and system architects to verify code samples and benchmark results.",
+      "Our team collaborates directly with principal engineers, open-source maintainers, and system architects to verify code samples and benchmark results.",
   },
   {
-    question: "Can I syndicate or repost Editorial articles?",
+    question: "Can I syndicate or repost Maajanki articles?",
     answer:
-      "You are welcome to quote excerpts up to 200 words with canonical attribution and a link back to the original article. Full republication requires prior written approval.",
+      "Yes, with proper attribution and a direct canonical backlink to the original article page on Maajanki.",
   },
 ];
 

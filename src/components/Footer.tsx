@@ -24,6 +24,7 @@ const navColumns = [
     links: [
       { label: "Home", href: "/" },
       { label: "Latest Articles", href: "/blog" },
+      { label: "Deals & Products", href: "/affiliate-products" },
       { label: "Categories", href: "/blog" },
       { label: "Search & Topics", href: "/search" },
     ],
@@ -101,7 +102,7 @@ export default function Footer() {
             </div>
 
             <p className="text-white/80 text-sm md:text-[15px] leading-relaxed max-w-md w-full">
-              Premium technical editorial and architectural insights for
+              Premium technical insights and architectural guides from Maajanki for
               software developers, designers, and engineering leaders.
             </p>
 

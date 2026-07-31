@@ -446,7 +446,7 @@ export default function NewsletterPage() {
                   ))}
                 </div>
                 <blockquote>
-                  <p className="text-on-surface-variant text-sm leading-relaxed italic">"{quote}"</p>
+                  <p className="text-on-surface-variant text-sm leading-relaxed italic">&quot;{quote}&quot;</p>
                 </blockquote>
                 <figcaption className="flex items-center gap-3 pt-1">
                   <div

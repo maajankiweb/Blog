@@ -19,7 +19,6 @@ import {
   ExternalLink,
   CheckCircle2,
   Rocket,
-  ShieldAlert,
 } from "lucide-react";
 import FaqSection from "@/components/FaqSection";
 

@@ -628,4 +628,119 @@ export function generateFaqJsonLd(faqs: Array<{ question: string; answer: string
   };
 }
 
+import localAffiliateProducts from "../data/affiliate_products.json";
 
+export interface WPAffiliateProduct {
+  id: number;
+  title: string;
+  slug: string;
+  tagline?: string;
+  description: string;
+  price: string;
+  originalPrice?: string;
+  discount?: string;
+  rating?: number;
+  reviewsCount?: number;
+  affiliateUrl: string;
+  storeName?: string;
+  category: string;
+  badge?: string;
+  couponCode?: string;
+  featuredImage?: string;
+  features?: string[];
+  pros?: string[];
+  cons?: string[];
+  publishedAt?: string;
+}
+
+/**
+ * Helper to extract affiliate metadata from WP post content or fields if present
+ */
+function mapWPPostToAffiliateProduct(post: WPPost): WPAffiliateProduct {
+  const content = post.content?.rendered || "";
+  
+  // Extract affiliate URL if in post HTML or default to post link
+  const linkMatch = content.match(/href=["'](https?:\/\/[^"']+)["']/i);
+  const affUrl = linkMatch ? linkMatch[1] : post.link;
+
+  // Extract Price pattern e.g. Price: $29
+  const priceMatch = content.match(/Price:\s*([$\u20B9\u20AC\u00A3]?[0-9,.]+(?:\/[a-z]+)?)/i);
+  const origPriceMatch = content.match(/Original Price:\s*([$\u20B9\u20AC\u00A3]?[0-9,.]+(?:\/[a-z]+)?)/i);
+  const couponMatch = content.match(/Coupon:\s*([A-Z0-9_-]+)/i);
+  const storeMatch = content.match(/Store:\s*([A-Za-z0-9\s]+)/i);
+
+  const featuredImg = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 
+                     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80";
+
+  const categoryName = post._embedded?.['wp:term']?.[0]?.[0]?.name || "General Tools";
+
+  return {
+    id: post.id,
+    title: cleanHtmlText(post.title.rendered),
+    slug: post.slug,
+    tagline: cleanHtmlText(post.excerpt?.rendered || "").slice(0, 140),
+    description: cleanHtmlText(content),
+    price: priceMatch ? priceMatch[1] : "$49/yr",
+    originalPrice: origPriceMatch ? origPriceMatch[1] : undefined,
+    discount: origPriceMatch ? "Special Deal" : undefined,
+    rating: 4.8,
+    reviewsCount: 120,
+    affiliateUrl: affUrl,
+    storeName: storeMatch ? storeMatch[1].trim() : "WordPress Partner",
+    category: categoryName,
+    badge: "WordPress Pick",
+    couponCode: couponMatch ? couponMatch[1] : undefined,
+    featuredImage: featuredImg,
+    publishedAt: post.date,
+  };
+}
+
+/**
+ * Fetch affiliate products from WordPress or local fallback
+ */
+export async function getAffiliateProducts(categoryFilter?: string): Promise<WPAffiliateProduct[]> {
+  try {
+    const query = new URLSearchParams();
+    query.append('_embed', 'true');
+    query.append('per_page', '20');
+    query.append('search', 'affiliate');
+
+    const posts = await fetchAPI<WPPost[]>(`/posts?${query.toString()}`);
+    if (posts && posts.length > 0) {
+      const parsedWPProducts = posts.map(mapWPPostToAffiliateProduct);
+      const combined = [...parsedWPProducts, ...(localAffiliateProducts as WPAffiliateProduct[])];
+      if (categoryFilter && categoryFilter !== "All") {
+        return combined.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
+      }
+      return combined;
+    }
+  } catch (err) {
+    console.warn("Could not fetch WP affiliate posts, fallback to local data:", err);
+  }
+
+  let products = localAffiliateProducts as WPAffiliateProduct[];
+  if (categoryFilter && categoryFilter !== "All") {
+    products = products.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
+  }
+  return products;
+}
+
+/**
+ * Fetch single affiliate product by slug
+ */
+export async function getAffiliateProductBySlug(slug: string): Promise<WPAffiliateProduct | null> {
+  const localList = localAffiliateProducts as WPAffiliateProduct[];
+  const foundLocal = localList.find(p => p.slug === slug);
+  if (foundLocal) return foundLocal;
+
+  try {
+    const post = await getPostBySlug(slug);
+    if (post) {
+      return mapWPPostToAffiliateProduct(post);
+    }
+  } catch (err) {
+    console.warn(`Error fetching affiliate product slug "${slug}" from WP:`, err);
+  }
+
+  return null;
+}

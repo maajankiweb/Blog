@@ -8,6 +8,9 @@ import FaqSection from "@/components/FaqSection";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import TableOfContents from "@/components/TableOfContents";
 import AdBanner from "@/components/AdBanner";
+import HostingerAdCard from "@/components/HostingerAdCard";
+import InlineAdBanner from "@/components/InlineAdBanner";
+import YoutubeAdCard from "@/components/YoutubeAdCard";
 import { Clock, Calendar, Bookmark, Share2, MessageSquare, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter, FaPinterestP, FaWhatsapp, FaTelegram, FaRedditAlien } from "react-icons/fa6";
 
@@ -25,7 +28,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     const post = await getPostBySlug(slug);
     if (!post) {
       return {
-        title: "Post Not Found | Editorial",
+        title: "Post Not Found | Maajanki",
       };
     }
 
@@ -64,7 +67,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   } catch (err) {
     console.error("Error generating metadata:", err);
     return {
-      title: "Blog Post | Editorial",
+      title: "Blog Post | Maajanki",
     };
   }
 }
@@ -237,7 +240,7 @@ export default async function PostPage(props: PageProps) {
                 fill
                 sizes="(max-width: 1200px) 100vw, 1200px"
                 className="object-cover transition-transform duration-700 group-hover:scale-101"
-                loading="eager"
+                priority
               />
             </div>
           )}
@@ -250,6 +253,14 @@ export default async function PostPage(props: PageProps) {
             <div 
               className="wp-content article-content max-w-none dark:text-zinc-300"
               dangerouslySetInnerHTML={{ __html: contentWithHeadingIds }}
+            />
+
+            {/* Inline Hostinger Ad Section */}
+            <InlineAdBanner
+              href="https://www.hostinger.com/in?REFERRALCODE=maajankiweb"
+              title="Host Your Website with Hostinger — Up to 75% OFF + Free Domain"
+              description="Get ultra-fast cloud hosting, free SSL, 99.9% uptime guarantee, and 24/7 expert support. Specially optimized for Next.js, WordPress, and web applications."
+              ctaText="Get Started with Hostinger"
             />
 
             {/* Social Share Bar */}
@@ -347,7 +358,7 @@ export default async function PostPage(props: PageProps) {
               {/* Sidebar Newsletter box */}
               <div className="bg-on-secondary-fixed p-gutter rounded-xl text-white overflow-hidden relative shadow-md">
                 <div className="relative z-10 space-y-4">
-                  <h3 className="font-headline-md text-lg font-black">The Editorial Weekly</h3>
+                  <h3 className="font-headline-md text-lg font-black">The Maajanki Weekly</h3>
                   <p className="text-secondary-fixed-dim text-sm leading-relaxed">
                     Deep dives into the architecture of the modern web. No fluff, just insights.
                   </p>
@@ -367,6 +378,12 @@ export default async function PostPage(props: PageProps) {
                   <span className="material-symbols-outlined text-[120px]">mark_email_read</span>
                 </div>
               </div>
+
+              {/* AK Web Master Hub YouTube Channel Banner */}
+              <YoutubeAdCard />
+
+              {/* Hostinger Sponsored Ad Widget */}
+              <HostingerAdCard />
 
               {/* Sponsored Ad Banner */}
               <AdBanner />

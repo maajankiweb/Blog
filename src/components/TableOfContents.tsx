@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
 interface HeadingItem {
   id: string;
@@ -8,22 +8,17 @@ interface HeadingItem {
 }
 
 export default function TableOfContents({ htmlContent }: { htmlContent: string }) {
-  const [headings, setHeadings] = useState<HeadingItem[]>([]);
-
-  useEffect(() => {
-    // Parse h2 elements from the post content
+  const headings: HeadingItem[] = useMemo(() => {
+    if (typeof window === "undefined" || !htmlContent) return [];
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, "text/html");
     const h2s = doc.querySelectorAll("h2");
     
-    const parsedHeadings: HeadingItem[] = Array.from(h2s).map((h2, index) => {
+    return Array.from(h2s).map((h2, index) => {
       const text = h2.textContent || "";
-      // Match the generated id format: heading-0, heading-1, etc.
       const id = h2.id || `heading-${index}`;
       return { id, text };
     });
-
-    setHeadings(parsedHeadings);
   }, [htmlContent]);
 
   if (headings.length === 0) {

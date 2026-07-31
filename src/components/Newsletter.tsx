@@ -7,7 +7,7 @@ export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  const handleSubscribe = (e: FormEvent) => {
+  const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) {
       setStatus("error");
@@ -16,10 +16,23 @@ export default function Newsletter() {
 
     setStatus("submitting");
 
-    setTimeout(() => {
-      setStatus("success");
-      setEmail("");
-    }, 900);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Newsletter submission failed:", err);
+      setStatus("error");
+    }
   };
 
   return (
@@ -101,7 +114,7 @@ export default function Newsletter() {
               <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-1">
                 <HiCheckCircle size={32} />
               </div>
-              <h4 className="font-bold text-white text-xl">You're on the list!</h4>
+              <h4 className="font-bold text-white text-xl">You&apos;re on the list!</h4>
               <p className="text-white/70 text-sm leading-relaxed max-w-xs">
                 Thank you for subscribing. We will deliver our next deep dive to your inbox every Sunday morning.
               </p>

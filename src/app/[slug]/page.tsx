@@ -16,7 +16,9 @@ import CommentForm from "@/components/CommentForm";
 import FaqSection from "@/components/FaqSection";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import TableOfContents from "@/components/TableOfContents";
-import AdBanner from "@/components/AdBanner";
+import AdBanner from '@/components/AdBanner';
+import HostingerAdCard from '@/components/HostingerAdCard';
+import YoutubeAdCard from '@/components/YoutubeAdCard';
 import { Clock, Bookmark, Share2, MessageSquare, ArrowLeft, ArrowRight } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter, FaPinterestP, FaWhatsapp, FaTelegram, FaRedditAlien } from "react-icons/fa6";
 
@@ -409,6 +411,12 @@ export default async function DynamicSlugPage(props: PageProps) {
                     )}
                   </div>
                 </div>
+
+                {/* AK Web Master Hub YouTube Channel Banner */}
+                <YoutubeAdCard />
+
+                {/* Hostinger Sponsored Ad Banner */}
+                <HostingerAdCard />
 
                 {/* Ad Banner Widget */}
                 <AdBanner />

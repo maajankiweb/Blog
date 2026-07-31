@@ -9,7 +9,7 @@ export default function SubscribeForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
 
-  const handleSubscribe = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubscribe = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmed = email.trim();
     if (!trimmed || !trimmed.includes("@") || !trimmed.includes(".")) {
@@ -17,11 +17,24 @@ export default function SubscribeForm() {
       return;
     }
     setStatus("submitting");
-    // TODO: Replace setTimeout with real API call (e.g. fetch to newsletter service)
-    setTimeout(() => {
-      setStatus("success");
-      setEmail("");
-    }, 900);
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Newsletter submission failed:", err);
+      setStatus("error");
+    }
   };
 
   if (status === "success") {
@@ -37,7 +50,7 @@ export default function SubscribeForm() {
         >
           <CheckCircle2 className="h-10 w-10" />
         </div>
-        <h3 className="text-2xl font-bold text-white">You're on the list!</h3>
+        <h3 className="text-2xl font-bold text-white">You&apos;re on the list!</h3>
         <p className="text-white/70 text-sm max-w-xs leading-relaxed">
           Thank you for subscribing. Your first edition arrives this Sunday morning.
         </p>

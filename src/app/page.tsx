@@ -6,6 +6,9 @@ import FaqSection from "@/components/FaqSection";
 import StatCard from "@/components/StatCard";
 import Newsletter from "@/components/Newsletter";
 import AdBanner from "@/components/AdBanner";
+import HostingerAdCard from "@/components/HostingerAdCard";
+import BreakingNewsTicker from "@/components/BreakingNewsTicker";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import {
   HiArrowRight,
   HiArrowPath,
@@ -49,7 +52,7 @@ export default async function Home(props: PageProps) {
 
   try {
     const [fetchedPosts, fetchedCategories] = await Promise.all([
-      getPosts({ category: activeCategoryId, tag: activeTagId, perPage: 12 }),
+      getPosts({ category: activeCategoryId, tag: activeTagId, perPage: 20 }),
       getCategories({ perPage: 15 }),
     ]);
     posts = fetchedPosts;
@@ -62,8 +65,9 @@ export default async function Home(props: PageProps) {
 
   const mainFeaturedPost = posts[0];
   const rightFeaturedPosts = posts.slice(1, 5);
-  const latestPosts = posts.slice(5, 9);
-  const trendingPosts = posts.slice(9, 12);
+  // Show 8 latest published blog cards under "Latest Dispatches"
+  const latestPosts = posts.slice(5, 13);
+  const trendingPosts = posts.slice(13, 17);
 
   type TopicIconComponent = React.ComponentType<{
     size?: number;
@@ -136,17 +140,17 @@ export default async function Home(props: PageProps) {
         }))
       : fallbackTopics;
 
-  const marqueeBrands = [
-    "VERCEL",
-    "STRIPE",
-    "LINEAR",
-    "NOTION",
-    "RAYCAST",
-    "FIGMA",
-    "SUPABASE",
-    "PLANETSCALE",
-    "CLERK",
-    "RESEND",
+  const marqueeTopics = [
+    "WEB DEVELOPMENT",
+    "SOFTWARE ARCHITECTURE",
+    "CLOUD COMPUTING",
+    "ARTIFICIAL INTELLIGENCE",
+    "NEXT.JS & REACT",
+    "DEVOPS & SYSTEM DESIGN",
+    "CYBERSECURITY",
+    "FULL-STACK ENGINEERING",
+    "DATABASE OPTIMIZATION",
+    "UI / UX DESIGN",
   ];
 
   return (
@@ -327,23 +331,26 @@ export default async function Home(props: PageProps) {
         </div>
       </section>
 
+      {/* Breaking News Ticker directly after Hero Section */}
+      <BreakingNewsTicker posts={posts} />
+
       {/* ═══════════════════════════════════════════
-          2. MARQUEE / CREDIBILITY STRIP
+          2. MARQUEE / TOPICS STRIP
       ═══════════════════════════════════════════ */}
       <section className="py-6 border-b border-outline-variant/30 bg-surface-container-low/50 overflow-hidden">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-3">
           <p className="text-center text-[11px] text-on-surface-variant/70 font-semibold uppercase tracking-[0.18em]">
-            Read by engineers & leaders at forward-thinking teams
+            Covering Key Domains for Developers, Innovators & Digital Leaders
           </p>
         </div>
         <div className="flex items-center gap-8 overflow-hidden select-none opacity-60 hover:opacity-100 transition-opacity duration-200">
           <div className="marquee-track gap-12 items-center">
-            {[...marqueeBrands, ...marqueeBrands].map((brand, i) => (
+            {[...marqueeTopics, ...marqueeTopics].map((topic, i) => (
               <span
                 key={i}
                 className="font-bold text-xs tracking-widest text-on-surface/40 mx-6 flex-shrink-0"
               >
-                {brand}
+                ✦ {topic}
               </span>
             ))}
           </div>
@@ -361,7 +368,7 @@ export default async function Home(props: PageProps) {
               Editor&apos;s Pick
             </span>
             <h2 className="font-extrabold text-on-surface text-2xl md:text-3xl tracking-tight">
-              Featured Commentary
+              Latest Update
             </h2>
           </div>
           <Link
@@ -404,7 +411,7 @@ export default async function Home(props: PageProps) {
               <div className="p-6 md:p-8 flex flex-col gap-3 flex-grow">
                 <div className="flex items-center gap-2 text-on-surface-variant/80 text-xs font-medium">
                   <span className="font-semibold text-[#ff6b00]">
-                    {mainFeaturedPost._embedded?.author?.[0]?.name || "Editorial Team"}
+                    {mainFeaturedPost._embedded?.author?.[0]?.name || "Maajanki Team"}
                   </span>
                   <span>·</span>
                   <span>
@@ -651,6 +658,9 @@ export default async function Home(props: PageProps) {
                 </div>
               </div>
 
+              {/* Hostinger Ad Box */}
+              <HostingerAdCard />
+
               {/* Sponsored Ad Box — Osdire & Future Ads */}
               <AdBanner />
 
@@ -705,7 +715,12 @@ export default async function Home(props: PageProps) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          7. FAQ SECTION
+          7. TESTIMONIALS SECTION
+      ═══════════════════════════════════════════ */}
+      <TestimonialsSection />
+
+      {/* ═══════════════════════════════════════════
+          8. FAQ SECTION
       ═══════════════════════════════════════════ */}
       <FaqSection />
 

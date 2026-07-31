@@ -8,6 +8,8 @@ import { Grid, List, Search, Calendar, ChevronLeft, ChevronRight, User } from "l
 import { motion, AnimatePresence } from "framer-motion";
 import { WPPost, WPCategory, WPTag } from "@/lib/wordpress";
 import AdBanner from "./AdBanner";
+import HostingerAdCard from "./HostingerAdCard";
+import YoutubeAdCard from "./YoutubeAdCard";
 
 interface BlogListingLayoutProps {
   initialPosts: WPPost[];
@@ -162,7 +164,7 @@ export default function BlogListingLayout({
               <div className="text-center py-20 border border-dashed border-outline-variant/30 rounded-2xl bg-surface">
                 <h3 className="text-lg font-bold text-on-surface mb-2">No articles found</h3>
                 <p className="text-on-surface-variant text-sm">
-                  We couldn't find any articles matching your active filters.
+                  We couldn&apos;t find any articles matching your active filters.
                 </p>
               </div>
             ) : (
@@ -394,6 +396,36 @@ export default function BlogListingLayout({
                 })}
               </div>
             </div>
+
+            {/* AK Web Master Hub YouTube Channel Banner */}
+            <YoutubeAdCard />
+
+            {/* Hostinger Sponsored Ad Widget */}
+            <HostingerAdCard />
+
+            {/* Tags Cloud Widget */}
+            {tags && tags.length > 0 && (
+              <div className="bg-surface p-lg rounded-2xl border border-outline-variant/30">
+                <h4 className="text-label-md font-bold uppercase tracking-widest text-on-surface mb-md">
+                  Popular Tags
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {tags.slice(0, 15).map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => handleTagClick(t.id)}
+                      className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+                        activeTagId === t.id
+                          ? "bg-primary-container text-on-primary border-primary-container"
+                          : "bg-surface-container-low border-outline-variant/30 text-on-surface-variant hover:border-primary-container/50"
+                      }`}
+                    >
+                      #{t.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Sponsored / Ad Placement Widget (Osdire & Affiliate Ads) */}
             <AdBanner />

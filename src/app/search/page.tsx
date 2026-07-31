@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: "Search Results | Editorial",
+  title: "Search Results | Maajanki",
   description: "Search results from our curated technology and design archives.",
 };
 

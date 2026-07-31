@@ -1,5 +1,5 @@
 import FaqSection, { FAQItem } from "@/components/FaqSection";
-import Link from "next/link";
+
 import { Mail, ShieldCheck, Lock, Eye, Cookie, FileText, Globe } from "lucide-react";
 
 export const metadata = {

@@ -30,6 +30,7 @@ export default function Navbar() {
   const navItems = [
     { label: "Home", href: "/" },
     { label: "Articles", href: "/blog" },
+    { label: "Deals & Products", href: "/affiliate-products" },
     { label: "Newsletter", href: "/newsletter" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
@@ -120,13 +121,15 @@ export default function Navbar() {
               <HiMagnifyingGlass size={20} />
             </button>
 
-            <Link
-              href="/newsletter"
-              className="bg-[#ff6b00] hover:bg-[#e05e00] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-[#ff6b00]/25 active:scale-95 whitespace-nowrap flex items-center gap-1.5"
+            <a
+              href="https://www.youtube.com/@Akwebmasterhub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#ff0000] hover:bg-[#cc0000] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-[#ff0000]/25 active:scale-95 whitespace-nowrap flex items-center gap-1.5"
             >
               <HiSparkles size={14} />
               <span>Subscribe</span>
-            </Link>
+            </a>
 
             <button
               onClick={() => setIsOpen(!isOpen)}

@@ -13,7 +13,7 @@ export default function NotFound() {
             This page has been archived or removed.
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-lg">
-            We couldn't find the resource you requested. It might have been moved to a new category, or the URL might have been typed incorrectly.
+            We couldn&apos;t find the resource you requested. It might have been moved to a new category, or the URL might have been typed incorrectly.
           </p>
           <div className="flex flex-col sm:flex-row gap-base max-w-lg">
             <Link

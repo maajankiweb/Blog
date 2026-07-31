@@ -8,9 +8,10 @@ interface AdBannerProps {
 }
 
 export default function AdBanner({ variant = "sidebar", className = "" }: AdBannerProps) {
+  const isBanner = variant === "banner";
   return (
     <div
-      className={`bg-surface p-5 rounded-2xl border-2 border-primary-container/20 relative overflow-hidden shadow-sm hover:border-primary-container/40 transition-all duration-200 ${className}`}
+      className={`bg-surface p-5 rounded-2xl border-2 border-primary-container/20 relative overflow-hidden shadow-sm hover:border-primary-container/40 transition-all duration-200 ${isBanner ? "w-full" : ""} ${className}`}
     >
       <div className="flex items-center justify-between mb-3">
         <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 bg-primary-container/15 text-primary-container rounded-full border border-primary-container/30">

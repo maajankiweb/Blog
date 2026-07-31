@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { HiCheckCircle, HiXCircle } from "react-icons/hi2";
 import { ShieldCheck, BarChart2, Megaphone, SlidersHorizontal } from "lucide-react";
@@ -79,9 +80,9 @@ export default function CookieSettingsPage() {
         <p className="text-on-surface-variant max-w-2xl font-body-md text-body-md">
           We use cookies to improve your experience on Editorial. Choose which categories
           you consent to below. Your preferences will be remembered. For details, see our{" "}
-          <a href="/privacy-policy" className="text-primary-container hover:underline font-medium">
+          <Link href="/privacy-policy" className="text-primary-container hover:underline font-medium">
             Privacy Policy
-          </a>
+          </Link>
           .
         </p>
       </div>

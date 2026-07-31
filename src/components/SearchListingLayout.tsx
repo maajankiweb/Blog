@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Calendar, ChevronLeft, ChevronRight, Info, AlertCircle, ArrowRight } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, Info, AlertCircle, ArrowRight } from "lucide-react";
 import { WPPost, WPCategory } from "@/lib/wordpress";
 import { motion } from "framer-motion";
 import AdBanner from "./AdBanner";
+import YoutubeAdCard from "./YoutubeAdCard";
 
 interface SearchListingLayoutProps {
   query: string;
@@ -19,7 +19,7 @@ export default function SearchListingLayout({
   initialPosts,
   categories,
 }: SearchListingLayoutProps) {
-  const [searchVal, setSearchVal] = useState(query);
+
 
   const highlightText = (text: string, search: string) => {
     if (!search) return text;
@@ -47,7 +47,7 @@ export default function SearchListingLayout({
       <header className="bg-surface-container-low pt-xl pb-lg px-margin-mobile md:px-margin-desktop border-b border-outline-variant/20">
         <div className="max-w-container-max mx-auto space-y-md">
           <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">
-            Search results for '<span className="text-primary">{query}</span>'
+            Search results for &apos;<span className="text-primary">{query}</span>&apos;
           </h1>
           <p className="font-body-md text-body-md text-on-surface-variant">
             Found {initialPosts.length} results across all archives.
@@ -63,10 +63,10 @@ export default function SearchListingLayout({
               <AlertCircle className="h-24 w-24 text-outline" />
             </div>
             <h2 className="font-headline-md text-headline-md text-on-surface">
-              No results found for "{query}"
+              No results found for &quot;{query}&quot;
             </h2>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-md">
-              We couldn't find anything matching your request. Try adjusting your filters or checking spelling.
+              We couldn&apos;t find anything matching your request. Try adjusting your filters or checking spelling.
             </p>
             <div className="flex flex-col justify-center items-center gap-sm pt-4 w-full">
               <p className="font-label-md text-label-md uppercase text-on-surface-variant mb-xs">
@@ -160,6 +160,9 @@ export default function SearchListingLayout({
                 </div>
               </div>
 
+              {/* AK Web Master Hub YouTube Channel Banner */}
+              <YoutubeAdCard />
+
               {/* Sponsored Ad Banner */}
               <AdBanner />
 
@@ -169,7 +172,7 @@ export default function SearchListingLayout({
                 <div>
                   <h3 className="font-label-md text-label-md text-primary font-bold mb-xs">Search Tip</h3>
                   <p className="text-xs text-on-surface-variant dark:text-zinc-400 leading-relaxed">
-                    Use specific phrases for exact matches, e.g., "headless architecture".
+                    Use specific phrases for exact matches, e.g., &quot;headless architecture&quot;.
                   </p>
                 </div>
               </div>

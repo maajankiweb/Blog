@@ -6,13 +6,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let posts: Array<{ slug: string; date: string }> = [];
   try {
-    posts = await getPosts({ perPage: 100 });
+    posts = await getPosts({ perPage: 20 });
   } catch {
     // Fallback: skip dynamic posts if API unavailable
   }
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
+    { url: `${siteUrl}/affiliate-products`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
     { url: `${siteUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${siteUrl}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
     { url: `${siteUrl}/contact-us`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
