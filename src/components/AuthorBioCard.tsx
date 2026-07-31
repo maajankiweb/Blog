@@ -14,14 +14,12 @@ export default function AuthorBioCard() {
         <div className="relative shrink-0">
           <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#ff6b00] relative bg-neutral-900 shadow-md">
             <Image
-              src="https://blog.maajankiwebtech.com/wp-content/uploads/2026/02/Ashish-Kumar-Profile.png"
+              src="/ashish-kumar.png"
               alt="Ashish Kumar - Founder & Lead Strategist"
               fill
               sizes="96px"
-              className="object-cover"
-              onError={(e) => {
-                // Fallback avatar handler
-              }}
+              className="object-cover object-top"
+              priority
             />
           </div>
           <span className="absolute bottom-0 right-0 bg-[#ff6b00] text-white p-1 rounded-full border-2 border-surface shadow-xs" title="Verified Author & Founder">

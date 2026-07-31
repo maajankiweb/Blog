@@ -558,14 +558,16 @@
 .share-tg:hover { background: #229ed9 !important; border-color: #229ed9 !important; }
 .share-rd:hover { background: #ff4500 !important; border-color: #ff4500 !important; }
 
-/* Continuous Marquee Auto-sliding Animation */
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* Hide broken unstyled WordPress plugin social sharing widgets */
+.xs_social_share_widget,
+.wslu-style-2,
+.sharedaddy,
+.sd-sharing,
+.heateor_sss_sharing_container,
+.social-share,
+div[class*="xs_social_share"],
+ul[class*="wslu-"] {
+  display: none !important;
 }
 
 .animate-marquee {

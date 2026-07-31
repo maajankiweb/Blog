@@ -164,9 +164,9 @@ export default async function PostPage(props: PageProps) {
 
   // Completely strip Jetpack/Sassy Social Share/WordPress plugin social sharing block from article HTML content
   contentWithHeadingIds = contentWithHeadingIds
-    .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share)[^"]*"[\s\S]*?<\/div>\s*<\/div>/gi, '')
-    .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share)[^"]*"[\s\S]*?<\/div>/gi, '')
-    .replace(/<ul[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share)[^"]*"[\s\S]*?<\/ul>/gi, '')
+    .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share|xs_social_share_widget|wslu-style-2)[^"]*"[\s\S]*?<\/div>\s*<\/div>/gi, '')
+    .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share|xs_social_share_widget|wslu-style-2)[^"]*"[\s\S]*?<\/div>/gi, '')
+    .replace(/<ul[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share|wslu)[^"]*"[\s\S]*?<\/ul>/gi, '')
     .replace(/<ul[^>]*>[\s\S]*?Share\s*(Facebook|LinkedIn|Twitter|Pinterest|WhatsApp|Telegram|Reddit)[\s\S]*?<\/ul>/gi, '')
     .replace(/<div[^>]*>[\s\S]*?0\s*Share\s*Facebook[\s\S]*?<\/div>/gi, '');
 
