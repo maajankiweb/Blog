@@ -36,176 +36,36 @@
   },
   {
     "id": 1002,
-    "title": "Elementor Pro - Page Builder for WordPress",
-    "slug": "elementor-pro-page-builder",
-    "tagline": "The #1 visual page builder for WordPress with drag-and-drop design flexibility.",
-    "description": "Build custom WordPress websites visually with Elementor Pro. Access 100+ widgets, dynamic content tags, theme builder, popup builder, WooCommerce builder, and professional templates.",
-    "price": "₹4,999/yr",
-    "originalPrice": "₹8,299/yr",
-    "discount": "40% OFF",
+    "title": "Osdire Web Hosting & Cloud Solutions",
+    "slug": "osdire-web-hosting-cloud",
+    "tagline": "High-speed cloud servers, NVMe web hosting, and domain management.",
+    "description": "Osdire provides powerful cloud hosting infrastructure with ultra-fast NVMe storage, free SSL certificates, automated cPanel management, and 24/7 technical assistance for growing websites.",
+    "price": "₹199/mo",
+    "originalPrice": "₹699/mo",
+    "discount": "70% OFF",
     "rating": 4.8,
-    "reviewsCount": 980,
-    "affiliateUrl": "https://elementor.com/",
-    "storeName": "Elementor",
-    "category": "Themes & Plugins",
+    "reviewsCount": 850,
+    "affiliateUrl": "https://osdire.com/",
+    "storeName": "Osdire",
+    "category": "Hosting",
     "badge": "Hot Deal",
-    "couponCode": "ELEMENTOR2026",
-    "featuredImage": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80",
-    "features": [
-      "100+ Visual Design Widgets",
-      "Theme Builder & Header/Footer Builder",
-      "Full WooCommerce Store Customizer",
-      "Popup & Lead Capture Builder",
-      "300+ Designer Kits & Templates"
-    ],
-    "pros": [
-      "No coding required for complex layouts",
-      "Huge ecosystem of add-ons and tutorials",
-      "Seamless integration with ACF & custom post types"
-    ],
-    "cons": [
-      "Can add weight to pages if unoptimized",
-      "Requires active subscription for ongoing updates"
-    ],
-    "publishedAt": "2026-07-05T10:00:00Z"
-  },
-  {
-    "id": 1003,
-    "title": "SEMrush All-In-One Marketing Toolkit",
-    "slug": "semrush-marketing-toolkit",
-    "tagline": "Supercharge your SEO, content strategy, competitor analysis, and PPC advertising.",
-    "description": "SEMrush is the leading online visibility management SaaS platform. Discover low-competition keywords, track competitor backlinks, audit site technical SEO issues, and plan content with AI recommendations.",
-    "price": "₹9,999/mo",
-    "originalPrice": "₹11,999/mo",
-    "discount": "14% OFF",
-    "rating": 4.9,
-    "reviewsCount": 2150,
-    "affiliateUrl": "https://www.semrush.com/",
-    "storeName": "SEMrush",
-    "category": "SEO & Marketing",
-    "badge": "Editor's Choice",
-    "couponCode": "7DAYSFREE",
-    "featuredImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80",
-    "features": [
-      "25+ Billion Keyword Database",
-      "Competitor Traffic & Ad Insight",
-      "Automated Technical SEO Site Audits",
-      "Position Tracking & Rank Intelligence",
-      "Backlink Audit & Link Building CRM"
-    ],
-    "pros": [
-      "Unmatched database accuracy and breadth",
-      "All-in-one suite replaces multiple SEO tools",
-      "In-depth competitor analysis"
-    ],
-    "cons": [
-      "Priced for serious businesses and agencies",
-      "Steep learning curve for absolute beginners"
-    ],
-    "publishedAt": "2026-07-10T10:00:00Z"
-  },
-  {
-    "id": 1004,
-    "title": "ChatGPT Plus / OpenAI API Credits",
-    "slug": "chatgpt-plus-openai-api",
-    "tagline": "Access GPT-4o, DALL-E 3, Advanced Data Analysis, and Custom GPT agents.",
-    "description": "Accelerate productivity with cutting-edge AI capabilities. Automate blog drafting, code generation, translation, image creation, and automated data processing with high precision.",
-    "price": "₹1,699/mo",
-    "originalPrice": "₹2,099/mo",
-    "discount": "Featured",
-    "rating": 4.95,
-    "reviewsCount": 5400,
-    "affiliateUrl": "https://chatgpt.com/",
-    "storeName": "OpenAI",
-    "category": "AI Tools",
-    "badge": "Trending",
-    "couponCode": "AIEXTRA",
-    "featuredImage": "https://images.unsplash.com/photo-1677442136019-21780efad99a?w=800&auto=format&fit=crop&q=80",
-    "features": [
-      "Access to flagship GPT-4o & Reasoning Models",
-      "Instant DALL-E 3 AI Image Generation",
-      "Custom GPT Creation & Knowledge Retrieval",
-      "Code Interpreter & Data Analysis Tool",
-      "Fast response times during peak usage"
-    ],
-    "pros": [
-      "Industry-standard AI intelligence",
-      "Versatile across writing, coding, and analysis",
-      "Regular model updates and new feature additions"
-    ],
-    "cons": [
-      "Rate limits apply during heavy server demand",
-      "Requires prompt crafting practice"
-    ],
-    "publishedAt": "2026-07-15T10:00:00Z"
-  },
-  {
-    "id": 1005,
-    "title": "Namecheap Domain & Cloud DNS",
-    "slug": "namecheap-domain-registration",
-    "tagline": "Secure your domain name with free privacy protection & 99.99% DNS uptime.",
-    "description": "Register custom domains starting at just ₹499/yr. Includes free lifetime domain privacy (WhoisGuard), DNSSEC security, free email forwarding, and 24/7 technical customer support.",
-    "price": "₹499/yr",
-    "originalPrice": "₹1,199/yr",
-    "discount": "60% OFF",
-    "rating": 4.7,
-    "reviewsCount": 870,
-    "affiliateUrl": "https://www.namecheap.com/",
-    "storeName": "Namecheap",
-    "category": "Domain & Security",
-    "badge": "Exclusive",
-    "couponCode": "NCDEAL2026",
+    "couponCode": "OSDIREDEAL",
     "featuredImage": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",
     "features": [
-      "Free Lifetime Domain Privacy Protection",
-      "Free 2-Month Trial of Business Email",
-      "DNSSEC Security & Fast Anycast DNS",
-      "24/7 Live Chat Technical Support",
-      "Zero hidden renewal fees"
+      "Pure NVMe Storage Speed",
+      "Free One-Click WordPress Installer",
+      "Free Lifetime SSL Security",
+      "cPanel Control Panel Access",
+      "24/7 Dedicated Support Team"
     ],
     "pros": [
-      "Clear upfront pricing with no hidden catches",
-      "Free WhoisGuard privacy forever",
-      "Clean, modern management dashboard"
+      "Super fast NVMe server response times",
+      "Ideal for business websites and blogs",
+      "Great pricing and discount deals"
     ],
     "cons": [
-      "Shared hosting add-on is basic compared to dedicated hosts"
+      "Limited data center options"
     ],
-    "publishedAt": "2026-07-20T10:00:00Z"
-  },
-  {
-    "id": 1006,
-    "title": "WP Rocket - Premium WordPress Caching",
-    "slug": "wp-rocket-caching-plugin",
-    "tagline": "Instantly boost your Core Web Vitals and website speed without technical effort.",
-    "description": "WP Rocket is the leading WordPress caching plugin recognized by web performance experts. Automatically applies page caching, GZIP compression, JS/CSS minification, lazy loading, and database optimization upon activation.",
-    "price": "₹4,999/yr",
-    "originalPrice": "₹6,499/yr",
-    "discount": "25% OFF",
-    "rating": 4.9,
-    "reviewsCount": 1640,
-    "affiliateUrl": "https://wp-rocket.me/",
-    "storeName": "WP Rocket",
-    "category": "Themes & Plugins",
-    "badge": "Speed Booster",
-    "couponCode": "ROCKETSPEED",
-    "featuredImage": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
-    "features": [
-      "Instant Page Caching & Cache Preloading",
-      "Core Web Vitals Optimization",
-      "CSS & JavaScript Minification & Unused CSS Removal",
-      "Media Lazy Loading & Delay JS Execution",
-      "Database Cleanup & Optimization"
-    ],
-    "pros": [
-      "Works right out of the box with 80% default optimizations",
-      "Huge impact on Google PageSpeed Insights score",
-      "Great compatibility with WooCommerce and page builders"
-    ],
-    "cons": [
-      "No free trial or free version available",
-      "Annual renewal required"
-    ],
-    "publishedAt": "2026-07-22T10:00:00Z"
+    "publishedAt": "2026-07-05T10:00:00Z"
   }
 ]

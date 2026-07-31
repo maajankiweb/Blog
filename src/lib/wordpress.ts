@@ -699,30 +699,31 @@ function mapWPPostToAffiliateProduct(post: WPPost): WPAffiliateProduct {
  * Fetch affiliate products from WordPress or local fallback
  */
 export async function getAffiliateProducts(categoryFilter?: string): Promise<WPAffiliateProduct[]> {
+  let wpAffiliateProducts: WPAffiliateProduct[] = [];
   try {
-    const query = new URLSearchParams();
-    query.append('_embed', 'true');
-    query.append('per_page', '20');
-    query.append('search', 'affiliate');
+    const affCat = await getCategoryBySlug("affiliate-products") || await getCategoryBySlug("affiliate") || await getCategoryBySlug("deals");
+    if (affCat) {
+      const query = new URLSearchParams();
+      query.append('_embed', 'true');
+      query.append('per_page', '20');
+      query.append('categories', affCat.id.toString());
 
-    const posts = await fetchAPI<WPPost[]>(`/posts?${query.toString()}`);
-    if (posts && posts.length > 0) {
-      const parsedWPProducts = posts.map(mapWPPostToAffiliateProduct);
-      const combined = [...parsedWPProducts, ...(localAffiliateProducts as WPAffiliateProduct[])];
-      if (categoryFilter && categoryFilter !== "All") {
-        return combined.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
+      const posts = await fetchAPI<WPPost[]>(`/posts?${query.toString()}`);
+      if (posts && posts.length > 0) {
+        wpAffiliateProducts = posts.map(mapWPPostToAffiliateProduct);
       }
-      return combined;
     }
   } catch (err) {
-    console.warn("Could not fetch WP affiliate posts, fallback to local data:", err);
+    console.warn("Could not fetch WP affiliate category posts, fallback to local data:", err);
   }
 
-  let products = localAffiliateProducts as WPAffiliateProduct[];
+  // Combine WP affiliate products with curated local list (Hostinger, Osdire, etc.)
+  const combined = [...wpAffiliateProducts, ...(localAffiliateProducts as WPAffiliateProduct[])];
+
   if (categoryFilter && categoryFilter !== "All") {
-    products = products.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
+    return combined.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
   }
-  return products;
+  return combined;
 }
 
 /**
