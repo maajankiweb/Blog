@@ -18,11 +18,13 @@ const iconMap = {
 export type StatIconName = keyof typeof iconMap;
 
 function useCountUp(target: number, decimals = 0, duration = 1800) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(target);
   const started = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Reset to 0 for initial smooth animate-up on client mount
+    setValue(0);
     const ease = (t: number) =>
       t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2;
 
@@ -40,7 +42,7 @@ function useCountUp(target: number, decimals = 0, duration = 1800) {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.1 },
     );
 
     if (ref.current) observer.observe(ref.current);

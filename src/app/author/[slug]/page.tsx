@@ -103,7 +103,7 @@ export default async function AuthorSlugPage(props: PageProps) {
                     <Globe className="h-5 w-5" />
                   </a>
                 )}
-                <Link href="/contact-us" className="text-on-surface-variant hover:text-primary transition-colors" aria-label="Mail">
+                <Link href="/contact" className="text-on-surface-variant hover:text-primary transition-colors" aria-label="Mail">
                   <Mail className="h-5 w-5" />
                 </Link>
                 <Link href="/blog" className="text-on-surface-variant hover:text-primary transition-colors" aria-label="RSS">

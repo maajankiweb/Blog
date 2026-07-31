@@ -11,6 +11,7 @@ import AdBanner from "@/components/AdBanner";
 import HostingerAdCard from "@/components/HostingerAdCard";
 import InlineAdBanner from "@/components/InlineAdBanner";
 import YoutubeAdCard from "@/components/YoutubeAdCard";
+import AuthorBioCard from "@/components/AuthorBioCard";
 import { Clock, Calendar, Bookmark, Share2, MessageSquare, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter, FaPinterestP, FaWhatsapp, FaTelegram, FaRedditAlien } from "react-icons/fa6";
 
@@ -433,55 +434,19 @@ export default async function PostPage(props: PageProps) {
           </aside>
         </div>
 
-        {/* Author Bio Block */}
-        <section className="mt-xl py-xl border-t border-outline-variant/20 dark:border-zinc-800/30">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-xl items-stretch">
-            {/* Left: Author Details */}
-            <div className="flex gap-md p-md bg-surface-container dark:bg-zinc-900 rounded-xl items-center">
-              {author?.avatar_urls?.['96'] ? (
-                <Image 
-                  src={author.avatar_urls['96']} 
-                  alt={author.name}
-                  width={80}
-                  height={80}
-                  className="rounded-full object-cover shrink-0"
-                />
-              ) : (
-                <div className="w-20 h-20 bg-primary-fixed rounded-full flex items-center justify-center font-bold text-primary text-xl shrink-0">
-                  {author?.name.substring(0, 2) || "ED"}
-                </div>
-              )}
-              <div>
-                <h3 className="font-headline-md text-xl text-on-surface dark:text-zinc-100 mb-xs">
-                  {author?.name || "Elena Vance"}
-                </h3>
-                <p className="text-sm text-on-surface-variant dark:text-zinc-400 leading-relaxed">
-                  {author?.description || "Elena is a systems designer and journalist focusing on the intersection of human psychology and digital interfaces."}
-                </p>
-              </div>
-            </div>
+          {/* Author Bio Block */}
+          <AuthorBioCard />
 
-            {/* Right: Next / Prev navigation links */}
-            <div className="flex flex-col justify-center gap-sm">
-              <Link href="/blog" className="group flex flex-col items-end text-right">
-                <span className="text-[11px] text-on-surface-variant dark:text-zinc-400 uppercase tracking-widest mb-1">
-                  Next Article
-                </span>
-                <span className="text-body-lg font-bold text-on-surface dark:text-zinc-200 group-hover:text-primary transition-colors flex items-center gap-xs">
-                  Beyond the Fold: Scroll Depth and Narrative <ArrowRight className="h-4 w-4" />
-                </span>
+          <section className="mt-8 py-8 border-t border-outline-variant/20 dark:border-zinc-800/30">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <Link href="/blog" className="group flex items-center gap-2 text-[#ff6b00] font-bold text-sm hover:underline">
+                <ArrowLeft className="h-4 w-4" /> Browse All Articles
               </Link>
-              <Link href="/blog" className="group flex flex-col items-start">
-                <span className="text-[11px] text-on-surface-variant dark:text-zinc-400 uppercase tracking-widest mb-1">
-                  Previous Article
-                </span>
-                <span className="text-body-lg font-bold text-on-surface dark:text-zinc-200 group-hover:text-primary transition-colors flex items-center gap-xs">
-                  <ArrowLeft className="h-4 w-4" /> The Color of Utility: Primary Orange
-                </span>
+              <Link href="/contact" className="group flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-semibold text-xs">
+                Have questions or need consultation? Reach out →
               </Link>
             </div>
-          </div>
-        </section>
+          </section>
 
         {/* Comments Listing & Post Comment Form */}
         <section className="mt-xl max-w-4xl mx-auto space-y-lg">

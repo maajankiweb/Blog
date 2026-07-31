@@ -9,6 +9,7 @@ import AdBanner from "@/components/AdBanner";
 import HostingerAdCard from "@/components/HostingerAdCard";
 import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import StartHereSection from "@/components/StartHereSection";
 import {
   HiArrowRight,
   HiArrowPath,
@@ -67,6 +68,8 @@ export default async function Home(props: PageProps) {
   const rightFeaturedPosts = posts.slice(1, 5);
   // Show 8 latest published blog cards under "Latest Dispatches"
   const latestPosts = posts.slice(5, 13);
+  // Separate trending posts to prevent heavy duplication in ticker
+  const tickerPosts = posts.length > 5 ? posts.slice(4, 12) : posts;
   const trendingPosts = posts.slice(13, 17);
 
   type TopicIconComponent = React.ComponentType<{
@@ -141,16 +144,14 @@ export default async function Home(props: PageProps) {
       : fallbackTopics;
 
   const marqueeTopics = [
-    "WEB DEVELOPMENT",
-    "SOFTWARE ARCHITECTURE",
-    "CLOUD COMPUTING",
-    "ARTIFICIAL INTELLIGENCE",
-    "NEXT.JS & REACT",
-    "DEVOPS & SYSTEM DESIGN",
-    "CYBERSECURITY",
-    "FULL-STACK ENGINEERING",
-    "DATABASE OPTIMIZATION",
-    "UI / UX DESIGN",
+    "LOCAL SEO & SEARCH RANKINGS",
+    "CUSTOM WEB DEVELOPMENT",
+    "WORDPRESS OPTIMIZATION",
+    "NEXT.JS & REACT SYSTEMS",
+    "INDIAN FREELANCER INVOICING",
+    "DIGITAL MARKETING ROI",
+    "GOOGLE SEARCH CONSOLE FIXES",
+    "BUSINESS GROWTH STRATEGY",
   ];
 
   return (
@@ -166,28 +167,27 @@ export default async function Home(props: PageProps) {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/15 text-white/80 text-xs font-medium mb-6 backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00] flex-shrink-0" />
-                Updated weekly with original analysis
+                Practical Growth Guides for Indian Businesses &amp; Developers
               </div>
 
               {/* Headline */}
               <h1
                 className="font-extrabold text-white leading-[1.08] tracking-tight mb-6 max-w-2xl"
                 style={{
-                  fontSize: "clamp(36px, 4.8vw, 68px)",
+                  fontSize: "clamp(34px, 4.5vw, 64px)",
                   letterSpacing: "-0.035em",
                 }}
               >
-                Insights for the{" "}
+                Master Web Dev, Local SEO &amp;{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-[#ffb693]">
-                  Modern Builder
+                  Digital Business Growth
                 </span>
                 .
               </h1>
 
               {/* Paragraph */}
-              <p className="text-white/65 text-base md:text-lg leading-relaxed mb-8 max-w-xl font-normal">
-                Deep dives into architecture, engineering culture, and the
-                future of web systems. Written by builders, for builders.
+              <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-xl font-normal">
+                Actionable step-by-step guides on custom Next.js &amp; WordPress web development, ranking #1 on Google, and scaling online client revenues.
               </p>
 
               {/* Search bar — Clean inline professional input */}
@@ -203,7 +203,7 @@ export default async function Home(props: PageProps) {
                   <input
                     type="text"
                     name="q"
-                    placeholder="Search articles, topics, or keywords…"
+                    placeholder="Search SEO guides, web dev, or topics…"
                     className="w-full bg-white/5 border border-white/15 focus:border-[#ff6b00] focus:bg-white/10 text-white placeholder:text-white/40 rounded-xl py-3.5 pl-11 pr-28 text-sm outline-none transition-all duration-200"
                   />
                   <button
@@ -221,7 +221,7 @@ export default async function Home(props: PageProps) {
                   href="/blog"
                   className="inline-flex items-center gap-2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all duration-200 shadow-sm"
                 >
-                  Start Reading
+                  Explore Articles
                   <HiArrowRight size={16} />
                 </Link>
                 <Link
@@ -332,7 +332,10 @@ export default async function Home(props: PageProps) {
       </section>
 
       {/* Breaking News Ticker directly after Hero Section */}
-      <BreakingNewsTicker posts={posts} />
+      <BreakingNewsTicker posts={tickerPosts} />
+
+      {/* Start Here / Beginner's Curated Guide Roadmap */}
+      <StartHereSection />
 
       {/* ═══════════════════════════════════════════
           2. MARQUEE / TOPICS STRIP
@@ -340,7 +343,7 @@ export default async function Home(props: PageProps) {
       <section className="py-6 border-b border-outline-variant/30 bg-surface-container-low/50 overflow-hidden">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-3">
           <p className="text-center text-[11px] text-on-surface-variant/70 font-semibold uppercase tracking-[0.18em]">
-            Covering Key Domains for Developers, Innovators & Digital Leaders
+            Covering Key Growth Domains for Indian Businesses &amp; Developers
           </p>
         </div>
         <div className="flex items-center gap-8 overflow-hidden select-none opacity-60 hover:opacity-100 transition-opacity duration-200">
@@ -673,7 +676,7 @@ export default async function Home(props: PageProps) {
                   Don&apos;t miss a dispatch.
                 </h3>
                 <p className="text-white/60 text-xs mb-4 leading-relaxed">
-                  Join 15,000+ engineers getting our weekly deep dives.
+                  Join 15,000+ businesses getting our weekly growth deep dives.
                 </p>
                 <form action="/newsletter" method="GET" className="space-y-2.5">
                   <input
@@ -733,10 +736,10 @@ export default async function Home(props: PageProps) {
             Start exploring
           </span>
           <h2 className="text-white font-extrabold text-2xl md:text-4xl leading-tight mb-4 tracking-tight">
-            Ready to build better systems?
+            Ready to grow your online business?
           </h2>
           <p className="text-white/60 text-sm md:text-base leading-relaxed mb-8">
-            Join thousands of developers staying ahead with our technical essays and architectural breakdowns.
+            Join thousands of business owners and developers staying ahead with our technical guides and SEO breakdowns.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
@@ -747,7 +750,7 @@ export default async function Home(props: PageProps) {
               <HiArrowRight size={16} />
             </Link>
             <Link
-              href="/contact-us"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-colors duration-200"
             >
               <HiEnvelope size={16} />

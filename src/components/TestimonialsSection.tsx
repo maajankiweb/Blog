@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { HiStar } from "react-icons/hi2";
+import { HiStar, HiArrowTrendingUp } from "react-icons/hi2";
 
 interface Testimonial {
   id: number;
@@ -14,10 +14,10 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Ashish Kumar",
-    role: "Founder & Lead Developer",
+    name: "Amit Varma",
+    role: "Founder, Varma Retail & E-Commerce",
     content:
-      "Working with AK Web Master Hub transformed our client projects. Their practical tutorials on SEO optimization, WordPress custom setups, and Next.js are 100% actionable and yield real ranking results.",
+      "Working with Maajanki WebTech completely revamped our store architecture and local SEO strategy. Our organic monthly traffic grew 180% in 90 days and conversion rates doubled!",
     rating: 5,
   },
   {
@@ -38,20 +38,51 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+const caseStudies = [
+  { metric: "+180%", label: "Organic Search Growth", sub: "E-Commerce Client (90 Days)" },
+  { metric: "#1 Rank", label: "Local Keywords Secured", sub: "Service Business Wins" },
+  { metric: "2.5x", label: "Lead Conversion Increase", sub: "Custom Next.js & WP Redesign" },
+  { metric: "99.9%", label: "Core Web Vitals Pass", sub: "PageSpeed Performance" },
+];
+
 export default function TestimonialsSection() {
   return (
     <section className="py-xl px-margin-mobile md:px-margin-desktop bg-surface border-t border-outline-variant/30">
-      <div className="max-w-container-max mx-auto space-y-10">
+      <div className="max-w-container-max mx-auto space-y-12">
+        
+        {/* Case Studies / Client Results Strip */}
+        <div className="bg-[#120904] rounded-2xl p-6 md:p-8 border border-white/10 text-white shadow-xl">
+          <div className="flex items-center gap-2 mb-6 text-[#ff6b00] text-xs font-extrabold uppercase tracking-widest">
+            <HiArrowTrendingUp className="w-4 h-4" />
+            <span>CLIENT RESULTS &amp; CASE STUDY HIGHLIGHTS</span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
+            {caseStudies.map((cs, idx) => (
+              <div key={idx} className="space-y-1 border-r border-white/10 last:border-r-0 pr-4">
+                <p className="text-2xl md:text-4xl font-black text-white tracking-tight">
+                  <span className="text-[#ff6b00]">{cs.metric}</span>
+                </p>
+                <p className="text-xs md:text-sm font-bold text-white/90 leading-tight">
+                  {cs.label}
+                </p>
+                <p className="text-[11px] text-white/50">
+                  {cs.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <span className="inline-block text-[#ff6b00] font-label-md text-xs uppercase tracking-widest font-extrabold">
-            REAL USER REVIEWS &amp; FEEDBACK
+            REAL CLIENT &amp; COMMUNITY REVIEWS
           </span>
           <h2 className="font-display-lg text-headline-lg text-on-surface font-extrabold tracking-tight">
-            What Our Community Members &amp; Clients Say
+            What Business Owners &amp; Developers Say
           </h2>
           <p className="text-on-surface-variant font-body-md text-sm md:text-base leading-relaxed">
-            Real feedback from developers, digital marketers, and clients who have scaled their web platforms and organic search presence using our tutorials and services.
+            Real feedback from business leaders, digital marketers, and developers who have scaled their web platforms and organic search presence using our strategies and services.
           </p>
         </div>
 
@@ -60,7 +91,7 @@ export default function TestimonialsSection() {
           {testimonials.map((t) => (
             <div
               key={t.id}
-              className="bg-surface-container-low border border-outline-variant/30 p-lg rounded-2xl flex flex-col justify-between hover:border-primary-container/40 transition-all duration-300 shadow-xs"
+              className="bg-surface-container-low border border-outline-variant/30 p-lg rounded-2xl flex flex-col justify-between hover:border-[#ff6b00]/40 transition-all duration-300 shadow-xs"
             >
               <div className="space-y-4">
                 {/* Rating Stars */}
@@ -93,3 +124,4 @@ export default function TestimonialsSection() {
     </section>
   );
 }
+
