@@ -824,19 +824,28 @@ const mockDigitalProducts: WooDigitalProduct[] = [
   },
 ];
 
+import { fetchWebPressHubProducts } from "./webpresshub";
+
 /**
- * Fetch digital products dynamically from WooCommerce REST API or fallback to WP post category / local mock data
+ * Fetch digital products dynamically from WooCommerce REST API, webpresshub.net REST API, or fallback to WP post category & local catalog
  */
 export async function getWooProducts(): Promise<WooDigitalProduct[]> {
+  let remoteHubProducts: WooDigitalProduct[] = [];
   try {
-    // Attempt to fetch from WooCommerce REST API endpoints
+    remoteHubProducts = await fetchWebPressHubProducts();
+  } catch (err) {
+    console.warn("Error fetching remote WebPressHub products:", err);
+  }
+
+  try {
+    // Attempt to fetch from local WooCommerce REST API endpoints
     const res = await fetch("https://blog.maajankiwebtech.com/wp-json/wc/v3/products?per_page=20", {
       next: { revalidate: 3600 },
     });
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
-        return data.map((p: any) => ({
+        const localWcMapped = data.map((p: any) => ({
           id: p.id,
           name: p.name,
           slug: p.slug,
@@ -850,38 +859,15 @@ export async function getWooProducts(): Promise<WooDigitalProduct[]> {
           rating: p.average_rating ? parseFloat(p.average_rating) : 4.8,
           salesCount: p.total_sales || 10,
         }));
+        return [...localWcMapped, ...remoteHubProducts, ...mockDigitalProducts];
       }
     }
   } catch (err) {
     console.warn("Could not fetch WooCommerce API products, attempting WP posts fallback:", err);
   }
 
-  // Attempt WP posts under category "products" or "store"
-  try {
-    const prodCat = await getCategoryBySlug("products") || await getCategoryBySlug("store");
-    if (prodCat) {
-      const wpPosts = await getPosts({ category: prodCat.id, perPage: 20 });
-      if (wpPosts.length > 0) {
-        const wpMapped: WooDigitalProduct[] = wpPosts.map((post) => ({
-          id: post.id,
-          name: cleanHtmlText(post.title.rendered),
-          slug: post.slug,
-          category: post._embedded?.['wp:term']?.[0]?.[0]?.name || "Digital",
-          price: "₹1,999",
-          description: cleanHtmlText(post.content.rendered),
-          shortDescription: cleanHtmlText(post.excerpt.rendered).slice(0, 100),
-          featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
-          rating: 4.9,
-          salesCount: 45,
-        }));
-        return [...wpMapped, ...mockDigitalProducts];
-      }
-    }
-  } catch (err) {
-    console.warn("Could not fetch WP products category, returning curated digital products:", err);
-  }
-
-  return mockDigitalProducts;
+  // Combine remote WebPressHub products with mock digital catalog
+  return [...remoteHubProducts, ...mockDigitalProducts];
 }
 
 /**
