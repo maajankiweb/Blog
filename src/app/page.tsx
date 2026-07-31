@@ -10,6 +10,11 @@ import HostingerAdCard from "@/components/HostingerAdCard";
 import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import StartHereSection from "@/components/StartHereSection";
+import WhyChooseMaajanki from "@/components/WhyChooseMaajanki";
+import AiSaasSolutions from "@/components/AiSaasSolutions";
+import TrustedTechnologies from "@/components/TrustedTechnologies";
+import FounderSection from "@/components/FounderSection";
+import HomepageFinalCta from "@/components/HomepageFinalCta";
 import {
   HiArrowRight,
   HiArrowPath,
@@ -723,47 +728,39 @@ export default async function Home(props: PageProps) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          7. TESTIMONIALS SECTION
+          7. WHY CHOOSE MAAJANKI & ECOSYSTEM
+      ═══════════════════════════════════════════ */}
+      <WhyChooseMaajanki />
+
+      {/* ═══════════════════════════════════════════
+          8. AI POWERED SAAS SOLUTIONS
+      ═══════════════════════════════════════════ */}
+      <AiSaasSolutions />
+
+      {/* ═══════════════════════════════════════════
+          9. TRUSTED TECHNOLOGIES
+      ═══════════════════════════════════════════ */}
+      <TrustedTechnologies />
+
+      {/* ═══════════════════════════════════════════
+          10. MEET THE FOUNDER (ASHISH KUMAR)
+      ═══════════════════════════════════════════ */}
+      <FounderSection />
+
+      {/* ═══════════════════════════════════════════
+          11. TESTIMONIALS SECTION
       ═══════════════════════════════════════════ */}
       <TestimonialsSection />
 
       {/* ═══════════════════════════════════════════
-          8. FAQ SECTION
+          12. FAQ SECTION
       ═══════════════════════════════════════════ */}
       <FaqSection />
 
       {/* ═══════════════════════════════════════════
-          8. FINAL CTA — Restrained Dark Editorial Strip
+          13. FINAL HOMEPAGE CTA
       ═══════════════════════════════════════════ */}
-      <section className="bg-[#0f0a08] border-t border-white/10 py-16 md:py-20 text-center px-margin-mobile md:px-margin-desktop">
-        <div className="max-w-xl mx-auto">
-          <span className="text-[#ff6b00] font-bold text-xs uppercase tracking-widest block mb-3">
-            Start exploring
-          </span>
-          <h2 className="text-white font-extrabold text-2xl md:text-4xl leading-tight mb-4 tracking-tight">
-            Ready to grow your online business?
-          </h2>
-          <p className="text-white/60 text-sm md:text-base leading-relaxed mb-8">
-            Join thousands of business owners and developers staying ahead with our technical guides and SEO breakdowns.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <Link
-              href="/blog"
-              className="inline-flex items-center justify-center gap-2 bg-[#ff6b00] hover:bg-[#e05e00] text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-colors duration-200"
-            >
-              Start Reading
-              <HiArrowRight size={16} />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-colors duration-200"
-            >
-              <HiEnvelope size={16} />
-              Get in Touch
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HomepageFinalCta />
     </div>
   );
 }
