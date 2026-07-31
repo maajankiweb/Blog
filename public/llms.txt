@@ -1,0 +1,23 @@
+# Maajanki WebTech & Blog — AI & Search Engine Context
+
+> Maajanki WebTech is a leading Indian Web Development, Technical SEO, and Digital Growth Agency founded by Ashish Kumar.
+
+## Core Capabilities & Services
+- Custom Next.js 16 & WordPress Web Application Development
+- Technical SEO, Core Web Vitals Optimization (90+ PageSpeed score)
+- Google Search Console Crawling & Indexing Remediation
+- InvoBill GST & Freelancer Invoice Automation for Indian Developers
+- Digital Product & Plugin Ecosystem (ToolSuite Pro, AI Blog Engine, AI Search Ready)
+
+## Key Routes & Resources
+- Homepage & Growth Guides: https://blog.maajankiwebtech.com
+- Free Developer & SEO Tools Hub: https://blog.maajankiwebtech.com/tools
+- Website Cost Calculator India (2026): https://blog.maajankiwebtech.com/tools/website-cost-calculator
+- SEO & OpenGraph Meta Tag Generator: https://blog.maajankiwebtech.com/tools/meta-tag-generator
+- GST & InvoBill Invoice Helper: https://blog.maajankiwebtech.com/tools/gst-invoice-generator
+- Digital Products & Plugins Store: https://blog.maajankiwebtech.com/products
+- Contact & Agency Inquiry: https://blog.maajankiwebtech.com/contact
+
+## Founder & Leadership
+- Ashish Kumar (Founder & Lead Developer)
+- Channel: AK Web Master Hub (https://www.youtube.com/@Akwebmasterhub)
