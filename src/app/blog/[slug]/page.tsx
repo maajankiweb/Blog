@@ -539,6 +539,88 @@ export default async function PostPage(props: PageProps) {
 
         {/* Lead Magnet Exit-Intent Modal */}
         <ExitIntentModal />
+
+        {/* Structured Schema Markup (BlogPosting & FAQPage JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "BlogPosting",
+                  "@id": `https://blog.maajankiwebtech.com/blog/${post.slug}#article`,
+                  "isPartOf": {
+                    "@type": "WebPage",
+                    "@id": `https://blog.maajankiwebtech.com/blog/${post.slug}`,
+                    "url": `https://blog.maajankiwebtech.com/blog/${post.slug}`,
+                    "name": cleanTitle,
+                  },
+                  "headline": cleanTitle,
+                  "description": post.excerpt.rendered.replace(/<[^>]*>/g, "").slice(0, 160),
+                  "image": imageUrl ? [imageUrl] : undefined,
+                  "datePublished": post.date,
+                  "dateModified": post.modified || post.date,
+                  "author": {
+                    "@type": "Person",
+                    "name": author?.name || "Ashish Kumar",
+                    "url": "https://blog.maajankiwebtech.com/about",
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Maajanki WebTech Digital Agency",
+                    "url": "https://blog.maajankiwebtech.com",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://blog.maajankiwebtech.com/logo.png",
+                    },
+                  },
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": `https://blog.maajankiwebtech.com/blog/${post.slug}`,
+                  },
+                },
+                {
+                  "@type": "FAQPage",
+                  "mainEntity": [
+                    {
+                      "@type": "Question",
+                      "name": "Can I share or reference this article in my own publication?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, you are welcome to quote excerpts with attribution and a link back to this original post. For full syndication requests, please reach out via our contact page."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "How can I stay updated on future articles about this topic?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "You can subscribe to our weekly newsletter or follow our RSS feed to get notified whenever new deep dives in this category are published."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Where can I report a correction or technical typo?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "We strive for technical accuracy. If you notice an error or outdated code sample, please leave a comment below or send a note via our contact form."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Are code examples in this post free to use in production?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "All code snippets provided in our editorial deep dives are open for educational and commercial use under standard MIT licensing unless specified otherwise."
+                      }
+                    }
+                  ]
+                }
+              ]
+            })
+          }}
+        />
       </main>
     </>
   );
