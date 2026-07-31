@@ -68,6 +68,28 @@ const toolsList = [
     accent: "from-purple-500 to-pink-500",
   },
   {
+    id: "ai-headline-generator",
+    name: "AI Article Title & Meta Description Generator",
+    category: "AI & CONTENT",
+    description:
+      "Generate high-CTR viral headlines and SEO meta descriptions optimized for Google rankings and click-through rates.",
+    href: "/tools/ai-headline-generator",
+    icon: HiSparkles,
+    badge: "AI TOOL",
+    accent: "from-amber-500 to-orange-500",
+  },
+  {
+    id: "ai-schema-generator",
+    name: "AI Schema Markup Generator (JSON-LD)",
+    category: "AI & SEO",
+    description:
+      "Generate Schema.org JSON-LD code for Articles, FAQPages, and Local Businesses to secure Google Rich Snippets & AI search citations.",
+    href: "/tools/ai-schema-generator",
+    icon: HiCodeBracket,
+    badge: "AI & GEO",
+    accent: "from-emerald-500 to-cyan-500",
+  },
+  {
     id: "image-webp-converter",
     name: "Image to WebP Converter",
     category: "SPEED & OPTIMIZATION",
