@@ -25,6 +25,7 @@ const navColumns = [
       { label: "Home", href: "/" },
       { label: "Latest Articles", href: "/blog" },
       { label: "Free Tools", href: "/tools" },
+      { label: "Digital Store", href: "/products" },
       { label: "Deals & Products", href: "/affiliate-products" },
       { label: "Saved Articles", href: "/saved" },
     ],

@@ -4,7 +4,7 @@ import { HiSparkles, HiArrowRight } from "react-icons/hi2";
 
 export default function HomepageFinalCta() {
   return (
-    <section className="py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+    <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
       <div className="bg-gradient-to-r from-[#170e09] via-[#120904] to-[#0a0503] rounded-3xl p-8 md:p-14 border border-[#ff6b00]/40 shadow-2xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 text-white relative overflow-hidden">
         {/* Glow */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#ff6b00]/15 rounded-full blur-3xl pointer-events-none" />

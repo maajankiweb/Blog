@@ -14,8 +14,8 @@ const technologies = [
 
 export default function TrustedTechnologies() {
   return (
-    <section className="py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-white">
-      <div className="bg-[#120904] rounded-3xl p-8 md:p-12 border border-white/10 space-y-8 text-center md:text-left relative overflow-hidden">
+    <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-white">
+      <div className="bg-[#120904] rounded-3xl p-8 md:p-14 border border-white/10 space-y-8 text-center md:text-left relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-white/10">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff6b00]/15 border border-[#ff6b00]/30 text-[#ff6b00] text-xs font-bold uppercase tracking-wider">
