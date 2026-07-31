@@ -175,6 +175,8 @@ export default async function PostPage(props: PageProps) {
     .replace(/<ul[^>]*>[\s\S]*?Share\s*(Facebook|LinkedIn|Twitter|Pinterest|WhatsApp|Telegram|Reddit)[\s\S]*?<\/ul>/gi, '')
     .replace(/<div[^>]*>[\s\S]*?0\s*Share\s*Facebook[\s\S]*?<\/div>/gi, '');
 
+  const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, "").replace(/&#8217;/g, "'").replace(/&#8216;/g, "'").trim();
+
   return (
     <>
       {/* Scroll-linked reading progress bar */}
