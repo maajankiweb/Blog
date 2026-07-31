@@ -40,7 +40,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="bg-[#0d0806]/90 backdrop-blur-xl border-b border-white/10 top-0 sticky z-50 text-white transition-all duration-300">
+      <header className="fixed top-0 inset-x-0 z-50 bg-[#0d0806]/95 backdrop-blur-xl border-b border-white/10 text-white transition-all duration-300 shadow-2xl">
         <nav className="flex justify-between items-center h-[72px] w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
           {/* Logo */}
           <Link
