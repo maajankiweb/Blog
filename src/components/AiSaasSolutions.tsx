@@ -26,7 +26,7 @@ export default function AiSaasSolutions() {
             Software Built To Help Businesses Work Smarter
           </h2>
 
-          <p className="text-sm md:text-base text-white/90 leading-relaxed font-medium">
+          <p className="text-sm md:text-base text-neutral-950 bg-white/90 p-4 rounded-2xl leading-relaxed font-bold shadow-lg border border-white/20">
             Maajanki WebTech develops modern AI software and SaaS products for businesses, agencies, creators, and website owners to automate workflows and scale fast.
           </p>
 

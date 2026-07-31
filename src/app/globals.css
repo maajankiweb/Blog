@@ -182,13 +182,13 @@
 /* ─────────────────────────────────────────
    SCROLLING MARQUEE
 ───────────────────────────────────────── */
-.marquee-track {
+.marquee-track, .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 30s linear infinite;
+  animation: marquee-scroll 25s linear infinite;
 }
 
-.marquee-track:hover {
+.marquee-track:hover, .animate-marquee:hover {
   animation-play-state: paused;
 }
 
