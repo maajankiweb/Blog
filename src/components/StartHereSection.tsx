@@ -22,7 +22,7 @@ const mustReadGuides: GuideItem[] = [
     description: "Learn how to legally invoice Indian and global clients, calculate GST, and use free tools like InvoBill.",
     readTime: "6 min read",
     icon: HiCurrencyRupee,
-    slug: "gst-invoicing-guide-freelancers-india",
+    slug: "landing-page-vs-full-website-leads",
   },
   {
     id: "website-cost",
@@ -31,7 +31,7 @@ const mustReadGuides: GuideItem[] = [
     description: "A complete breakdown of domain, hosting, custom Next.js/WordPress development costs vs DIY builders.",
     readTime: "8 min read",
     icon: HiWrench,
-    slug: "website-development-cost-india-guide",
+    slug: "web-development-vs-website-builders",
   },
   {
     id: "seo-vs-ads",
@@ -40,16 +40,16 @@ const mustReadGuides: GuideItem[] = [
     description: "Compare long-term organic ranking value against instant paid search ads to maximize your ROI.",
     readTime: "7 min read",
     icon: HiChartBar,
-    slug: "seo-vs-google-ads-roi-small-business",
+    slug: "seo-vs-paid-ads",
   },
   {
     id: "indexing-fixes",
-    title: "Fix Discovered - Currently Not Indexed Errors in GSC",
+    title: "How to Index Your Page in Google: Step-by-Step Guide (2026)",
     category: "TECHNICAL SEO",
     description: "Step-by-step troubleshooting guide for getting your web pages crawled and indexed fast by Google.",
     readTime: "5 min read",
     icon: HiDocumentText,
-    slug: "fix-google-search-console-indexing-errors",
+    slug: "how-to-index-your-page-in-google",
   },
 ];
 
