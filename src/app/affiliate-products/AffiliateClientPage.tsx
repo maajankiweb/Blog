@@ -350,6 +350,26 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
           </div>
         )}
       </section>
+
+      {/* Floating Toast Notification for Coupon Copy */}
+      <AnimatePresence>
+        {copiedCoupon && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed bottom-6 right-6 z-[100] bg-emerald-950 border border-emerald-500/50 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 backdrop-blur-xl"
+          >
+            <HiClipboardDocumentCheck size={20} className="text-emerald-400 shrink-0" />
+            <div>
+              <p className="text-xs font-bold text-white">Coupon Code Copied!</p>
+              <p className="text-[11px] text-emerald-300">
+                Code &quot;{copiedCoupon}&quot; copied to clipboard.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

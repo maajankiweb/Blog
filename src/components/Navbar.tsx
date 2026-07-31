@@ -10,6 +10,7 @@ import {
   HiXMark,
   HiSparkles,
 } from "react-icons/hi2";
+import SearchAutocomplete from "@/components/SearchAutocomplete";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,7 @@ export default function Navbar() {
     { label: "Home", href: "/" },
     { label: "Articles", href: "/blog" },
     { label: "Deals & Products", href: "/affiliate-products" },
-    { label: "Newsletter", href: "/newsletter" },
+    { label: "Saved", href: "/saved" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
@@ -151,19 +152,7 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -12 }}
             className="fixed inset-x-0 top-[72px] bg-[#120904] border-b border-white/10 shadow-2xl z-40 p-5 flex flex-col gap-4 md:hidden text-white"
           >
-            <form
-              onSubmit={handleSearchSubmit}
-              className="relative flex items-center border border-white/15 bg-white/5 rounded-xl px-4 py-3 gap-2"
-            >
-              <HiMagnifyingGlass className="text-[#ff6b00] flex-shrink-0" size={18} />
-              <input
-                type="text"
-                placeholder="Search articles & topics..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-none focus:ring-0 outline-none text-sm text-white placeholder:text-white/40"
-              />
-            </form>
+            <SearchAutocomplete onCloseMobile={() => setIsOpen(false)} />
 
             <div className="flex flex-col gap-1 py-1">
               {navItems.map(({ label, href }) => {

@@ -12,7 +12,12 @@ import HostingerAdCard from "@/components/HostingerAdCard";
 import InlineAdBanner from "@/components/InlineAdBanner";
 import YoutubeAdCard from "@/components/YoutubeAdCard";
 import AuthorBioCard from "@/components/AuthorBioCard";
-import { Clock, Calendar, Bookmark, Share2, MessageSquare, ArrowLeft, ArrowRight, User } from "lucide-react";
+import ArticleAudioPlayer from "@/components/ArticleAudioPlayer";
+import InteractiveTOC from "@/components/InteractiveTOC";
+import CodeCopyEnhancer from "@/components/CodeCopyEnhancer";
+import BookmarkButton from "@/components/BookmarkButton";
+import ExitIntentModal from "@/components/ExitIntentModal";
+import { Clock, Calendar, Share2, MessageSquare, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter, FaPinterestP, FaWhatsapp, FaTelegram, FaRedditAlien } from "react-icons/fa6";
 
 type Params = Promise<{ slug: string }>;
@@ -221,13 +226,14 @@ export default async function PostPage(props: PageProps) {
                   <span>{readingTimeMinutes} min read</span>
                 </div>
               <div className="h-8 w-px bg-outline-variant/40 hidden sm:block"></div>
-              <div className="flex items-center gap-sm">
-                <button className="p-2 hover:bg-surface-container dark:hover:bg-zinc-800 rounded-full transition-colors text-on-surface dark:text-zinc-200" aria-label="Bookmark">
-                  <Bookmark className="h-4 w-4" />
-                </button>
-                <button className="p-2 hover:bg-surface-container dark:hover:bg-zinc-800 rounded-full transition-colors text-on-surface dark:text-zinc-200" aria-label="Share">
-                  <Share2 className="h-4 w-4" />
-                </button>
+              <div className="flex items-center gap-[#ff6b00]">
+                <BookmarkButton
+                  slug={post.slug}
+                  title={cleanTitle}
+                  excerpt={post.excerpt.rendered.replace(/<[^>]*>/g, "").slice(0, 120)}
+                  category={primaryCategory?.name || "Article"}
+                  imageUrl={imageUrl}
+                />
               </div>
             </div>
           </div>
@@ -246,11 +252,18 @@ export default async function PostPage(props: PageProps) {
             </div>
           )}
         </header>
-
         {/* 2-Column Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-xl">
           {/* Main Article Content */}
           <article className="lg:col-span-8">
+            <CodeCopyEnhancer />
+
+            {/* Audio Listener Component */}
+            <ArticleAudioPlayer
+              title={cleanTitle}
+              content={post.content.rendered}
+            />
+
             <div 
               className="wp-content article-content max-w-none dark:text-zinc-300"
               dangerouslySetInnerHTML={{ __html: contentWithHeadingIds }}
@@ -353,8 +366,8 @@ export default async function PostPage(props: PageProps) {
           {/* Sidebar */}
           <aside className="lg:col-span-4 space-y-lg">
             <div className="sticky top-28 space-y-lg">
-              {/* Dynamic Table of Contents */}
-              <TableOfContents htmlContent={post.content.rendered} />
+              {/* Interactive Dynamic Table of Contents */}
+              <InteractiveTOC content={post.content.rendered} />
 
               {/* Sidebar Newsletter box */}
               <div className="bg-on-secondary-fixed p-gutter rounded-xl text-white overflow-hidden relative shadow-md">
@@ -521,6 +534,9 @@ export default async function PostPage(props: PageProps) {
           title="Article FAQ & Usage"
           description="Frequently asked questions regarding this post, code usage, and sharing rights."
         />
+
+        {/* Lead Magnet Exit-Intent Modal */}
+        <ExitIntentModal />
       </main>
     </>
   );
