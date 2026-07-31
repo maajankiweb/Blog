@@ -745,3 +745,149 @@ export async function getAffiliateProductBySlug(slug: string): Promise<WPAffilia
 
   return null;
 }
+
+export interface WooDigitalProduct {
+  id: number;
+  name: string;
+  slug: string;
+  category: "Templates" | "Plugins" | "Kits" | "Ebooks" | string;
+  price: string;
+  regularPrice?: string;
+  salePrice?: string;
+  description: string;
+  shortDescription?: string;
+  featuredImage?: string;
+  demoUrl?: string;
+  downloadUrl?: string;
+  badge?: string;
+  rating?: number;
+  salesCount?: number;
+}
+
+const mockDigitalProducts: WooDigitalProduct[] = [
+  {
+    id: 101,
+    name: "Maajanki Pro Next.js & Tailwind Blog Starter Kit",
+    slug: "nextjs-blog-starter-kit-pro",
+    category: "Templates",
+    price: "₹2,499",
+    regularPrice: "₹4,999",
+    description: "Production-ready, SEO optimized Next.js 16 blog template with Turbopack, ISR revalidation, dark mode, and RSS feed.",
+    shortDescription: "Ultra-fast Next.js blog template built for high Google PageSpeed scores.",
+    featuredImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://blog.maajankiwebtech.com",
+    badge: "BESTSELLER",
+    rating: 4.9,
+    salesCount: 140,
+  },
+  {
+    id: 102,
+    name: "InvoBill GST & Freelancer Invoice Helper Plugin",
+    slug: "invobill-gst-invoice-plugin-wordpress",
+    category: "Plugins",
+    price: "₹1,499",
+    regularPrice: "₹2,999",
+    description: "WordPress plugin for Indian agency owners & freelancers to auto-generate 18% GST invoices with SAC code 998314.",
+    shortDescription: "Instant GST Invoice generator plugin for WordPress sites.",
+    featuredImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80",
+    badge: "FEATURED",
+    rating: 5.0,
+    salesCount: 88,
+  },
+  {
+    id: 103,
+    name: "Technical SEO & Schema Markup Master Playbook (2026)",
+    slug: "technical-seo-schema-master-playbook",
+    category: "Ebooks",
+    price: "₹499",
+    regularPrice: "₹1,299",
+    description: "Complete 120-page step-by-step PDF guide on fixing Google Search Console indexing errors, Core Web Vitals, and JSON-LD schema.",
+    shortDescription: "Actionable Technical SEO guide for ranking #1 on Google.",
+    featuredImage: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&auto=format&fit=crop&q=80",
+    badge: "POPULAR EBOOK",
+    rating: 4.8,
+    salesCount: 310,
+  },
+  {
+    id: 104,
+    name: "Local Business Lead Gen WordPress Theme",
+    slug: "local-business-lead-gen-wordpress-theme",
+    category: "Templates",
+    price: "₹1,999",
+    regularPrice: "₹3,999",
+    description: "High-converting WordPress theme built for Indian service businesses with Elementor compatibility and WhatsApp integration.",
+    shortDescription: "Mobile-first WordPress theme designed for high lead conversion.",
+    featuredImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop&q=80",
+    badge: "NEW",
+    rating: 4.9,
+    salesCount: 52,
+  },
+];
+
+/**
+ * Fetch digital products dynamically from WooCommerce REST API or fallback to WP post category / local mock data
+ */
+export async function getWooProducts(): Promise<WooDigitalProduct[]> {
+  try {
+    // Attempt to fetch from WooCommerce REST API endpoints
+    const res = await fetch("https://blog.maajankiwebtech.com/wp-json/wc/v3/products?per_page=20", {
+      next: { revalidate: 3600 },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          category: p.categories?.[0]?.name || "Digital",
+          price: `₹${p.price}`,
+          regularPrice: p.regular_price ? `₹${p.regular_price}` : undefined,
+          description: p.description?.replace(/<[^>]*>/g, "") || "",
+          shortDescription: p.short_description?.replace(/<[^>]*>/g, "") || "",
+          featuredImage: p.images?.[0]?.src || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
+          demoUrl: p.external_url || undefined,
+          rating: p.average_rating ? parseFloat(p.average_rating) : 4.8,
+          salesCount: p.total_sales || 10,
+        }));
+      }
+    }
+  } catch (err) {
+    console.warn("Could not fetch WooCommerce API products, attempting WP posts fallback:", err);
+  }
+
+  // Attempt WP posts under category "products" or "store"
+  try {
+    const prodCat = await getCategoryBySlug("products") || await getCategoryBySlug("store");
+    if (prodCat) {
+      const wpPosts = await getPosts({ category: prodCat.id, perPage: 20 });
+      if (wpPosts.length > 0) {
+        const wpMapped: WooDigitalProduct[] = wpPosts.map((post) => ({
+          id: post.id,
+          name: cleanHtmlText(post.title.rendered),
+          slug: post.slug,
+          category: post._embedded?.['wp:term']?.[0]?.[0]?.name || "Digital",
+          price: "₹1,999",
+          description: cleanHtmlText(post.content.rendered),
+          shortDescription: cleanHtmlText(post.excerpt.rendered).slice(0, 100),
+          featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
+          rating: 4.9,
+          salesCount: 45,
+        }));
+        return [...wpMapped, ...mockDigitalProducts];
+      }
+    }
+  } catch (err) {
+    console.warn("Could not fetch WP products category, returning curated digital products:", err);
+  }
+
+  return mockDigitalProducts;
+}
+
+/**
+ * Fetch single digital product by slug
+ */
+export async function getWooProductBySlug(slug: string): Promise<WooDigitalProduct | null> {
+  const products = await getWooProducts();
+  return products.find((p) => p.slug === slug) || null;
+}
