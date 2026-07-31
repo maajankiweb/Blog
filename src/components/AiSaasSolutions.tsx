@@ -22,15 +22,15 @@ export default function AiSaasSolutions() {
             <span>AI POWERED SAAS SOLUTIONS</span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-[#ffb693]">
             Software Built To Help Businesses Work Smarter
           </h2>
 
-          <p className="text-sm md:text-base text-white/70 leading-relaxed">
+          <p className="text-sm md:text-base text-white/60 leading-relaxed">
             Maajanki WebTech develops modern AI software and SaaS products for businesses, agencies, creators, and website owners to automate workflows and scale fast.
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs text-white/80 pt-2">
+          <div className="flex flex-wrap items-center gap-6 text-xs text-white/50 pt-2">
             <span className="flex items-center gap-1 font-bold text-[#ff6b00]">
               <HiStar className="fill-current" /> Trusted by 500+ businesses
             </span>
