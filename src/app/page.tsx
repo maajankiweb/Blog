@@ -190,27 +190,32 @@ export default async function Home(props: PageProps) {
                 Actionable step-by-step guides on custom Next.js &amp; WordPress web development, ranking #1 on Google, and scaling online client revenues.
               </p>
 
-              {/* Search bar — Clean inline professional input */}
+              {/* Search bar — Clean responsive inline input */}
               <form
                 action="/search"
                 method="GET"
                 className="w-full max-w-lg mb-8"
               >
-                <div className="relative flex items-center">
-                  <MdSearch
-                    className="absolute left-4 w-5 h-5 text-white/40 pointer-events-none"
-                  />
-                  <input
-                    type="text"
-                    name="q"
-                    placeholder="Search SEO guides, web dev, or topics…"
-                    className="w-full bg-white/5 border border-white/15 focus:border-[#ff6b00] focus:bg-white/10 text-white placeholder:text-white/40 rounded-xl py-3.5 pl-11 pr-28 text-sm outline-none transition-all duration-200"
-                  />
+                <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-0">
+                  <div className="relative flex-1">
+                    <MdSearch
+                      size={20}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ff6b00] pointer-events-none"
+                    />
+                    <input
+                      type="text"
+                      name="q"
+                      placeholder="Search SEO, WordPress &amp; Dev guides..."
+                      className="w-full bg-white/5 border border-white/15 focus:border-[#ff6b00] focus:bg-white/10 text-white placeholder:text-white/40 rounded-xl !px-12 sm:!pr-[115px] !py-3.5 !text-sm outline-none transition-all duration-200"
+                      required
+                    />
+                  </div>
                   <button
                     type="submit"
-                    className="absolute right-1.5 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-semibold px-4 py-2 rounded-lg text-xs transition-colors duration-200"
+                    className="sm:absolute sm:right-1.5 sm:top-1/2 sm:-translate-y-1/2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 sm:py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 shrink-0"
                   >
-                    Search
+                    <span>Search</span>
+                    <HiArrowRight size={14} />
                   </button>
                 </div>
               </form>
@@ -257,7 +262,7 @@ export default async function Home(props: PageProps) {
             </div>
 
             {/* ── Right: Restrained editorial floating cards ── */}
-            <div className="md:col-span-5 relative h-[380px] md:h-[440px]">
+            <div className="md:col-span-5 relative min-h-[320px] sm:min-h-[380px] md:h-[440px] w-full">
               {/* Primary featured card */}
               {mainFeaturedPost ? (
                 <Link

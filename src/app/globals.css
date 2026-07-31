@@ -104,8 +104,21 @@
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-on-surface font-sans antialiased;
+    @apply bg-background text-on-surface font-sans antialiased overflow-x-hidden;
+    touch-action: manipulation;
+  }
+
+  /* Prevent text clipping and horizontal scroll on mobile viewports */
+  img, video, canvas, svg, iframe {
+    max-width: 100%;
+    height: auto;
   }
 }
 
