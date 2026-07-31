@@ -138,7 +138,7 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
                       <span className="font-bold text-[#ff6b00] block mb-1">2. Price & Link Meta</span>
                       Include metadata in your post content using formatted lines:
                       <br />
-                      <code className="text-white/60 block mt-1">Price: $29.99</code>
+                      <code className="text-white/60 block mt-1">Price: ₹2,499</code>
                       <code className="text-white/60 block">Coupon: MAAJANKI10</code>
                       <code className="text-white/60 block">Store: Hostinger</code>
                     </div>

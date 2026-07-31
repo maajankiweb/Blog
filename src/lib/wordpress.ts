@@ -680,7 +680,7 @@ function mapWPPostToAffiliateProduct(post: WPPost): WPAffiliateProduct {
     slug: post.slug,
     tagline: cleanHtmlText(post.excerpt?.rendered || "").slice(0, 140),
     description: cleanHtmlText(content),
-    price: priceMatch ? priceMatch[1] : "$49/yr",
+    price: priceMatch ? priceMatch[1] : "₹3,999/yr",
     originalPrice: origPriceMatch ? origPriceMatch[1] : undefined,
     discount: origPriceMatch ? "Special Deal" : undefined,
     rating: 4.8,
