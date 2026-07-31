@@ -24,9 +24,9 @@ const navColumns = [
     links: [
       { label: "Home", href: "/" },
       { label: "Latest Articles", href: "/blog" },
+      { label: "Free Tools", href: "/tools" },
       { label: "Deals & Products", href: "/affiliate-products" },
-      { label: "Categories", href: "/blog" },
-      { label: "Search & Topics", href: "/search" },
+      { label: "Saved Articles", href: "/saved" },
     ],
   },
   {
@@ -35,7 +35,7 @@ const navColumns = [
       { label: "About Us", href: "/about" },
       { label: "Contact", href: "/contact" },
       { label: "Newsletter", href: "/newsletter" },
-      { label: "Careers", href: "#" },
+      { label: "Search & Topics", href: "/search" },
     ],
   },
   {
