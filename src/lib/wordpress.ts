@@ -1,6 +1,6 @@
 import localBlogData from "../data/blog_all_content.json";
 
-const API_URL = process.env.WORDPRESS_API_URL || 'https://blog.maajankiwebtech.com/wp-json/wp/v2';
+const API_URL = process.env.WORDPRESS_API_URL || 'https://cms.maajankiwebtech.com/wp-json/wp/v2';
 
 export interface WPPost {
   id: number;
@@ -461,7 +461,7 @@ export function cleanHtmlText(htmlStr: string): string {
  * Fetch API returning response data + response headers (for X-WP-TotalPages)
  */
 async function fetchAPIWithHeaders<T>(endpoint: string, options: RequestInit = {}): Promise<{ data: T; headers: Headers }> {
-  const API_BASE = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://blog.maajankiwebtech.com/wp-json/wp/v2';
+  const API_BASE = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://cms.maajankiwebtech.com/wp-json/wp/v2';
   const url = `${API_BASE}${endpoint}`;
   const defaultHeaders = { 'Content-Type': 'application/json' };
   const mergedOptions: RequestInit = {
@@ -839,7 +839,7 @@ export async function getWooProducts(): Promise<WooDigitalProduct[]> {
 
   try {
     // Attempt to fetch from local WooCommerce REST API endpoints
-    const res = await fetch("https://blog.maajankiwebtech.com/wp-json/wc/v3/products?per_page=20", {
+    const res = await fetch("https://cms.maajankiwebtech.com/wp-json/wc/v3/products?per_page=20", {
       next: { revalidate: 3600 },
     });
     if (res.ok) {
