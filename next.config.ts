@@ -85,11 +85,6 @@ const nextConfig: NextConfig = {
         destination: '/blog',
         permanent: true,
       },
-      {
-        source: '/contact',
-        destination: '/contact-us',
-        permanent: true,
-      },
     ];
   },
 };
