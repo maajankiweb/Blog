@@ -13,10 +13,10 @@ let xml = `<?xml version="1.0" encoding="UTF-8" ?>
 	xmlns:wp="http://wordpress.org/export/1.2/"
 >
 <channel>
-	<title>Maajanki Blog Complete Backup with Media</title>
+	<title>Maajanki Blog Complete Backup with Media Fix</title>
 	<link>https://cms.maajankiwebtech.com</link>
-	<description>WordPress Backup Export with Images</description>
-	<pubDate>Sun, 02 Aug 2026 18:40:00 +0000</pubDate>
+	<description>WordPress Backup Export with High Res Media URLs</description>
+	<pubDate>Sun, 02 Aug 2026 19:00:00 +0000</pubDate>
 	<language>en-US</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
 `;
@@ -31,17 +31,21 @@ posts.forEach(post => {
   const date = post.date || new Date().toISOString();
   const id = post.id || Math.floor(Math.random() * 10000);
 
-  // Check for featured image attachment in _embedded
-  let featuredMediaObj = null;
+  // Extract source_url from _embedded or construct fallback
+  let mediaUrl = null;
+  let mediaTitle = title;
+  
   if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
-    featuredMediaObj = post._embedded['wp:featuredmedia'][0];
+    const fm = post._embedded['wp:featuredmedia'][0];
+    mediaUrl = fm.source_url || (fm.media_details && fm.media_details.sizes && fm.media_details.sizes.large ? fm.media_details.sizes.large.source_url : null);
+    if (fm.title && fm.title.rendered) {
+      mediaTitle = fm.title.rendered;
+    }
   }
 
   let mediaId = null;
-  if (featuredMediaObj && featuredMediaObj.source_url) {
-    mediaId = featuredMediaObj.id || mediaIdCounter++;
-    const mediaUrl = featuredMediaObj.source_url;
-    const mediaTitle = featuredMediaObj.title ? featuredMediaObj.title.rendered : title;
+  if (mediaUrl) {
+    mediaId = mediaIdCounter++;
     
     // Add Attachment Item to XML
     xml += `
@@ -59,7 +63,7 @@ posts.forEach(post => {
 		<wp:post_date_gmt><![CDATA[${date.replace('T', ' ')}]]></wp:post_date_gmt>
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[media-${mediaId}]]></wp:post_name>
+		<wp:post_name><![CDATA[media-att-${mediaId}]]></wp:post_name>
 		<wp:status><![CDATA[inherit]]></wp:status>
 		<wp:post_parent>${id}</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
@@ -103,4 +107,4 @@ xml += `
 
 const outputPath = path.join(__dirname, 'public', 'wordpress_export_backup.xml');
 fs.writeFileSync(outputPath, xml);
-console.log(`Updated XML export with Featured Images generated at ${outputPath}!`);
+console.log(`Updated XML export generated at ${outputPath}!`);
