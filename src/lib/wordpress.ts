@@ -838,8 +838,8 @@ export async function getWooProducts(): Promise<WooDigitalProduct[]> {
   }
 
   try {
-    // Attempt to fetch from local WooCommerce REST API endpoints
-    const res = await fetch("https://cms.maajankiwebtech.com/wp-json/wc/v3/products?per_page=20", {
+    // Attempt to fetch dynamically from local WooCommerce REST API on cms.maajankiwebtech.com
+    const res = await fetch("https://cms.maajankiwebtech.com/wp-json/wc/v3/products?per_page=50", {
       next: { revalidate: 3600 },
     });
     if (res.ok) {
@@ -849,15 +849,16 @@ export async function getWooProducts(): Promise<WooDigitalProduct[]> {
           id: p.id,
           name: p.name,
           slug: p.slug,
-          category: p.categories?.[0]?.name || "Digital",
-          price: `₹${p.price}`,
+          category: p.categories?.[0]?.name || (p.type === 'external' ? 'Affiliate' : 'Digital'),
+          price: `₹${p.price || p.regular_price || 0}`,
           regularPrice: p.regular_price ? `₹${p.regular_price}` : undefined,
           description: p.description?.replace(/<[^>]*>/g, "") || "",
           shortDescription: p.short_description?.replace(/<[^>]*>/g, "") || "",
           featuredImage: p.images?.[0]?.src || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
-          demoUrl: p.external_url || undefined,
-          rating: p.average_rating ? parseFloat(p.average_rating) : 4.8,
-          salesCount: p.total_sales || 10,
+          demoUrl: p.external_url || p.permalink || undefined,
+          downloadUrl: p.downloads?.[0]?.file || undefined,
+          rating: p.average_rating ? parseFloat(p.average_rating) : 4.9,
+          salesCount: p.total_sales || 15,
         }));
         return [...localWcMapped, ...remoteHubProducts, ...mockDigitalProducts];
       }
