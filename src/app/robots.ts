@@ -14,6 +14,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://blog.maajankiwebtech.com/sitemap.xml',
-    host: 'https://blog.maajankiwebtech.com',
   };
 }
