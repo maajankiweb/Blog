@@ -111,6 +111,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Google Search Console Verification */}
+        <meta
+          name="google-site-verification"
+          content="zuQNLK0LfnYPs6sn7PFd4igMvGvDQHni8uqM8ZH9BLo"
+        />
         {/* DNS prefetch for WordPress API */}
         <link rel="preconnect" href="https://blog.maajankiwebtech.com" />
         <link rel="dns-prefetch" href="https://blog.maajankiwebtech.com" />
