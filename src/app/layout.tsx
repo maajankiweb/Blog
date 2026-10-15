@@ -14,6 +14,9 @@ const inter = Inter({
 });
 
 const siteUrl = "https://blog.maajankiwebtech.com";
+const googleVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  "zuQNLK0LfnYPs6sn7PFd4igMvGvDQHni8uqM8ZH9BLo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -56,7 +59,7 @@ export const metadata: Metadata = {
     apple: "/apple-icon.jpg",
   },
   verification: {
-    google: "zuQNLK0LfnYPs6sn7PFd4igMvGvDQHni8uqM8ZH9BLo",
+    google: googleVerification,
   },
 };
 
@@ -114,7 +117,7 @@ export default function RootLayout({
         {/* Google Search Console Verification */}
         <meta
           name="google-site-verification"
-          content="zuQNLK0LfnYPs6sn7PFd4igMvGvDQHni8uqM8ZH9BLo"
+          content={googleVerification}
         />
         {/* DNS prefetch for WordPress API */}
         <link rel="preconnect" href="https://blog.maajankiwebtech.com" />
