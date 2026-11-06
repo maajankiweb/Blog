@@ -223,45 +223,72 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* 4 Cards Grid with Real Imagery */}
+            {/* 4 Cards Grid with Real Imagery & Ad-Inspired Glowing Design */}
             <div suppressHydrationWarning className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Card 1: My Agency (Maajanki Web Tech) */}
               <div
                 suppressHydrationWarning
-                className="bg-white border border-gray-200 hover:border-[#DC2564]/50 rounded-2xl overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                className="bg-gradient-to-br from-[#0c1427] via-[#111e3b] to-[#18284d] border border-orange-500/30 hover:border-orange-400/60 rounded-2xl p-5 text-white relative overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
               >
-                <div>
-                  {/* Image Container with Real Logo */}
-                  <div className="relative h-48 w-full bg-slate-50 border-b border-gray-100 flex items-center justify-center p-6 overflow-hidden">
-                    <Image
-                      src="/maajanki-web-tech-logo.webp"
-                      alt="Maajanki Web Tech Agency Logo"
-                      fill
-                      sizes="(max-width: 640px) 100vw, 280px"
-                      className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <span className="absolute top-3 left-3 bg-[#DC2564] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
-                      My Agency
+                {/* Decorative Ambient Glow */}
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-orange-600/25 rounded-full blur-2xl pointer-events-none group-hover:bg-orange-500/35 transition-all" />
+                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
+
+                <div className="space-y-3.5 relative z-10">
+                  {/* Header Badges */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 bg-orange-500/20 text-orange-300 rounded-full border border-orange-400/30 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
+                      FEATURED AGENCY
+                    </span>
+                    <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                      SERVICE
                     </span>
                   </div>
 
-                  {/* Card Content */}
-                  <div className="p-5 space-y-2">
-                    <h3 className="font-black text-base text-[#14213D] group-hover:text-[#DC2564] transition-colors">
-                      Maajanki Web Tech
+                  {/* Logo Container with Real Image */}
+                  <div className="bg-white/95 rounded-xl p-3 flex items-center justify-center border border-white/20 shadow-xs relative h-28">
+                    <div className="relative w-full h-12">
+                      <Image
+                        src="/maajanki-web-tech-logo.webp"
+                        alt="Maajanki Web Tech Agency Logo"
+                        fill
+                        sizes="280px"
+                        className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div>
+                    <h3 className="font-extrabold text-white text-base leading-snug group-hover:text-orange-300 transition-colors">
+                      Maajanki Web Tech LLP
                     </h3>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      Website Development, Headless WordPress &amp; Digital Marketing agency empowering brands online.
+                    <p className="text-slate-300 text-xs leading-relaxed mt-1">
+                      Full-service digital agency building custom Next.js web applications, headless commerce systems, and data-driven SEO growth campaigns.
                     </p>
                   </div>
+
+                  {/* Feature Checkmarks */}
+                  <ul className="text-xs text-orange-200/90 space-y-1.5 font-medium pt-1">
+                    <li className="flex items-center gap-1.5">
+                      <span className="text-orange-400 font-bold">✓</span> Next.js &amp; Headless WordPress
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <span className="text-orange-400 font-bold">✓</span> Technical SEO, Speed &amp; 3x CRO
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <span className="text-orange-400 font-bold">✓</span> Complete Digital Marketing &amp; Growth
+                    </li>
+                  </ul>
                 </div>
 
-                <div className="p-5 pt-0">
+                <div className="pt-4 relative z-10">
                   <a
                     href="https://maajankiwebtech.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full btn-outline py-2.5 px-3 text-xs font-bold justify-center flex items-center gap-1.5 group-hover:border-[#DC2564] group-hover:text-[#DC2564]"
+                    className="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-orange-500 to-[#DC2564] hover:from-orange-600 hover:to-[#B81D52] text-white py-2.5 px-4 rounded-xl font-bold text-xs transition-all duration-200 shadow-md shadow-orange-950/40 active:scale-[0.98]"
                   >
                     <span>Visit maajankiwebtech.com</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -272,41 +299,69 @@ export default function AboutPage() {
               {/* Card 2: BrewPluse POS (Cafe Management Software) */}
               <div
                 suppressHydrationWarning
-                className="bg-white border border-gray-200 hover:border-emerald-500/50 rounded-2xl overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                className="bg-gradient-to-br from-[#042f2e] via-[#064e3b] to-[#022c22] border border-emerald-500/30 hover:border-emerald-400/60 rounded-2xl p-5 text-white relative overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
               >
-                <div>
-                  {/* Image Container with Storefront Real Photo */}
-                  <div className="relative h-48 w-full bg-slate-900 border-b border-gray-100 overflow-hidden">
+                {/* Decorative Ambient Glow */}
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/25 rounded-full blur-2xl pointer-events-none group-hover:bg-emerald-400/35 transition-all" />
+                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-teal-600/20 rounded-full blur-2xl pointer-events-none" />
+
+                <div className="space-y-3.5 relative z-10">
+                  {/* Header Badges */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 bg-emerald-500/20 text-emerald-300 rounded-full border border-emerald-400/30 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      CAFE &amp; RESTAURANT POS
+                    </span>
+                    <span className="text-xs text-emerald-200/60 font-semibold uppercase tracking-wider">
+                      SAAS
+                    </span>
+                  </div>
+
+                  {/* Real Storefront Photo Container */}
+                  <div className="relative h-28 w-full rounded-xl overflow-hidden border border-emerald-400/20 shadow-xs bg-slate-900">
                     <Image
                       src="/brewpluse-cafe.jpg"
                       alt="BrewPluse POS Cafe Management Software"
                       fill
-                      sizes="(max-width: 640px) 100vw, 280px"
+                      sizes="280px"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <span className="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
-                      Cafe Management
+                    <span className="absolute bottom-2 left-2.5 text-[11px] font-bold text-white bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded-md">
+                      BrewPluse POS
                     </span>
                   </div>
 
-                  {/* Card Content */}
-                  <div className="p-5 space-y-2">
-                    <h3 className="font-black text-base text-[#14213D] group-hover:text-emerald-700 transition-colors">
+                  {/* Content */}
+                  <div>
+                    <h3 className="font-extrabold text-white text-base leading-snug group-hover:text-emerald-300 transition-colors">
                       BrewPluse POS
                     </h3>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      Modern cloud restaurant &amp; cafe billing software with smart inventory, menu QR, and KOT management.
+                    <p className="text-emerald-100/90 text-xs leading-relaxed mt-1">
+                      Cloud cafe &amp; restaurant management software with lightning-fast billing, automated inventory alerts, and QR ordering.
                     </p>
                   </div>
+
+                  {/* Feature Checkmarks */}
+                  <ul className="text-xs text-emerald-200/90 space-y-1.5 font-medium pt-1">
+                    <li className="flex items-center gap-1.5">
+                      <span className="text-emerald-400 font-bold">✓</span> Fast Cloud POS &amp; Kitchen KOT
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <span className="text-emerald-400 font-bold">✓</span> Recipe &amp; Real-time Stock Inventory
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <span className="text-emerald-400 font-bold">✓</span> Contactless QR Digital Menus
+                    </li>
+                  </ul>
                 </div>
 
-                <div className="p-5 pt-0">
+                <div className="pt-4 relative z-10">
                   <a
                     href="https://brewpluse.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full btn-outline py-2.5 px-3 text-xs font-bold justify-center flex items-center gap-1.5 hover:border-emerald-600 hover:text-emerald-700"
+                    className="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white py-2.5 px-4 rounded-xl font-bold text-xs transition-all duration-200 shadow-md shadow-emerald-950/40 active:scale-[0.98]"
                   >
                     <span>Visit brewpluse.com</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -314,61 +369,95 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Card 3: Coming Soon 1 */}
+              {/* Card 3: Coming Soon */}
               <div
                 suppressHydrationWarning
-                className="bg-[#F7F8FC] border-2 border-dashed border-gray-300 rounded-2xl p-6 flex flex-col justify-between text-center min-h-[340px]"
+                className="bg-gradient-to-br from-[#120a2a] via-[#1a0f3d] to-[#291254] border border-purple-500/30 hover:border-purple-400/60 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between items-center text-center group min-h-[420px]"
               >
-                <div className="space-y-4 pt-6">
-                  <div className="w-14 h-14 mx-auto rounded-2xl bg-pink-50 text-[#DC2564] flex items-center justify-center">
-                    <Rocket className="w-7 h-7" />
+                {/* Decorative Ambient Glow */}
+                <div className="absolute -top-12 -right-12 w-36 h-36 bg-purple-600/25 rounded-full blur-3xl pointer-events-none group-hover:bg-purple-500/35 transition-all" />
+                <div className="absolute -bottom-12 -left-12 w-36 h-36 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
+
+                <div className="w-full flex items-center justify-between relative z-10">
+                  <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 bg-purple-500/20 text-purple-300 rounded-full border border-purple-400/30 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+                    IN LABS
+                  </span>
+                  <span className="text-xs text-purple-300/60 font-semibold uppercase tracking-wider">
+                    UPCOMING
+                  </span>
+                </div>
+
+                <div className="my-auto py-6 space-y-4 relative z-10">
+                  <div className="w-16 h-16 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <Rocket className="w-8 h-8 animate-pulse text-purple-300" />
                   </div>
-                  <div>
-                    <span className="text-[10px] font-mono font-black uppercase tracking-widest text-[#DC2564] block">
-                      IN PIPELINE
-                    </span>
-                    <h3 className="font-black text-xl text-[#14213D] mt-1">
+                  <div className="space-y-1">
+                    <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                       Coming Soon
                     </h3>
+                    <p className="text-xs text-purple-200/80 font-medium">
+                      Proprietary Software Platform
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-600 max-w-[200px] mx-auto leading-relaxed">
-                    AI automated marketing suite and social syndication tool for creators and local service agencies.
+                  <p className="text-xs text-slate-300 max-w-[220px] mx-auto leading-relaxed">
+                    New cloud software platform currently under active development. Stay tuned for official launch.
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-200">
-                  <span className="text-[11px] font-bold text-gray-500 bg-white px-3 py-1 rounded-full border border-gray-200 inline-block">
-                    Launch: Q3 2026
-                  </span>
+                <div className="w-full pt-4 relative z-10 border-t border-purple-500/20">
+                  <div className="w-full bg-purple-900/40 border border-purple-500/40 py-2.5 px-3 rounded-xl text-center">
+                    <span className="text-xs font-bold text-purple-200 flex items-center justify-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
+                      Status: Coming Soon
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Card 4: Coming Soon 2 */}
+              {/* Card 4: Coming Soon */}
               <div
                 suppressHydrationWarning
-                className="bg-[#F7F8FC] border-2 border-dashed border-gray-300 rounded-2xl p-6 flex flex-col justify-between text-center min-h-[340px]"
+                className="bg-gradient-to-br from-[#082032] via-[#0f2d48] to-[#173a5e] border border-cyan-500/30 hover:border-cyan-400/60 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between items-center text-center group min-h-[420px]"
               >
-                <div className="space-y-4 pt-6">
-                  <div className="w-14 h-14 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <Layers className="w-7 h-7" />
+                {/* Decorative Ambient Glow */}
+                <div className="absolute -top-12 -right-12 w-36 h-36 bg-cyan-500/25 rounded-full blur-3xl pointer-events-none group-hover:bg-cyan-400/35 transition-all" />
+                <div className="absolute -bottom-12 -left-12 w-36 h-36 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
+
+                <div className="w-full flex items-center justify-between relative z-10">
+                  <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400/30 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                    IN LABS
+                  </span>
+                  <span className="text-xs text-cyan-300/60 font-semibold uppercase tracking-wider">
+                    UPCOMING
+                  </span>
+                </div>
+
+                <div className="my-auto py-6 space-y-4 relative z-10">
+                  <div className="w-16 h-16 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <Sparkles className="w-8 h-8 animate-pulse text-cyan-300" />
                   </div>
-                  <div>
-                    <span className="text-[10px] font-mono font-black uppercase tracking-widest text-blue-600 block">
-                      IN PIPELINE
-                    </span>
-                    <h3 className="font-black text-xl text-[#14213D] mt-1">
+                  <div className="space-y-1">
+                    <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                       Coming Soon
                     </h3>
+                    <p className="text-xs text-cyan-200/80 font-medium">
+                      Enterprise Digital Utility
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-600 max-w-[200px] mx-auto leading-relaxed">
-                    Cloud invoice verification, GST billing automation, and tax document parsing utilities.
+                  <p className="text-xs text-slate-300 max-w-[220px] mx-auto leading-relaxed">
+                    Next-generation digital tool designed to accelerate automated online operations.
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-200">
-                  <span className="text-[11px] font-bold text-gray-500 bg-white px-3 py-1 rounded-full border border-gray-200 inline-block">
-                    Launch: Q4 2026
-                  </span>
+                <div className="w-full pt-4 relative z-10 border-t border-cyan-500/20">
+                  <div className="w-full bg-cyan-900/40 border border-cyan-500/40 py-2.5 px-3 rounded-xl text-center">
+                    <span className="text-xs font-bold text-cyan-200 flex items-center justify-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                      Status: Coming Soon
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

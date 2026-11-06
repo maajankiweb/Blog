@@ -68,7 +68,7 @@ export default function WhyChooseMaajanki() {
               <span>THE MAAJANKI ADVANTAGE</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              An Elite Ecosystem for Modern Web Development &amp; Growth
+              An Elite Ecosystem for Modern Web Engineering &amp; Growth
             </h2>
             <p className="text-sm md:text-base text-slate-600 leading-relaxed">
               MJ Digital equips developers, creators, and agencies with production-grade templates, verified WordPress plugins, AI-powered tools, and actionable engineering guides to build faster and scale confidently.

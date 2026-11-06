@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getProducts } from "@/lib/wordpress/products";
 import { HiSparkles } from "react-icons/hi2";
 import ProductsClientGrid from "./ProductsClientGrid";
+import EcosystemPromoBanner from "@/components/EcosystemPromoBanner";
 
 export const revalidate = 60; // ISR revalidation every 60 seconds
 
@@ -93,6 +94,13 @@ export default async function ProductsStorePage() {
 
         {/* Client Filter & Checkout Grid */}
         <ProductsClientGrid initialProducts={products} />
+
+        {/* Featured Ecosystem Ads & Platforms */}
+        <EcosystemPromoBanner
+          title="Looking for Bespoke Engineering or Commercial POS?"
+          subtitle="Beyond pre-built starter assets, hire our dedicated development team or empower your restaurant business with BrewPluse POS."
+          className="pt-10 border-t border-slate-200"
+        />
       </div>
     </main>
   );

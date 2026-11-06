@@ -69,6 +69,7 @@ export default function BookmarkButton({
         localStorage.setItem("maajanki_saved_articles", JSON.stringify(updated));
         setIsSaved(true);
       }
+      window.dispatchEvent(new Event("storage"));
     } catch (err) {
       console.error("Failed to update bookmarks:", err);
     }

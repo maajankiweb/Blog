@@ -10,6 +10,8 @@ import { WPPost, WPCategory, WPTag, cleanHtmlText } from "@/lib/wordpress";
 import AdBanner from "./AdBanner";
 import HostingerAdCard from "./HostingerAdCard";
 import YoutubeAdCard from "./YoutubeAdCard";
+import MaajankiAdCard from "./MaajankiAdCard";
+import BrewPluseAdCard from "./BrewPluseAdCard";
 
 interface BlogListingLayoutProps {
   initialPosts: WPPost[];
@@ -372,6 +374,12 @@ export default function BlogListingLayout({
 
             {/* Hostinger Sponsored Ad Widget */}
             <HostingerAdCard />
+
+            {/* Maajanki Web Tech Agency Ad */}
+            <MaajankiAdCard />
+
+            {/* BrewPluse Cafe Management Software Ad */}
+            <BrewPluseAdCard />
 
             {/* Sponsored Ad Banner */}
             <AdBanner />

@@ -18,17 +18,30 @@ export default function ArticleAudioPlayer({ title, content }: ArticleAudioPlaye
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Extract clean plain text from article HTML
+  // Deterministic plain text extraction that works identically on Server & Client (No SSR Hydration Mismatch)
   const cleanText = React.useMemo(() => {
-    if (typeof window === "undefined") return "";
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = content;
-    const text = tempDiv.textContent || tempDiv.innerText || "";
-    // Remove excessive spaces
-    return `${title}. ${text.replace(/\s+/g, " ").trim()}`;
+    if (!content) return title || "";
+    // Clean tags, decode basic entities, normalize whitespaces
+    const text = content
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, " ")
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, " ")
+      .replace(/<[^>]*>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'")
+      .replace(/\s+/g, " ")
+      .trim();
+    return `${title}. ${text}`.trim();
   }, [title, content]);
 
-  const estimatedMinutes = Math.max(1, Math.ceil(cleanText.split(/\s+/).length / 180));
+  const estimatedMinutes = React.useMemo(() => {
+    if (!cleanText) return 1;
+    const words = cleanText.split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 180));
+  }, [cleanText]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -155,7 +168,7 @@ export default function ArticleAudioPlayer({ title, content }: ArticleAudioPlaye
               <span className="text-xs font-bold text-[#DC2564]">
                 Audio Article Listener
               </span>
-              <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full text-white/70">
+              <span suppressHydrationWarning className="text-xs bg-white/10 px-2 py-0.5 rounded-full text-white/70">
                 ~{estimatedMinutes} min listen
               </span>
             </div>

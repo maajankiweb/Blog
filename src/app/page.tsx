@@ -7,6 +7,8 @@ import StatCard from "@/components/StatCard";
 import Newsletter from "@/components/Newsletter";
 import AdBanner from "@/components/AdBanner";
 import HostingerAdCard from "@/components/HostingerAdCard";
+import MaajankiAdCard from "@/components/MaajankiAdCard";
+import BrewPluseAdCard from "@/components/BrewPluseAdCard";
 import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import StartHereSection from "@/components/StartHereSection";
@@ -652,6 +654,12 @@ export default async function Home(props: PageProps) {
 
               {/* Hostinger Ad Box */}
               <HostingerAdCard />
+
+              {/* Maajanki Web Tech Agency Ad */}
+              <MaajankiAdCard />
+
+              {/* BrewPluse Cafe Management Software Ad */}
+              <BrewPluseAdCard />
 
               {/* Sponsored Ad Box — Osdire & Future Ads */}
               <AdBanner />
