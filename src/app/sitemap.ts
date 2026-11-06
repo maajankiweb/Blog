@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Core Static Routes (Excludes all deleted /tools)
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: siteUrl, lastModified: currentDate, changeFrequency: 'daily', priority: 1.0 },
+    { url: 'https://blog.maajankiwebtech.com/', lastModified: currentDate, changeFrequency: 'daily', priority: 1.0 },
     { url: `${siteUrl}/blog`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
     { url: `${siteUrl}/products`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
     { url: `${siteUrl}/about`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.8 },

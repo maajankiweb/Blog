@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "MJ Digital", "Maajanki", "Ashish Kumar",
   ],
   alternates: {
-    canonical: siteUrl,
+    canonical: "https://blog.maajankiwebtech.com/",
     types: {
       "application/rss+xml": `${siteUrl}/feed.xml`,
     },
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
       "Practical, actionable insights on SEO, digital marketing, and modern software architecture for modern businesses.",
     type: "website",
     locale: "en_IN",
-    url: siteUrl,
+    url: "https://blog.maajankiwebtech.com/",
     siteName: "MJ Digital Blog",
   },
   twitter: {
@@ -158,7 +158,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": "https://blog.maajankiwebtech.com/#website",
       name: "MJ Digital Blog",
-      url: siteUrl,
+      url: "https://blog.maajankiwebtech.com/",
       publisher: {
         "@id": "https://blog.maajankiwebtech.com/#organization",
       },

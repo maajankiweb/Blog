@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getPosts, getCategories, WPPost, cleanHtmlText } from "@/lib/wordpress";
@@ -43,6 +44,23 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 interface PageProps {
   searchParams: SearchParams;
 }
+
+export const metadata: Metadata = {
+  title: "MJ Digital Blog | Digital Growth, Technical SEO & Software Architecture",
+  description:
+    "Learn modern web architecture, technical SEO, content marketing, and growth strategy for businesses. Practical, actionable insights from MJ Digital.",
+  alternates: {
+    canonical: "https://blog.maajankiwebtech.com/",
+  },
+  openGraph: {
+    title: "MJ Digital Blog | Digital Growth, Technical SEO & Software Architecture",
+    description:
+      "Learn modern web architecture, technical SEO, content marketing, and growth strategy for businesses. Practical, actionable insights from MJ Digital.",
+    url: "https://blog.maajankiwebtech.com/",
+    type: "website",
+    siteName: "MJ Digital Blog",
+  },
+};
 
 export default async function Home(props: PageProps) {
   const searchParams = await props.searchParams;
