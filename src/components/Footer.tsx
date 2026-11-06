@@ -5,48 +5,44 @@ import Link from "next/link";
 import {
   FaXTwitter,
   FaLinkedinIn,
-  FaGithub,
+  FaInstagram,
+  FaFacebookF,
   FaYoutube,
 } from "react-icons/fa6";
-import { HiEnvelope, HiArrowUp } from "react-icons/hi2";
+import { HiArrowUp, HiPhone } from "react-icons/hi2";
 
 const socialLinks = [
+  { icon: FaInstagram, href: "https://www.instagram.com/maajankiwebtech/", label: "Instagram (@maajankiwebtech)" },
+  { icon: FaFacebookF, href: "https://www.facebook.com/maajankiwebtechllp", label: "Facebook (maajankiwebtechllp)" },
   { icon: FaXTwitter, href: "https://twitter.com/maajankiwebtech", label: "X / Twitter" },
   { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/maajankiwebtech", label: "LinkedIn" },
-  { icon: FaGithub, href: "https://github.com/AshishKmj", label: "GitHub" },
-  { icon: FaYoutube, href: "https://youtube.com/@maajankiwebtech", label: "YouTube" },
-  { icon: HiEnvelope, href: "mailto:info@maajankiwebtech.com", label: "Email" },
+  { icon: FaYoutube, href: "https://www.youtube.com/@Ashishkmj", label: "YouTube" },
 ];
 
-const navColumns = [
-  {
-    title: "Navigation",
-    links: [
-      { label: "Home", href: "/" },
-      { label: "Latest Articles", href: "/blog" },
-      { label: "Free Tools", href: "/tools" },
-      { label: "Digital Store", href: "/products" },
-      { label: "Deals & Products", href: "/affiliate-products" },
-      { label: "Saved Articles", href: "/saved" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About Us", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Newsletter", href: "/newsletter" },
-      { label: "Search & Topics", href: "/search" },
-    ],
-  },
-  {
-    title: "Legal & Policy",
-    links: [
-      { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Settings", href: "/cookie-settings" },
-    ],
-  },
+const editorialLinks = [
+  { label: "All Dispatches", href: "/blog" },
+  { label: "Next.js & React", href: "/category/technology" },
+  { label: "Technical SEO & GEO", href: "/category/seo" },
+  { label: "AI & Automation", href: "/category/ai" },
+  { label: "WordPress Architecture", href: "/category/wordpress" },
+  { label: "Online Business Growth", href: "/category/business" },
+];
+
+const marketplaceLinks = [
+  { label: "Digital Store Home", href: "/products" },
+  { label: "Next.js Templates", href: "/products?category=templates" },
+  { label: "WordPress Plugins", href: "/products?category=plugins" },
+  { label: "Agency Development", href: "/contact" },
+  { label: "My Customer Account", href: "/my-account" },
+];
+
+const legalLinks = [
+  { label: "About MJ Digital", href: "/about" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms" },
+  { label: "Refund Policy", href: "/refund-policy" },
+  { label: "Digital Delivery Policy", href: "/digital-delivery-policy" },
 ];
 
 export default function Footer() {
@@ -71,44 +67,38 @@ export default function Footer() {
       behavior: "smooth",
     });
   };
+
   return (
-    <footer
-      className="relative overflow-hidden border-t border-white/10 text-white"
-      style={{
-        background: "linear-gradient(180deg, #0a0604 0%, #120904 100%)",
-      }}
-    >
-      {/* Background Glow Overlay */}
-      <div
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full opacity-15 blur-3xl"
-        style={{
-          background: "radial-gradient(circle, #ff6b00 0%, transparent 70%)",
-        }}
-      />
-      <div className="grain-overlay absolute inset-0 pointer-events-none opacity-30" />
+    <footer className="relative overflow-hidden bg-[#0F172A] text-slate-300 border-t border-slate-800">
+      {/* Subtle Ambient Glow */}
+      <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full opacity-10 blur-3xl bg-[#DC2564]" />
 
-      {/* Main Footer Container */}
       <div className="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-16 pb-12">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-10 lg:gap-16 pb-14 border-b border-white/10">
-          {/* Brand Info (5/12 Width) */}
-          <div className="w-full md:w-5/12 space-y-6">
-            <div className="flex items-center gap-3">
-              <span className="font-black text-2xl tracking-tighter text-white">
-                Maajanki<span className="text-[#ff6b00]">.</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Feed Live
-              </span>
-            </div>
+        {/* Main 4-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-14 border-b border-slate-800/80">
+          {/* Column 1: Brand & Contact (4 cols) */}
+          <div className="lg:col-span-4 space-y-5">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1 text-2xl font-black tracking-tight text-white hover:opacity-90 transition-opacity"
+            >
+              <span>MJ Digital</span>
+              <span className="w-2 h-2 rounded-full bg-[#DC2564] inline-block mb-0.5" />
+            </Link>
 
-            <p className="text-white/80 text-sm md:text-[15px] leading-relaxed max-w-md w-full">
-              Premium technical insights and architectural guides from Maajanki for
-              software developers, designers, and engineering leaders.
+            <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+              MJ Digital is a modern digital publishing platform and digital products marketplace helping developers, agencies, and businesses build faster and scale online.
             </p>
 
-            {/* Social Media Pill Badges */}
-            <div className="pt-2 flex flex-wrap gap-2.5">
+            <div className="space-y-2 text-xs text-slate-400 pt-1">
+              <div className="flex items-center gap-2">
+                <HiPhone size={16} className="text-[#DC2564] shrink-0" />
+                <span>+91-9006543913 / info@maajankiwebtech.com</span>
+              </div>
+            </div>
+
+            {/* Social Icons */}
+            <div className="pt-2 flex flex-wrap gap-2">
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -116,73 +106,107 @@ export default function Footer() {
                   target={href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-xl bg-white/6 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-[#ff6b00] hover:border-[#ff6b00] transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+                  className="w-9 h-9 rounded-lg bg-slate-800/70 border border-slate-700/60 flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#DC2564] hover:border-[#DC2564] transition-all duration-200"
                 >
-                  <Icon size={16} />
+                  <Icon size={15} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Navigation Links (7/12 Width) */}
-          <div className="w-full md:w-7/12 grid grid-cols-2 sm:grid-cols-3 gap-8">
-            {navColumns.map(({ title, links }) => (
-              <div key={title} className="space-y-4">
-                <h4 className="font-bold text-xs uppercase tracking-widest text-[#ff6b00]">
-                  {title}
-                </h4>
-                <ul className="space-y-3">
-                  {links.map(({ label, href }) => (
-                    <li key={label}>
-                      <Link
-                        className="text-white/65 hover:text-white text-sm transition-colors duration-200 inline-flex items-center gap-1 group"
-                        href={href}
-                      >
-                        <span className="group-hover:translate-x-1 transition-transform">
-                          {label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          {/* Column 2: Editorial Dispatches (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="font-bold text-xs uppercase tracking-wider text-white">
+              Editorial Dispatches
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {editorialLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-slate-400 hover:text-white transition-colors duration-150 inline-block"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Digital Marketplace (2 cols) */}
+          <div className="lg:col-span-2 space-y-4">
+            <h4 className="font-bold text-xs uppercase tracking-wider text-white">
+              Digital Store
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {marketplaceLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-slate-400 hover:text-white transition-colors duration-150 inline-block"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Trust & Company (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="font-bold text-xs uppercase tracking-wider text-white">
+              Company &amp; Legal
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {legalLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-slate-400 hover:text-white transition-colors duration-150 inline-block"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         {/* Bottom Sub-footer */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>
-            Copyright © All rights reserved. | Maajanki by Maajanki WebTech Digital Agency
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p suppressHydrationWarning>
+            © {new Date().getFullYear()} MJ Digital. All rights reserved. Registered Indian Digital Tech Enterprise.
           </p>
-          <div className="flex items-center gap-6">
-            <Link
-              href="/privacy-policy"
-              className="hover:text-white transition-colors"
-            >
-              Privacy
+          <div className="flex items-center gap-5">
+            <Link href="/privacy-policy" className="hover:text-slate-300 transition-colors">
+              Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              Terms
+            <Link href="/terms" className="hover:text-slate-300 transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/refund-policy" className="hover:text-slate-300 transition-colors">
+              Refund Policy
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Floating Back To Top Icon Button */}
+      {/* Floating Back-To-Top Button */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
           aria-label="Back to top"
-          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-[#ff6b00] text-white flex items-center justify-center shadow-2xl hover:bg-[#e05e00] hover:scale-110 active:scale-95 transition-all duration-300 border border-white/20 animate-fade-in"
-          title="Back to top"
+          className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-[#DC2564] text-white flex items-center justify-center shadow-lg hover:bg-[#B81D52] hover:scale-105 active:scale-95 transition-all duration-200"
         >
-          <HiArrowUp size={20} />
+          <HiArrowUp size={18} />
         </button>
       )}
 
-      {/* Decorative Watermark */}
-      <div className="absolute -bottom-6 right-4 text-[80px] md:text-[110px] font-black text-white/[0.03] pointer-events-none select-none z-0 tracking-tighter uppercase">
+      {/* Decorative Brand Watermark */}
+      <div
+        suppressHydrationWarning
+        className="absolute -bottom-6 right-4 text-[70px] md:text-[100px] font-black text-white/[0.02] pointer-events-none select-none z-0 tracking-tighter uppercase"
+      >
         MAAJANKI
       </div>
     </footer>

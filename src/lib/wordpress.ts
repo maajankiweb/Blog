@@ -154,12 +154,15 @@ function injectLocalSEO(post: WPPost): WPPost {
 function getLocalCategories(): WPCategory[] {
   const catsMap = new Map<number, WPCategory>();
   (localBlogData as any[]).forEach((post) => {
+    if (!Array.isArray(post?.categories)) return;
     post.categories.forEach((cat: any) => {
+      if (!cat || !cat.id) return;
+      const slug = cat.slug || String(cat.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-");
       if (!catsMap.has(cat.id)) {
         catsMap.set(cat.id, {
           id: cat.id,
-          name: cat.name,
-          slug: cat.slug,
+          name: cat.name || "Category",
+          slug: slug,
           count: 1,
           description: ""
         });
@@ -399,13 +402,38 @@ export async function createComment(postId: number, name: string, email: string,
  * Get category by slug
  */
 export async function getCategoryBySlug(slug: string): Promise<WPCategory | null> {
+  if (!slug) return null;
+  const safeSlug = slug.toLowerCase();
+
+  // Synonyms/aliases matching for requested footer topics
+  const aliasMap: Record<string, { id: number; name: string; slug: string; description: string }> = {
+    technology: { id: 31, name: "Next.js & React Technology", slug: "technology", description: "Modern web engineering, React 19, TypeScript, and Next.js full-stack development." },
+    seo: { id: 32, name: "Technical SEO & GEO", slug: "seo", description: "Search engine optimization, Core Web Vitals, Google rich snippets, and generative AI search discoverability." },
+    ai: { id: 33, name: "AI & Automation", slug: "ai", description: "Practical artificial intelligence software, prompt engineering, agentic workflows, and automated LLM systems." },
+    wordpress: { id: 34, name: "WordPress Architecture", slug: "wordpress", description: "Headless WordPress, custom plugin engineering, WooCommerce REST API, and speed optimization." },
+    business: { id: 35, name: "Online Business Growth", slug: "business", description: "Digital publishing business models, digital product sales, billing workflows, and organic growth." },
+  };
+
+  if (aliasMap[safeSlug]) {
+    return {
+      ...aliasMap[safeSlug],
+      count: 10,
+    };
+  }
+
   try {
     const categories = await fetchAPI<WPCategory[]>(`/categories?slug=${encodeURIComponent(slug)}`);
-    return categories.length > 0 ? categories[0] : null;
+    if (categories && categories.length > 0) return categories[0];
   } catch (error) {
-    console.error(`Error fetching category for slug "${slug}":`, error);
-    return null;
+    console.warn(`Error fetching WP category for slug "${slug}":`, error);
   }
+
+  // Resilient fallback: search local categorized records
+  const localCats = getLocalCategories();
+  const found = localCats.find((c) => c?.slug && c.slug.toLowerCase() === safeSlug);
+  if (found) return found;
+
+  return null;
 }
 
 /**
@@ -762,6 +790,7 @@ export interface WooDigitalProduct {
   badge?: string;
   rating?: number;
   salesCount?: number;
+  features?: string[];
 }
 
 const mockDigitalProducts: WooDigitalProduct[] = [
@@ -824,57 +853,54 @@ const mockDigitalProducts: WooDigitalProduct[] = [
   },
 ];
 
-import { fetchWebPressHubProducts } from "./webpresshub";
+// Re-export modern WooCommerce headless product functions
+export * from "./wordpress/products";
 
 /**
- * Fetch digital products dynamically from WooCommerce REST API, webpresshub.net REST API, or fallback to WP post category & local catalog
+ * Fetch digital products dynamically from modern WordPress WooCommerce service
  */
 export async function getWooProducts(): Promise<WooDigitalProduct[]> {
-  let remoteHubProducts: WooDigitalProduct[] = [];
-  try {
-    remoteHubProducts = await fetchWebPressHubProducts();
-  } catch (err) {
-    console.warn("Error fetching remote WebPressHub products:", err);
-  }
-
-  try {
-    // Attempt to fetch dynamically from local WooCommerce REST API on cms.maajankiwebtech.com
-    const res = await fetch("https://cms.maajankiwebtech.com/wp-json/wc/v3/products?per_page=50", {
-      next: { revalidate: 3600 },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        const localWcMapped = data.map((p: any) => ({
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          category: p.categories?.[0]?.name || (p.type === 'external' ? 'Affiliate' : 'Digital'),
-          price: `₹${p.price || p.regular_price || 0}`,
-          regularPrice: p.regular_price ? `₹${p.regular_price}` : undefined,
-          description: p.description?.replace(/<[^>]*>/g, "") || "",
-          shortDescription: p.short_description?.replace(/<[^>]*>/g, "") || "",
-          featuredImage: p.images?.[0]?.src || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
-          demoUrl: p.external_url || p.permalink || undefined,
-          downloadUrl: p.downloads?.[0]?.file || undefined,
-          rating: p.average_rating ? parseFloat(p.average_rating) : 4.9,
-          salesCount: p.total_sales || 15,
-        }));
-        return [...localWcMapped, ...remoteHubProducts, ...mockDigitalProducts];
-      }
-    }
-  } catch (err) {
-    console.warn("Could not fetch WooCommerce API products, attempting WP posts fallback:", err);
-  }
-
-  // Combine remote WebPressHub products with mock digital catalog
-  return [...remoteHubProducts, ...mockDigitalProducts];
+  const { getProducts } = await import("./wordpress/products");
+  const products = await getProducts();
+  return products.map((p) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    category: p.category,
+    price: p.price,
+    regularPrice: p.regularPrice,
+    description: p.description,
+    shortDescription: p.shortDescription,
+    featuredImage: p.featuredImage,
+    demoUrl: p.demoUrl,
+    downloadUrl: p.downloadUrl,
+    badge: p.badge,
+    rating: p.rating,
+    salesCount: p.salesCount,
+  }));
 }
 
 /**
  * Fetch single digital product by slug
  */
 export async function getWooProductBySlug(slug: string): Promise<WooDigitalProduct | null> {
-  const products = await getWooProducts();
-  return products.find((p) => p.slug === slug) || null;
+  const { getProductBySlug } = await import("./wordpress/products");
+  const p = await getProductBySlug(slug);
+  if (!p) return null;
+  return {
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    category: p.category,
+    price: p.price,
+    regularPrice: p.regularPrice,
+    description: p.description,
+    shortDescription: p.shortDescription,
+    featuredImage: p.featuredImage,
+    demoUrl: p.demoUrl,
+    downloadUrl: p.downloadUrl,
+    badge: p.badge,
+    rating: p.rating,
+    salesCount: p.salesCount,
+  };
 }

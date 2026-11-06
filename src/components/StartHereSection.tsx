@@ -55,15 +55,15 @@ const mustReadGuides: GuideItem[] = [
 
 export default function StartHereSection() {
   return (
-    <section className="py-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-      <div className="bg-gradient-to-br from-[#170e09] via-[#100905] to-[#0a0503] rounded-3xl p-8 md:p-12 border border-[#ff6b00]/25 shadow-2xl text-white relative overflow-hidden">
+    <section suppressHydrationWarning className="py-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+      <div suppressHydrationWarning className="bg-gradient-to-br from-[#170e09] via-[#100905] to-[#0a0503] rounded-3xl p-8 md:p-12 border border-[#DC2564]/25 shadow-2xl text-white relative overflow-hidden">
         {/* Ambient background glow */}
-        <div className="absolute top-0 right-0 w-[400px] h-[300px] bg-[#ff6b00]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[400px] h-[300px] bg-[#DC2564]/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
         <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-white/10">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff6b00]/15 border border-[#ff6b00]/30 text-[#ff6b00] text-xs font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DC2564]/15 border border-[#DC2564]/30 text-[#DC2564] text-xs font-bold uppercase tracking-widest">
               <HiSparkles className="w-3.5 h-3.5" />
               <span>NEW VISITOR ROADMAP</span>
             </div>
@@ -76,7 +76,7 @@ export default function StartHereSection() {
           </div>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-200 shrink-0"
+            className="inline-flex items-center gap-2 bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-200 shrink-0"
           >
             Explore All Archives <HiArrowRight size={14} />
           </Link>
@@ -90,14 +90,14 @@ export default function StartHereSection() {
               <Link
                 key={guide.id}
                 href={guide.slug ? `/blog/${guide.slug}` : "/blog"}
-                className="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#ff6b00]/50 p-6 rounded-2xl flex flex-col justify-between transition-all duration-300 shadow-md hover:-translate-y-1"
+                className="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#DC2564]/50 p-6 rounded-2xl flex flex-col justify-between transition-all duration-300 shadow-md hover:-translate-y-1"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-[#ff6b00] text-[10px] font-black uppercase tracking-wider">
+                    <span className="text-[#DC2564] text-[10px] font-black uppercase tracking-wider">
                       {guide.category}
                     </span>
-                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/80 group-hover:bg-[#ff6b00] group-hover:text-white transition-colors">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white/80 group-hover:bg-[#DC2564] group-hover:text-white transition-colors">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
@@ -111,7 +111,7 @@ export default function StartHereSection() {
 
                 <div className="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/50 group-hover:text-white/80 transition-colors">
                   <span>{guide.readTime}</span>
-                  <span className="text-[#ff6b00] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <span className="text-[#DC2564] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                     Read guide →
                   </span>
                 </div>

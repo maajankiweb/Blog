@@ -18,8 +18,8 @@ export default function BreakingNewsTicker({ posts }: BreakingNewsTickerProps) {
   const displayPosts = [...tickerPosts, ...tickerPosts];
 
   return (
-    <section className="bg-surface border-y border-outline-variant/25 py-3 px-margin-mobile md:px-margin-desktop overflow-hidden shadow-xs relative z-10">
-      <div className="max-w-container-max mx-auto flex items-center gap-4">
+    <section suppressHydrationWarning className="bg-surface border-y border-outline-variant/25 py-3 px-margin-mobile md:px-margin-desktop overflow-hidden shadow-xs relative z-10">
+      <div suppressHydrationWarning className="max-w-container-max mx-auto flex items-center gap-4">
         {/* Red Breaking News Badge */}
         <div className="shrink-0 bg-[#e00000] text-white font-black text-xs md:text-sm uppercase tracking-wider px-3.5 py-1.5 rounded flex items-center gap-2 shadow-md z-20">
           <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping shrink-0" />

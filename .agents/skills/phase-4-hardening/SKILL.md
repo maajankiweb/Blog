@@ -1,3 +1,8 @@
+---
+name: NEXUS Phase 4 Hardening
+description: Phase 4 playbook for security audits, reality checking, performance benchmarking, and production readiness.
+---
+
 # 🛡️ Phase 4 Playbook — Quality & Hardening
 
 > **Duration**: 3-7 days | **Agents**: 8 | **Gate Keeper**: Reality Checker (sole authority)

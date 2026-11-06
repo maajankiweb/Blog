@@ -1,0 +1,30 @@
+# Maajanki WebTech & Blog — Full LLM Context
+
+> Comprehensive context on Maajanki WebTech Digital Agency, technical services, blog guides, developer utilities, and digital products.
+
+## About The Business
+- Organization: Maajanki WebTech Digital Agency
+- Founder: Ashish Kumar
+- Operating Address: Bettiah, West Champaran, Bihar - 845438, India
+- Phone: +91-9006543913
+- Email: info@maajankiwebtech.com
+- Domain: https://blog.maajankiwebtech.com
+
+## Key Pages & Navigation
+- [Home](https://blog.maajankiwebtech.com/): Official homepage featuring latest dispatches, agency services, and growth guides
+- [Articles & Blog](https://blog.maajankiwebtech.com/blog): In-depth tutorials and guides on SEO, Next.js, WordPress, and digital marketing
+- [Digital Products & Pricing](https://blog.maajankiwebtech.com/products): Commercial starter templates, WordPress plugins, and pricing details
+- [About Maajanki](https://blog.maajankiwebtech.com/about): Company background, mission, technology stack, and leadership
+- [Contact Agency](https://blog.maajankiwebtech.com/contact): Direct business inquiries, client consultation, and office details
+- [Newsletter](https://blog.maajankiwebtech.com/newsletter): Weekly developer and business growth dispatches
+
+## Products & Pricing
+- [Maajanki Pro Next.js & Tailwind Blog Starter Kit](https://blog.maajankiwebtech.com/products): ₹2,499 INR (Regular ₹4,999) — Production-ready Next.js 16 blog template with Turbopack, ISR revalidation, and dark mode.
+- [InvoBill GST & Freelancer Invoice Helper Plugin](https://blog.maajankiwebtech.com/products): ₹1,499 INR (Regular ₹2,999) — WordPress plugin for Indian freelancers & agencies to auto-generate 18% GST invoices with SAC code 998314.
+- [Hostinger Premium Web Hosting Deals](https://blog.maajankiwebtech.com/affiliate-products): From ₹149/month — High speed SSD web hosting with LiteSpeed and free domain.
+
+## Developer & SEO Free Tools
+- [Free Developer Tools Hub](https://blog.maajankiwebtech.com/tools): Complete suite of online webmaster, SEO, and billing utilities
+- [Website Cost Calculator India](https://blog.maajankiwebtech.com/tools/website-cost-calculator): Transparent cost estimator for website development in India
+- [SEO & OpenGraph Meta Tag Generator](https://blog.maajankiwebtech.com/tools/meta-tag-generator): Free meta tag builder for search and social preview optimization
+- [GST Invoice Generator](https://blog.maajankiwebtech.com/tools/gst-invoice-generator): Free automated 18% GST billing tool for Indian freelancers & agencies

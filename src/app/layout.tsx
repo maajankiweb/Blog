@@ -5,6 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
 import GsapInit from "@/components/GsapInit";
+import WebMcpProvider from "@/components/WebMcpProvider";
+import ExtensionCleaner from "@/components/ExtensionCleaner";
+import { CartProvider } from "@/context/CartContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,33 +24,33 @@ const googleVerification =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Maajanki Blog | Digital Growth, SEO & Web Development",
-    template: "%s | Maajanki Blog",
+    default: "MJ Digital Blog | Digital Growth, SEO & Web Development",
+    template: "%s | MJ Digital Blog",
   },
   description:
-    "Learn web development, technical SEO, content marketing, and growth strategy for businesses. Practical, actionable insights from Maajanki WebTech Digital Agency.",
+    "Learn web development, technical SEO, content marketing, and growth strategy for businesses. Practical, actionable insights from MJ Digital Digital Agency.",
   keywords: [
     "SEO", "Technical SEO", "Web Development", "Digital Marketing",
     "Content Marketing", "WordPress", "Next.js", "Online Business Growth",
-    "Maajanki", "Maajanki WebTech",
+    "Maajanki", "MJ Digital",
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Maajanki Blog | Digital Growth, SEO & Web Development",
+    title: "MJ Digital Blog | Digital Growth, SEO & Web Development",
     description:
       "Practical, actionable insights on SEO, digital marketing, and web development for modern businesses.",
     type: "website",
     locale: "en_IN",
     url: siteUrl,
-    siteName: "Maajanki Blog",
+    siteName: "MJ Digital Blog",
   },
   twitter: {
     card: "summary_large_image",
     site: "@maajankiwebtech",
     creator: "@kumarashishweb",
-    title: "Maajanki Blog | Digital Growth, SEO & Web Development",
+    title: "MJ Digital Blog | Digital Growth, SEO & Web Development",
     description:
       "Practical, actionable insights on SEO, digital marketing, and web development.",
   },
@@ -63,42 +66,92 @@ export const metadata: Metadata = {
   },
 };
 
-// Organization + WebSite schema for GEO (AI citation engines)
-const orgSchema = {
+// Consolidated Organization, LocalBusiness & WebSite schema for AI Agents & Search Engines
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Maajanki WebTech Digital Agency",
-  url: "https://blog.maajankiwebtech.com",
-  logo: {
-    "@type": "ImageObject",
-    url: "https://blog.maajankiwebtech.com/logo.png",
-    width: 200,
-    height: 60,
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    email: "info@maajankiwebtech.com",
-    contactType: "customer support",
-  },
-  sameAs: [
-    "https://www.facebook.com/maajankiwebtech",
-    "https://twitter.com/maajankiwebtech",
-  ],
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Maajanki Blog",
-  url: siteUrl,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${siteUrl}/search?q={search_term_string}`,
+  "@graph": [
+    {
+      "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
+      "@id": "https://blog.maajankiwebtech.com/#organization",
+      name: "MJ Digital Digital Agency",
+      alternateName: "MJ Digital",
+      url: "https://blog.maajankiwebtech.com",
+      logo: {
+        "@type": "ImageObject",
+        "@id": "https://blog.maajankiwebtech.com/#logo",
+        url: "https://blog.maajankiwebtech.com/logo.png",
+        width: 200,
+        height: 60,
+        caption: "MJ Digital",
+      },
+      image: "https://blog.maajankiwebtech.com/ashish-kumar.png",
+      description: "Indian Web Development, Technical SEO, and Digital Growth Agency specializing in Next.js 16, WordPress, and developer tools.",
+      telephone: "+91-9006543913",
+      email: "info@maajankiwebtech.com",
+      priceRange: "₹₹",
+      currenciesAccepted: "INR, USD",
+      paymentAccepted: "Credit Card, UPI, Net Banking",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Main Road",
+        addressLocality: "Bettiah",
+        addressRegion: "Bihar",
+        postalCode: "845438",
+        addressCountry: "IN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 26.8028,
+        longitude: 84.5029,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "09:00",
+          closes: "19:00",
+        },
+      ],
+      founder: {
+        "@type": "Person",
+        name: "Ashish Kumar",
+        jobTitle: "Founder & Lead Architect",
+        url: "https://blog.maajankiwebtech.com/author/ashish-kumar",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+91-9006543913",
+        email: "info@maajankiwebtech.com",
+        contactType: "customer support",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+      sameAs: [
+        "https://www.facebook.com/maajankiwebtech",
+        "https://twitter.com/maajankiwebtech",
+        "https://www.linkedin.com/company/maajankiwebtech",
+        "https://github.com/AshishKmj",
+        "https://www.youtube.com/@Ashishkmj",
+      ],
     },
-    "query-input": "required name=search_term_string",
-  },
+    {
+      "@type": "WebSite",
+      "@id": "https://blog.maajankiwebtech.com/#website",
+      name: "MJ Digital Blog",
+      url: siteUrl,
+      publisher: {
+        "@id": "https://blog.maajankiwebtech.com/#organization",
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${siteUrl}/search?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -113,29 +166,22 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head>
-        {/* Google Search Console Verification */}
-        <meta
-          name="google-site-verification"
-          content={googleVerification}
-        />
-        {/* DNS prefetch for WordPress API */}
-        <link rel="preconnect" href="https://blog.maajankiwebtech.com" />
-        <link rel="dns-prefetch" href="https://blog.maajankiwebtech.com" />
-        {/* Organization + WebSite structured data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-      </head>
       <body
         className="min-h-screen flex flex-col bg-background text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed"
         suppressHydrationWarning
       >
+        {/* Consolidated Organization, LocalBusiness & WebSite structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+
+        {/* In-browser Agent Tools (WebMCP) */}
+        <WebMcpProvider />
+
+        {/* Browser Extension Attribute Sanitizer */}
+        <ExtensionCleaner />
+
         {/* Global GSAP Registration & Plugin Initialization */}
         <GsapInit />
 
@@ -147,19 +193,21 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        {/* Sticky Navbar */}
-        <Navbar />
+        <CartProvider>
+          {/* Sticky Navbar */}
+          <Navbar />
 
-        {/* Main Content Area */}
-        <main id="main-content" className="grow pt-18">
-          {children}
-        </main>
+          {/* Main Content Area */}
+          <main id="main-content" className="grow pt-18">
+            {children}
+          </main>
 
-        {/* Floating WhatsApp Button */}
-        <WhatsAppFloatingButton />
+          {/* Floating WhatsApp Button */}
+          <WhatsAppFloatingButton />
 
-        {/* Global Footer */}
-        <Footer />
+          {/* Global Footer */}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

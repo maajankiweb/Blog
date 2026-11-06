@@ -1,3 +1,8 @@
+---
+name: NEXUS Phase 6 Operate
+description: Phase 6 playbook for sustained operations, SLA monitoring, live feedback synthesis, and continuous evolution.
+---
+
 # 🔄 Phase 6 Playbook — Operate & Evolve
 
 > **Duration**: Ongoing | **Agents**: 12+ (rotating) | **Governance**: Studio Producer

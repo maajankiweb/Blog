@@ -69,7 +69,7 @@ export default function SearchAutocomplete({ onCloseMobile }: SearchAutocomplete
       <form onSubmit={handleSubmit} className="relative flex items-center">
         <HiMagnifyingGlass
           size={18}
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ff6b00] pointer-events-none"
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#DC2564] pointer-events-none"
         />
         <input
           type="text"
@@ -79,7 +79,7 @@ export default function SearchAutocomplete({ onCloseMobile }: SearchAutocomplete
           onFocus={() => {
             if (results.length > 0) setIsOpen(true);
           }}
-          className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-white/10 border border-white/20 text-xs text-white placeholder:text-white/50 focus:outline-none focus:border-[#ff6b00] transition-all"
+          className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-white/10 border border-white/20 text-xs text-white placeholder:text-white/50 focus:outline-none focus:border-[#DC2564] transition-all"
         />
         {query && (
           <button
@@ -133,12 +133,12 @@ export default function SearchAutocomplete({ onCloseMobile }: SearchAutocomplete
                         />
                       </div>
                     ) : (
-                      <div className="w-12 h-10 rounded-lg bg-[#ff6b00]/20 flex items-center justify-center shrink-0 text-[#ff6b00] font-black text-xs">
+                      <div className="w-12 h-10 rounded-lg bg-[#DC2564]/20 flex items-center justify-center shrink-0 text-[#DC2564] font-black text-xs">
                         MJ
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-bold text-white group-hover:text-[#ff6b00] transition-colors truncate">
+                      <h4 className="text-xs font-bold text-white group-hover:text-[#DC2564] transition-colors truncate">
                         {titleText}
                       </h4>
                       <p className="text-[11px] text-white/50 truncate">
@@ -151,7 +151,7 @@ export default function SearchAutocomplete({ onCloseMobile }: SearchAutocomplete
               <div className="pt-2 border-t border-white/10 text-center">
                 <button
                   onClick={handleSubmit}
-                  className="text-[11px] font-bold text-[#ff6b00] hover:underline"
+                  className="text-[11px] font-bold text-[#DC2564] hover:underline"
                 >
                   View all results for &quot;{query}&quot; →
                 </button>

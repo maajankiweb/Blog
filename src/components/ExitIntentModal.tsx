@@ -60,9 +60,9 @@ export default function ExitIntentModal() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg bg-[#120904] border border-[#ff6b00]/40 rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg bg-[#120904] border border-[#DC2564]/40 rounded-3xl p-6 md:p-8 text-white shadow-2xl overflow-hidden">
         {/* Ambient Glow */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#ff6b00]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#DC2564]/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button
@@ -86,7 +86,7 @@ export default function ExitIntentModal() {
         ) : (
           <div className="space-y-6">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ff6b00]/15 border border-[#ff6b00]/30 text-[#ff6b00] text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#DC2564]/15 border border-[#DC2564]/30 text-[#DC2564] text-xs font-bold uppercase tracking-wider">
                 <HiSparkles size={14} />
                 <span>FREE DIGITAL GROWTH KIT</span>
               </div>
@@ -100,20 +100,20 @@ export default function ExitIntentModal() {
 
             <form onSubmit={handleSubmit} className="space-y-3">
               <div className="relative">
-                <HiEnvelope className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ff6b00]" size={18} />
+                <HiEnvelope className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#DC2564]" size={18} />
                 <input
                   type="email"
                   placeholder="Enter your primary email address..."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#ff6b00]"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#DC2564]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition-all shadow-lg active:scale-95"
+                className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition-all shadow-lg active:scale-95"
               >
                 Send Me Free Playbook →
               </button>

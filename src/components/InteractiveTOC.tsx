@@ -76,7 +76,7 @@ export default function InteractiveTOC({ content }: InteractiveTOCProps) {
 
   return (
     <div className="bg-[#120904] border border-white/10 p-5 rounded-2xl shadow-xl text-white space-y-4 sticky top-24">
-      <div className="flex items-center gap-2 pb-3 border-b border-white/10 text-[#ff6b00]">
+      <div className="flex items-center gap-2 pb-3 border-b border-white/10 text-[#DC2564]">
         <HiListBullet size={18} />
         <h4 className="font-extrabold text-xs uppercase tracking-widest text-white">
           Table of Contents
@@ -94,7 +94,7 @@ export default function InteractiveTOC({ content }: InteractiveTOCProps) {
                 item.level === 3 ? "pl-5 text-[11px]" : ""
               } ${
                 isActive
-                  ? "bg-[#ff6b00] text-white font-bold shadow-md"
+                  ? "bg-[#DC2564] text-white font-bold shadow-md"
                   : "text-white/70 hover:text-white hover:bg-white/5"
               }`}
             >

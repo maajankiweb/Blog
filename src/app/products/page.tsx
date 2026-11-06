@@ -1,40 +1,82 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { getWooProducts, WooDigitalProduct } from "@/lib/wordpress";
+import { getProducts } from "@/lib/wordpress/products";
 import { HiSparkles } from "react-icons/hi2";
 import ProductsClientGrid from "./ProductsClientGrid";
 
+export const revalidate = 60; // ISR revalidation every 60 seconds
+
 export const metadata: Metadata = {
-  title: "Digital Products & Templates Store | Maajanki WebTech",
+  title: "Digital Products & WordPress Plugins Store | MJ Digital",
   description:
-    "Explore ready-made Next.js & WordPress starter templates, custom WordPress plugins, and digital SEO playbooks curated by Maajanki WebTech.",
+    "Buy production-ready Next.js 16 templates, custom WordPress plugins, and SEO playbooks. Instant license keys and automated delivery by MJ Digital.",
+  alternates: {
+    canonical: "https://blog.maajankiwebtech.com/products",
+  },
   openGraph: {
-    title: "Digital Products Store | Maajanki WebTech",
-    description:
-      "Buy premium website templates, WordPress plugins, and developer kits.",
+    title: "Digital Products Store | MJ Digital",
+    description: "Premium Next.js templates, WordPress plugins, and developer toolkits with transparent pricing in INR.",
     type: "website",
+    url: "https://blog.maajankiwebtech.com/products",
   },
 };
 
 export default async function ProductsStorePage() {
-  const products: WooDigitalProduct[] = await getWooProducts();
+  const products = await getProducts();
+
+  // Structured Data Schema for Search Engines and AI Crawlers
+  const productSchemas = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://blog.maajankiwebtech.com/products#webpage",
+        name: "Digital Products & Templates Store",
+        url: "https://blog.maajankiwebtech.com/products",
+        description: "Explore ready-made Next.js starter templates, custom WordPress plugins, and digital SEO playbooks.",
+      },
+      ...products.map((p) => ({
+        "@type": "Product",
+        "@id": `https://blog.maajankiwebtech.com/products/${p.slug}`,
+        name: p.name,
+        description: p.shortDescription || p.description,
+        image: p.featuredImage,
+        offers: {
+          "@type": "Offer",
+          price: p.numericPrice > 0 ? String(p.numericPrice) : "0",
+          priceCurrency: "INR",
+          availability: p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          url: `https://blog.maajankiwebtech.com/products/${p.slug}`,
+          seller: {
+            "@type": "Organization",
+            name: "MJ Digital Digital Agency",
+          },
+        },
+      })),
+    ],
+  };
 
   return (
-    <main className="min-h-screen bg-[#090503] text-white py-16 px-margin-mobile md:px-margin-desktop">
-      <div className="max-w-container-max mx-auto space-y-12">
+    <main className="min-h-screen bg-white text-slate-900 py-12 md:py-16 px-margin-mobile md:px-margin-desktop">
+      {/* Product Catalog & Offer Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchemas) }}
+      />
+
+      <div className="max-w-container-max mx-auto space-y-10">
         {/* Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff6b00]/15 border border-[#ff6b00]/30 text-[#ff6b00] text-xs font-bold uppercase tracking-wider">
-            <HiSparkles size={16} />
-            <span>WOOCOMMERCE &amp; WEBPRESSHUB INTEGRATED STORE</span>
+        <div className="max-w-3xl space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDF2F5] border border-[#FBCFE8] text-[#DC2564] text-xs font-bold uppercase tracking-wider">
+            <HiSparkles size={14} />
+            <span>OFFICIAL DIGITAL STORE &amp; LICENSES</span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-            Ready-Made Templates, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff6b00] to-amber-400">Plugins &amp; E-Books</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Production Templates, <span className="text-[#DC2564]">Plugins &amp; Assets</span>
           </h1>
 
-          <p className="text-base md:text-lg text-white/70 font-normal leading-relaxed">
-            High-performance Next.js starter kits, custom WordPress plugins, and digital SEO playbooks synced from WordPress &amp; WebPressHub APIs. Direct instant payment collection with instant download delivery.
+          <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+            High-performance Next.js 16 starter kits, custom WordPress plugins, and verified developer toolkits synced directly from WooCommerce. Instant payment via Razorpay / UPI with automated download delivery.
           </p>
         </div>
 

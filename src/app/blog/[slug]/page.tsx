@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug, getComments, getPosts, WPPost } from "@/lib/wordpress";
+import { getPostBySlug, getComments, getPosts, WPPost, cleanHtmlText } from "@/lib/wordpress";
 import CommentForm from "@/components/CommentForm";
 import FaqSection from "@/components/FaqSection";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
@@ -12,13 +12,15 @@ import HostingerAdCard from "@/components/HostingerAdCard";
 import InlineAdBanner from "@/components/InlineAdBanner";
 import YoutubeAdCard from "@/components/YoutubeAdCard";
 import AuthorBioCard from "@/components/AuthorBioCard";
+import AgencyConsultationCta from "@/components/AgencyConsultationCta";
 import ArticleAudioPlayer from "@/components/ArticleAudioPlayer";
 import InteractiveTOC from "@/components/InteractiveTOC";
 import CodeCopyEnhancer from "@/components/CodeCopyEnhancer";
 import BookmarkButton from "@/components/BookmarkButton";
 import ExitIntentModal from "@/components/ExitIntentModal";
-import { Clock, Calendar, Share2, MessageSquare, ArrowLeft, ArrowRight, User } from "lucide-react";
+import { Clock, Calendar, MessageSquare, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaXTwitter, FaPinterestP, FaWhatsapp, FaTelegram, FaRedditAlien } from "react-icons/fa6";
+import { HiCheckBadge, HiShoppingBag } from "react-icons/hi2";
 
 type Params = Promise<{ slug: string }>;
 
@@ -38,12 +40,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       };
     }
 
-    // Use scraped SEO values if available, otherwise fall back to default logic
-    const seoTitle = post.seo?.seoTitle || post.title.rendered.replace(/&#8217;/g, "'").replace(/&#8216;/g, "'").replace(/&#8220;/g, '“').replace(/&#8221;/g, '”');
-    const seoDescription = post.seo?.seoDescription || post.excerpt.rendered
-      .replace(/<[^>]*>?/gm, "") // Remove HTML tags
-      .trim()
-      .substring(0, 160);
+    const seoTitle = post.seo?.seoTitle || cleanHtmlText(post.title.rendered);
+    const seoDescription = post.seo?.seoDescription || cleanHtmlText(post.excerpt.rendered).slice(0, 160);
     const keywords = post.seo?.keywords ? post.seo.keywords.split(',').map(k => k.trim()) : undefined;
     const robots = post.seo?.robots || undefined;
 
@@ -90,7 +88,6 @@ export default async function PostPage(props: PageProps) {
     post = await getPostBySlug(slug);
     
     if (post) {
-      // Fetch comments & related posts in parallel
       const postCategories = post._embedded?.['wp:term']?.[0] || [];
       const primaryCategory = postCategories[0];
 
@@ -103,8 +100,8 @@ export default async function PostPage(props: PageProps) {
       
       comments = fetchedComments;
       relatedPosts = fetchedRelated
-        .filter((p) => p.id !== post!.id) // Exclude current post
-        .slice(0, 3); // Get top 3
+        .filter((p) => p.id !== post!.id)
+        .slice(0, 3);
     }
   } catch (err) {
     console.error(`Error loading blog details for slug "${slug}":`, err);
@@ -115,59 +112,50 @@ export default async function PostPage(props: PageProps) {
     notFound();
   }
 
-  // Extract featured image from _embedded
   const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
   const imageUrl = featuredMedia?.source_url;
   const imageAlt = featuredMedia?.alt_text || post.title.rendered;
 
-  // Extract category details
   const postCategories = post._embedded?.['wp:term']?.[0] || [];
   const primaryCategory = postCategories[0];
-
-  // Extract author details
   const author = post._embedded?.author?.[0];
 
-  // Format Date
-  const formattedDate = new Date(post.date).toLocaleDateString("en-IN", {
+  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric"
   });
 
-  // Calculate dynamic reading time
   const textOnly = post.content.rendered.replace(/<[^>]*>/g, "");
   const wordCount = textOnly.trim().split(/\s+/).length;
   const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 225));
 
-  // Inject ID attributes into h2 elements for Table of Contents anchors
   let headingIndex = 0;
   let contentWithHeadingIds = post.content.rendered.replace(/<h2>/g, () => {
     return `<h2 id="heading-${headingIndex++}">`;
   });
 
-  // Inject inline Ad banner into long articles after 3rd paragraph
+  // Inject in-content Digital Product Recommendation Banner after 3rd paragraph
   let paragraphCount = 0;
-  const inlineAdHtml = `
-    <div class="my-10 p-6 bg-surface border-2 border-primary-container/20 rounded-2xl shadow-sm not-prose">
-      <div class="flex items-center justify-between mb-2">
-        <span class="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 bg-primary-container/15 text-primary-container rounded-full border border-primary-container/30">SPONSORED</span>
-        <span class="text-[10px] text-on-surface-variant/60 font-semibold uppercase tracking-wider">Ad</span>
+  const digitalProductCallout = `
+    <div class="my-10 p-6 bg-slate-50 border border-slate-200/90 rounded-2xl shadow-xs not-prose flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 bg-[#FDF2F5] text-[#DC2564] rounded-full border border-[#FBCFE8]">RECOMMENDED STORE ASSET</span>
+        <h4 class="font-extrabold text-slate-900 text-base mb-1">Production Next.js 16 Starter Kit &amp; InvoBill Tools</h4>
+        <p class="text-slate-600 text-xs leading-relaxed max-w-xl">Save 100+ development hours. Pre-configured with Tailwind v4, SEO schema, and verified Razorpay checkout.</p>
       </div>
-      <h4 class="font-extrabold text-on-surface text-base mb-1">Accelerate Your Digital Growth with Osdire</h4>
-      <p class="text-on-surface-variant text-xs leading-relaxed mb-3">Unlock premium digital tools, web optimization, and specialized infrastructure designed for modern businesses.</p>
-      <a href="https://osdire.com/aff/ashish_kumar_dchb-1" target="_blank" rel="noopener sponsored" class="inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-[#e05e00] text-white py-2 px-5 rounded-xl font-bold text-xs transition-all shadow-sm">Explore Osdire Offers →</a>
+      <a href="/products" class="inline-flex items-center justify-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white py-2.5 px-4 rounded-xl font-bold text-xs transition-all shadow-xs shrink-0 whitespace-nowrap">View Store Asset →</a>
     </div>
   `;
 
   contentWithHeadingIds = contentWithHeadingIds.replace(/<\/p>/g, (match) => {
     paragraphCount++;
     if (paragraphCount === 3) {
-      return match + inlineAdHtml;
+      return match + digitalProductCallout;
     }
     return match;
   });
 
-  // Completely strip Jetpack/Sassy Social Share/WordPress plugin social sharing block from article HTML content
   contentWithHeadingIds = contentWithHeadingIds
     .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share|xs_social_share_widget|wslu-style-2)[^"]*"[\s\S]*?<\/div>\s*<\/div>/gi, '')
     .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share|xs_social_share_widget|wslu-style-2)[^"]*"[\s\S]*?<\/div>/gi, '')
@@ -175,87 +163,105 @@ export default async function PostPage(props: PageProps) {
     .replace(/<ul[^>]*>[\s\S]*?Share\s*(Facebook|LinkedIn|Twitter|Pinterest|WhatsApp|Telegram|Reddit)[\s\S]*?<\/ul>/gi, '')
     .replace(/<div[^>]*>[\s\S]*?0\s*Share\s*Facebook[\s\S]*?<\/div>/gi, '');
 
-  const cleanTitle = post.title.rendered.replace(/<[^>]*>/g, "").replace(/&#8217;/g, "'").replace(/&#8216;/g, "'").trim();
+  const cleanTitle = cleanHtmlText(post.title.rendered);
+  const displayAuthorName = author?.name === "Maa janki" || !author?.name ? "Ashish Kumar" : author.name;
+  const authorRole = displayAuthorName === "Ashish Kumar" ? "Founder & Principal Architect, Maajanki Web Tech" : "Technical Contributor";
 
   return (
     <>
-      {/* Scroll-linked reading progress bar */}
       <ReadingProgressBar />
 
-      <main className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-lg">
-        {/* Article Header */}
-        <header className="mb-xl">
-          <div className="flex flex-col gap-sm mb-base">
-            {primaryCategory && (
-              <span className="inline-block px-3 py-1 bg-surface-container-highest dark:bg-zinc-800 text-on-surface-variant dark:text-zinc-300 rounded-full text-xs font-bold uppercase tracking-wider w-fit">
+      <main className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 mb-6 overflow-x-auto whitespace-nowrap">
+          <Link href="/" className="hover:text-slate-900 transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/blog" className="hover:text-slate-900 transition-colors">Articles</Link>
+          {primaryCategory && (
+            <>
+              <span>/</span>
+              <Link href={`/category/${primaryCategory.slug}`} className="hover:text-[#DC2564] transition-colors">
                 {primaryCategory.name}
-              </span>
-            )}
-            <h1 
-              className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface dark:text-zinc-50 max-w-4xl leading-tight"
-              dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-            />
-          </div>
+              </Link>
+            </>
+          )}
+          <span>/</span>
+          <span className="text-slate-400 truncate max-w-[240px]">{cleanTitle}</span>
+        </nav>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-md py-md border-y border-outline-variant/20 dark:border-zinc-800/30 my-lg">
-            <div className="flex items-center gap-sm">
+        {/* Article Header */}
+        <header className="mb-10 space-y-4">
+          {primaryCategory && (
+            <span className="inline-block px-3 py-1 bg-[#FDF2F5] text-[#DC2564] border border-[#FBCFE8] rounded-full text-xs font-bold uppercase tracking-wider">
+              {primaryCategory.name}
+            </span>
+          )}
+
+          <h1 
+            className="font-black text-2xl sm:text-4xl lg:text-5xl text-slate-900 max-w-4xl leading-tight tracking-tight"
+            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+          />
+
+          {/* Author, Date & Reading Time Bar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-4 border-y border-slate-200/80 my-6">
+            <div className="flex items-center gap-3">
               {author?.avatar_urls?.['96'] ? (
                 <Image 
                   src={author.avatar_urls['96']} 
-                  alt={author.name}
-                  width={48}
-                  height={48}
-                  className="rounded-full object-cover border border-primary-fixed"
+                  alt={displayAuthorName}
+                  width={44}
+                  height={44}
+                  className="rounded-full object-cover border border-[#DC2564]/30"
                 />
               ) : (
-                <div className="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center font-bold text-primary">
-                  {author?.name.substring(0, 2) || "ED"}
+                <div className="w-11 h-11 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
+                  AK
                 </div>
               )}
               <div>
-                <p className="font-label-md text-label-md text-on-surface dark:text-zinc-200">
-                  {author?.name || "Elena Vance"}
-                </p>
-                <p className="text-xs text-on-surface-variant dark:text-zinc-400">
-                  Senior Editorial Writer • {formattedDate}
+                <div className="flex items-center gap-1.5 font-bold text-sm text-slate-900">
+                  <span>{displayAuthorName}</span>
+                  <HiCheckBadge className="text-[#DC2564] w-4 h-4" />
+                </div>
+                <p className="text-xs text-slate-500">
+                  {authorRole} • <span suppressHydrationWarning>{formattedDate}</span>
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-md">
-                <div className="flex items-center gap-xs text-on-surface-variant dark:text-zinc-400 text-xs font-medium">
-                  <Clock className="h-4 w-4" />
-                  <span>{readingTimeMinutes} min read</span>
-                </div>
-              <div className="h-8 w-px bg-outline-variant/40 hidden sm:block"></div>
-              <div className="flex items-center gap-[#ff6b00]">
-                <BookmarkButton
-                  slug={post.slug}
-                  title={cleanTitle}
-                  excerpt={post.excerpt.rendered.replace(/<[^>]*>/g, "").slice(0, 120)}
-                  category={primaryCategory?.name || "Article"}
-                  imageUrl={imageUrl}
-                />
+            <div className="flex items-center gap-4 text-xs font-medium text-slate-500">
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-4 w-4 text-slate-400" />
+                <span>{readingTimeMinutes} min read</span>
               </div>
+              <div className="h-5 w-px bg-slate-200 hidden sm:block" />
+              <BookmarkButton
+                slug={post.slug}
+                title={cleanTitle}
+                excerpt={cleanHtmlText(post.excerpt.rendered).slice(0, 120)}
+                category={primaryCategory?.name || "Article"}
+                imageUrl={imageUrl}
+              />
             </div>
           </div>
 
           {/* Featured Image */}
           {imageUrl && (
-            <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden relative group shadow-md border border-outline-variant/20 dark:border-zinc-800/30 bg-surface-variant/20">
+            <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden relative shadow-sm border border-slate-200/80 bg-slate-100">
               <Image
                 src={imageUrl}
                 alt={imageAlt}
                 fill
                 sizes="(max-width: 1200px) 100vw, 1200px"
-                className="object-cover transition-transform duration-700 group-hover:scale-101"
+                className="object-cover"
                 priority
               />
             </div>
           )}
         </header>
+
         {/* 2-Column Content Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Main Article Content */}
           <article className="lg:col-span-8">
             <CodeCopyEnhancer />
@@ -266,8 +272,9 @@ export default async function PostPage(props: PageProps) {
               content={post.content.rendered}
             />
 
+            {/* Rendered WP Content */}
             <div 
-              className="wp-content article-content max-w-none dark:text-zinc-300"
+              className="wp-content article-content max-w-none text-slate-700"
               dangerouslySetInnerHTML={{ __html: contentWithHeadingIds }}
             />
 
@@ -275,165 +282,133 @@ export default async function PostPage(props: PageProps) {
             <InlineAdBanner
               href="https://www.hostinger.com/in?REFERRALCODE=maajankiweb"
               title="Host Your Website with Hostinger — Up to 75% OFF + Free Domain"
-              description="Get ultra-fast cloud hosting, free SSL, 99.9% uptime guarantee, and 24/7 expert support. Specially optimized for Next.js, WordPress, and web applications."
+              description="Ultra-fast cloud hosting, free SSL, 99.9% uptime guarantee, and 24/7 expert support. Specially optimized for Next.js, WordPress, and web applications."
               ctaText="Get Started with Hostinger"
             />
 
             {/* Social Share Bar */}
-            <div className="mt-xl pt-lg border-t border-outline-variant/20 dark:border-zinc-800/30">
-              <span className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-3">
-                Share this Article
+            <div className="mt-12 pt-6 border-t border-slate-200">
+              <span className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                Share this Dispatch
               </span>
-              <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
-                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${cleanTitle} https://blog.maajankiwebtech.com/blog/${slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#1877F2] text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaFacebookF size={13} />
-                  Facebook
-                </a>
-                <a
-                  href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#0A66C2] text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaLinkedinIn size={13} />
-                  LinkedIn
-                </a>
-                <a
-                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}&text=${encodeURIComponent(post.title.rendered)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-black text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaXTwitter size={13} />
-                  Twitter
-                </a>
-                <a
-                  href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#E60023] text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaPinterestP size={13} />
-                  Pinterest
-                </a>
-                <a
-                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${post.title.rendered} https://blog.maajankiwebtech.com/blog/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#25D366] text-white hover:opacity-90 transition-opacity"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#25D366] text-white hover:opacity-90 transition-opacity"
                 >
                   <FaWhatsapp size={14} />
                   WhatsApp
                 </a>
                 <a
-                  href={`https://t.me/share/url?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}&text=${encodeURIComponent(post.title.rendered)}`}
+                  href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#229ED9] text-white hover:opacity-90 transition-opacity"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0A66C2] text-white hover:opacity-90 transition-opacity"
                 >
-                  <FaTelegram size={14} />
-                  Telegram
+                  <FaLinkedinIn size={13} />
+                  LinkedIn
                 </a>
                 <a
-                  href={`https://reddit.com/submit?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}&title=${encodeURIComponent(post.title.rendered)}`}
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}&text=${encodeURIComponent(cleanTitle)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#FF4500] text-white hover:opacity-90 transition-opacity"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-black text-white hover:opacity-90 transition-opacity"
                 >
-                  <FaRedditAlien size={14} />
-                  Reddit
+                  <FaXTwitter size={13} />
+                  X / Twitter
+                </a>
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1877F2] text-white hover:opacity-90 transition-opacity"
+                >
+                  <FaFacebookF size={13} />
+                  Facebook
                 </a>
               </div>
             </div>
 
             {/* Post Tags */}
-            <div className="flex flex-wrap gap-xs mt-lg pt-md border-t border-outline-variant/20 dark:border-zinc-800/30">
-              {post._embedded?.['wp:term']?.[1]?.map((tag: any) => (
-                <Link
-                  key={tag.id}
-                  href={`/blog?tag=${tag.id}`}
-                  className="px-4 py-2 bg-surface-container dark:bg-zinc-800 rounded-lg text-xs font-medium hover:bg-primary-container hover:text-on-primary transition-all dark:text-zinc-300 dark:hover:text-white"
-                >
-                  #{tag.name}
-                </Link>
-              ))}
-            </div>
+            {post._embedded?.['wp:term']?.[1] && (
+              <div className="flex flex-wrap gap-1.5 mt-8 pt-4 border-t border-slate-100">
+                {post._embedded['wp:term'][1].map((tag: any) => (
+                  <Link
+                    key={tag.id}
+                    href={`/blog?tag=${tag.id}`}
+                    className="px-3 py-1 bg-slate-100 hover:bg-[#FDF2F5] hover:text-[#DC2564] rounded-lg text-xs font-medium text-slate-700 transition-colors"
+                  >
+                    #{tag.name}
+                  </Link>
+                ))}
+              </div>
+            )}
           </article>
 
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-lg">
-            <div className="sticky top-28 space-y-lg">
+          {/* Sticky Sidebar */}
+          <aside className="lg:col-span-4 space-y-6">
+            <div className="sticky top-24 space-y-6">
               {/* Interactive Dynamic Table of Contents */}
               <InteractiveTOC content={post.content.rendered} />
 
-              {/* Sidebar Newsletter box */}
-              <div className="bg-on-secondary-fixed p-gutter rounded-xl text-white overflow-hidden relative shadow-md">
-                <div className="relative z-10 space-y-4">
-                  <h3 className="font-headline-md text-lg font-black">The Maajanki Weekly</h3>
-                  <p className="text-secondary-fixed-dim text-sm leading-relaxed">
-                    Deep dives into the architecture of the modern web. No fluff, just insights.
-                  </p>
-                  <form action="/newsletter" method="GET" className="space-y-xs">
-                    <input
-                      type="email"
-                      placeholder="email@example.com"
-                      className="w-full bg-white/10 border-white/20 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary placeholder:text-white/40 outline-none"
-                      required
-                    />
-                    <button type="submit" className="w-full bg-primary-container py-3 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
-                      SUBSCRIBE NOW
-                    </button>
-                  </form>
-                </div>
-                <div className="absolute -right-8 -bottom-8 opacity-10 pointer-events-none">
-                  <span className="material-symbols-outlined text-[120px]">mark_email_read</span>
-                </div>
+              {/* Sidebar Store Callout */}
+              <div className="bg-gradient-to-br from-slate-900 to-[#14213D] p-5 rounded-2xl border border-slate-800 text-white shadow-sm space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
+                  MAAJANKI COMMERCE
+                </span>
+                <h4 className="font-extrabold text-sm leading-snug">
+                  Explore Pre-built Next.js &amp; WordPress Templates
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed">
+                  Get high-performance, SEO-verified starter kits with instant digital download and GST invoicing.
+                </p>
+                <Link
+                  href="/products"
+                  className="inline-flex items-center gap-1 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-xs"
+                >
+                  <span>Browse Templates</span>
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
               </div>
 
-              {/* AK Web Master Hub YouTube Channel Banner */}
+              {/* YouTube Channel Banner */}
               <YoutubeAdCard />
 
               {/* Hostinger Sponsored Ad Widget */}
               <HostingerAdCard />
 
-              {/* Sponsored Ad Banner */}
-              <AdBanner />
-
               {/* Related reads column */}
-              <div>
-                <h3 className="font-label-md text-label-md mb-md text-black dark:text-white uppercase font-black tracking-wider sidebar-related-title">
-                  RELATED READS
+              <div className="bg-slate-50/70 p-5 rounded-2xl border border-slate-200/90 shadow-2xs">
+                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-900 mb-4">
+                  Related Dispatches
                 </h3>
-                <div className="flex flex-col gap-md">
+                <div className="flex flex-col gap-3.5">
                   {relatedPosts.length > 0 ? (
                     relatedPosts.map((rPost) => {
                       const rImgUrl = rPost._embedded?.['wp:featuredmedia']?.[0]?.source_url;
                       return (
-                        <Link key={rPost.id} href={`/blog/${rPost.slug}`} className="group flex gap-sm items-center cursor-pointer">
-                          <div className="w-20 h-20 rounded-lg overflow-hidden bg-surface-variant relative shrink-0">
+                        <Link key={rPost.id} href={`/blog/${rPost.slug}`} className="group flex gap-3 items-center">
+                          <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 relative shrink-0 border border-slate-200/60">
                             {rImgUrl ? (
                               <Image
                                 src={rImgUrl}
                                 alt={rPost.title.rendered}
                                 fill
-                                sizes="80px"
-                                className="object-cover"
+                                sizes="64px"
+                                className="object-cover group-hover:scale-105 transition-transform duration-200"
                               />
                             ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-primary-fixed to-primary" />
+                              <div className="w-full h-full bg-slate-200" />
                             )}
                           </div>
                           <div>
                             <h4 
-                              className="text-sm font-bold text-on-surface dark:text-zinc-200 group-hover:text-primary transition-colors line-clamp-2 leading-snug"
+                              className="text-xs font-bold text-slate-900 group-hover:text-[#DC2564] transition-colors line-clamp-2 leading-snug"
                               dangerouslySetInnerHTML={{ __html: rPost.title.rendered }}
                             />
-                            <span className="text-xs text-[#6B6058] font-medium">
+                            <span className="text-[11px] text-slate-400 font-medium mt-0.5 block">
                               5 min read
                             </span>
                           </div>
@@ -441,7 +416,7 @@ export default async function PostPage(props: PageProps) {
                       );
                     })
                   ) : (
-                    <p className="text-sm text-on-surface-variant italic">No related articles found</p>
+                    <p className="text-xs text-slate-500 italic">No related articles found</p>
                   )}
                 </div>
               </div>
@@ -449,30 +424,33 @@ export default async function PostPage(props: PageProps) {
           </aside>
         </div>
 
-          {/* Author Bio Block */}
-          <AuthorBioCard />
+        {/* Strategic Agency Consultation CTA */}
+        <AgencyConsultationCta />
 
-          <section className="mt-8 py-8 border-t border-outline-variant/20 dark:border-zinc-800/30">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <Link href="/blog" className="group flex items-center gap-2 text-[#ff6b00] font-bold text-sm hover:underline">
-                <ArrowLeft className="h-4 w-4" /> Browse All Articles
-              </Link>
-              <Link href="/contact" className="group flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-semibold text-xs">
-                Have questions or need consultation? Reach out →
-              </Link>
-            </div>
-          </section>
+        {/* Author Bio Block */}
+        <AuthorBioCard />
+
+        <section className="mt-8 py-6 border-t border-slate-200">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <Link href="/blog" className="group flex items-center gap-2 text-[#DC2564] font-bold text-sm hover:underline">
+              <ArrowLeft className="h-4 w-4" /> Browse All Articles
+            </Link>
+            <Link href="/contact" className="text-slate-600 hover:text-slate-900 font-semibold text-xs transition-colors">
+              Have questions or need custom development? Reach out →
+            </Link>
+          </div>
+        </section>
 
         {/* Comments Listing & Post Comment Form */}
-        <section className="mt-xl max-w-4xl mx-auto space-y-lg">
-          <div className="flex justify-between items-center mb-lg pb-4 border-b border-outline-variant/20 dark:border-zinc-800/30">
-            <h3 className="font-headline-md text-2xl text-on-surface dark:text-zinc-100 flex items-center gap-xs">
-              <MessageSquare className="h-6 w-6 text-primary" />
-              Reflections ({comments.length})
+        <section className="mt-12 max-w-4xl mx-auto space-y-6">
+          <div className="flex justify-between items-center pb-3 border-b border-slate-200">
+            <h3 className="font-extrabold text-xl text-slate-900 flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-[#DC2564]" />
+              <span>Comments ({comments.length})</span>
             </h3>
           </div>
 
-          <div className="space-y-lg">
+          <div className="space-y-4">
             {comments.length > 0 ? (
               comments.map((comment) => {
                 const commentDate = new Date(comment.date).toLocaleDateString("en-IN", {
@@ -481,21 +459,21 @@ export default async function PostPage(props: PageProps) {
                   year: "numeric"
                 });
                 return (
-                  <div key={comment.id} className="flex gap-md pb-lg border-b border-outline-variant/10 dark:border-zinc-800/10">
-                    <div className="w-10 h-10 rounded-full bg-secondary-container dark:bg-zinc-800 flex items-center justify-center font-bold text-on-secondary-container dark:text-zinc-300 text-sm shrink-0">
+                  <div key={comment.id} className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-2xl flex gap-3.5">
+                    <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
                       {comment.author_name.substring(0, 2).toUpperCase()}
                     </div>
                     <div>
-                      <div className="flex items-center gap-sm mb-xs">
-                        <span className="font-bold text-sm text-on-surface dark:text-zinc-100">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-bold text-xs text-slate-900">
                           {comment.author_name}
                         </span>
-                        <span className="text-xs text-on-surface-variant dark:text-zinc-400">
+                        <span className="text-[11px] text-slate-400" suppressHydrationWarning>
                           {commentDate}
                         </span>
                       </div>
                       <div 
-                        className="text-sm text-on-surface-variant dark:text-zinc-300 leading-relaxed"
+                        className="text-xs sm:text-sm text-slate-700 leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: comment.content.rendered }}
                       />
                     </div>
@@ -503,8 +481,8 @@ export default async function PostPage(props: PageProps) {
                 );
               })
             ) : (
-              <p className="text-on-surface-variant dark:text-zinc-400 text-sm italic py-4">
-                No reflections yet. Be the first to share your thoughts!
+              <p className="text-slate-500 text-xs italic py-2">
+                No comments yet. Be the first to share your thoughts!
               </p>
             )}
           </div>
@@ -557,19 +535,25 @@ export default async function PostPage(props: PageProps) {
                     "name": cleanTitle,
                   },
                   "headline": cleanTitle,
-                  "description": post.excerpt.rendered.replace(/<[^>]*>/g, "").slice(0, 160),
+                  "description": cleanHtmlText(post.excerpt.rendered).slice(0, 160),
                   "image": imageUrl ? [imageUrl] : undefined,
                   "datePublished": post.date,
                   "dateModified": post.modified || post.date,
                   "author": {
                     "@type": "Person",
-                    "name": author?.name || "Ashish Kumar",
+                    "name": displayAuthorName,
+                    "jobTitle": "Founder & Technical Lead",
+                    "worksFor": {
+                      "@type": "Organization",
+                      "name": "Maajanki Web Tech LLP",
+                      "url": "https://www.maajankiwebtech.com/"
+                    },
                     "url": "https://blog.maajankiwebtech.com/about",
                   },
                   "publisher": {
                     "@type": "Organization",
-                    "name": "Maajanki WebTech Digital Agency",
-                    "url": "https://blog.maajankiwebtech.com",
+                    "name": "Maajanki Web Tech LLP",
+                    "url": "https://www.maajankiwebtech.com/",
                     "logo": {
                       "@type": "ImageObject",
                       "url": "https://blog.maajankiwebtech.com/logo.png",
@@ -625,4 +609,3 @@ export default async function PostPage(props: PageProps) {
     </>
   );
 }
-

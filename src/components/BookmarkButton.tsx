@@ -73,7 +73,7 @@ export default function BookmarkButton({
       onClick={toggleBookmark}
       className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm active:scale-95 border ${
         isSaved
-          ? "bg-[#ff6b00] text-white border-[#ff6b00]"
+          ? "bg-[#DC2564] text-white border-[#DC2564]"
           : "bg-white/10 hover:bg-white/20 text-white/90 border-white/20"
       }`}
       title={isSaved ? "Remove from saved articles" : "Save article for later"}

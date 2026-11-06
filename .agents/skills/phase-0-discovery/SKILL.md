@@ -1,3 +1,8 @@
+---
+name: NEXUS Phase 0 Discovery
+description: Phase 0 playbook for intelligence, market discovery, risk analysis, and feasibility gates before building.
+---
+
 # 🔍 Phase 0 Playbook — Intelligence & Discovery
 
 > **Duration**: 3-7 days | **Agents**: 6 | **Gate Keeper**: Executive Summary Generator

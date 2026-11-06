@@ -45,19 +45,19 @@ export default function SavedArticlesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#090503] text-white py-16 px-margin-mobile md:px-margin-desktop">
+    <main className="min-h-screen bg-[#FFFFFF] text-white py-16 px-margin-mobile md:px-margin-desktop">
       <div className="max-w-container-max mx-auto space-y-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff6b00]/15 border border-[#ff6b00]/30 text-[#ff6b00] text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DC2564]/15 border border-[#DC2564]/30 text-[#DC2564] text-xs font-bold uppercase tracking-wider">
               <HiBookmark className="w-4 h-4" />
               <span>PERSONAL LIBRARY</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
               Saved Articles &amp; Bookmarks
             </h1>
-            <p className="text-white/70 text-sm md:text-base max-w-xl">
+            <p className="text-gray-600 text-sm md:text-base max-w-xl">
               Access your saved tutorials, web dev guides, and SEO strategies offline without creating an account.
             </p>
           </div>
@@ -75,17 +75,17 @@ export default function SavedArticlesPage() {
 
         {/* Saved List Grid */}
         {savedArticles.length === 0 ? (
-          <div className="text-center py-20 bg-white/5 rounded-3xl border border-white/10 space-y-4 max-w-xl mx-auto">
-            <div className="w-16 h-16 rounded-2xl bg-[#ff6b00]/15 text-[#ff6b00] flex items-center justify-center mx-auto">
+          <div className="text-center py-20 bg-white/5 rounded-3xl border border-gray-200 space-y-4 max-w-xl mx-auto">
+            <div className="w-16 h-16 rounded-2xl bg-[#DC2564]/15 text-[#DC2564] flex items-center justify-center mx-auto">
               <HiBookmark size={32} />
             </div>
             <h3 className="text-xl font-bold text-white">Your Reading List is Empty</h3>
-            <p className="text-sm text-white/60 max-w-md mx-auto">
+            <p className="text-sm text-gray-500 max-w-md mx-auto">
               Explore our articles and click &quot;Save for later&quot; on any guide to save it here for instant access.
             </p>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-md mt-2"
+              className="inline-flex items-center gap-2 bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-md mt-2"
             >
               <span>Explore Articles</span>
               <HiArrowRight size={14} />
@@ -96,11 +96,11 @@ export default function SavedArticlesPage() {
             {savedArticles.map((article) => (
               <article
                 key={article.slug}
-                className="group relative bg-[#120904] rounded-2xl border border-white/10 hover:border-[#ff6b00]/50 p-6 flex flex-col justify-between transition-all duration-300 shadow-xl"
+                className="group relative bg-white rounded-2xl border border-gray-200 hover:border-[#DC2564]/50 p-6 flex flex-col justify-between transition-all duration-300 shadow-xl"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[#ff6b00] text-[10px] font-black uppercase tracking-wider">
+                    <span className="text-[#DC2564] text-[10px] font-black uppercase tracking-wider">
                       {article.category}
                     </span>
                     <button
@@ -113,21 +113,21 @@ export default function SavedArticlesPage() {
                   </div>
 
                   <Link href={`/blog/${article.slug}`}>
-                    <h3 className="font-bold text-lg text-white group-hover:text-[#ff6b00] transition-colors leading-snug line-clamp-2">
+                    <h3 className="font-bold text-lg text-white group-hover:text-[#DC2564] transition-colors leading-snug line-clamp-2">
                       {article.title}
                     </h3>
                   </Link>
 
-                  <p className="text-white/60 text-xs leading-relaxed line-clamp-3">
+                  <p className="text-gray-500 text-xs leading-relaxed line-clamp-3">
                     {article.excerpt}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/50">
+                <div className="pt-6 mt-4 border-t border-gray-200 flex items-center justify-between text-xs text-white/50">
                   <span>Saved on {new Date(article.savedAt).toLocaleDateString()}</span>
                   <Link
                     href={`/blog/${article.slug}`}
-                    className="text-[#ff6b00] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                    className="text-[#DC2564] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                   >
                     <span>Read →</span>
                   </Link>

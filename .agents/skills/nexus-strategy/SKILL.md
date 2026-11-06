@@ -1,3 +1,8 @@
+---
+name: NEXUS Multi-Agent Strategy
+description: The Agency complete operational playbook and deployment doctrine for multi-agent orchestration.
+---
+
 # 🌐 NEXUS — Network of EXperts, Unified in Strategy
 
 ## The Agency's Complete Operational Playbook for Multi-Agent Orchestration

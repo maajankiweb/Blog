@@ -1,3 +1,8 @@
+---
+name: NEXUS Enterprise Feature Runbook
+description: NEXUS-Sprint runbook for adding major enterprise features with strict compliance, security, and quality gates.
+---
+
 # 🏢 Runbook: Enterprise Feature Development
 
 > **Mode**: NEXUS-Sprint | **Duration**: 6-12 weeks | **Agents**: 20-30

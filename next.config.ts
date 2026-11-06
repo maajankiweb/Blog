@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const securityHeaders = [
+  // AI Agent Content Signals
+  { key: "Content-Signal", value: "search=yes, ai-train=no" },
   // Prevent clickjacking — disallow site from being embedded in iframes
   { key: "X-Frame-Options", value: "DENY" },
   // Prevent MIME-type sniffing attacks
@@ -29,6 +31,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
+    dangerouslyAllowSVG: false,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 86400,
     remotePatterns: [

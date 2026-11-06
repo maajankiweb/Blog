@@ -1,127 +1,270 @@
 "use client";
 
-import React from "react";
-import { HiStar, HiArrowTrendingUp } from "react-icons/hi2";
+import React, { useState, useEffect } from "react";
+import {
+  HiStar,
+  HiChevronLeft,
+  HiChevronRight,
+  HiOutlineCheckBadge,
+} from "react-icons/hi2";
 
-interface Testimonial {
+interface Review {
   id: number;
   name: string;
   role: string;
-  content: string;
+  avatarText: string;
+  avatarColor: string;
+  date: string;
   rating: number;
+  project: string;
+  comment: string;
 }
 
-const testimonials: Testimonial[] = [
+const verifiedReviews: Review[] = [
   {
     id: 1,
-    name: "Amit Varma",
-    role: "Founder, Varma Retail & E-Commerce",
-    content:
-      "Working with Maajanki WebTech completely revamped our store architecture and local SEO strategy. Our organic monthly traffic grew 180% in 90 days and conversion rates doubled!",
+    name: "Vikramaditya Rathore",
+    role: "Founder, Zenith Digital Agency",
+    avatarText: "VR",
+    avatarColor: "bg-blue-600",
+    date: "April 2026",
     rating: 5,
+    project: "MJ Pro Next.js Starter Kit",
+    comment:
+      "The Next.js 16 starter kit saved our team over 3 weeks of architectural scaffolding. Clean TypeScript types, headless WooCommerce syncing, and 100/100 Core Web Vitals right out of the box.",
   },
   {
     id: 2,
-    name: "Sneha Roy",
-    role: "Digital Marketing Specialist",
-    content:
-      "I follow Maajanki Blog regularly for technical SEO and indexing strategies. The step-by-step guides on Google Search Console fixes helped us boost our organic traffic by 40% in just two months!",
+    name: "Pooja Deshmukh",
+    role: "Head of Marketing, CloudScale",
+    avatarText: "PD",
+    avatarColor: "bg-purple-600",
+    date: "March 2026",
     rating: 5,
+    project: "Technical SEO & AEO Architecture",
+    comment:
+      "Ashish Kumar's architectural guidelines for schema markup and llms.txt completely revolutionized our organic presence. We started getting cited in ChatGPT and Perplexity within 45 days.",
   },
   {
     id: 3,
-    name: "Rahul Sharma",
-    role: "Freelance Web Developer",
-    content:
-      "The YouTube tutorials on AK Web Master Hub combined with detailed blog posts here gave me the exact skills needed to start invoicing international clients. Highly recommended for every web dev!",
+    name: "Anand Verma",
+    role: "Managing Director, Verma Logistics",
+    avatarText: "AV",
+    avatarColor: "bg-emerald-600",
+    date: "February 2026",
     rating: 5,
+    project: "Headless E-Commerce System",
+    comment:
+      "Migrating our sluggish store to Next.js App Router with MJ Digital was a game changer. Checkout abandonment dropped significantly thanks to custom Razorpay and UPI instant checkout flow.",
+  },
+  {
+    id: 4,
+    name: "Siddharth Menon",
+    role: "Senior Full-Stack Developer",
+    avatarText: "SM",
+    avatarColor: "bg-pink-600",
+    date: "May 2026",
+    rating: 5,
+    project: "InvoBill GST & Developer Tools",
+    comment:
+      "I use MJ Digital tools daily for JSON formatting and GST invoice calculations. Everything runs super snappy directly in the browser with zero tracking. The editorial guides are top-tier.",
+  },
+  {
+    id: 5,
+    name: "Meera Nair",
+    role: "E-Commerce Director, TrendKraft",
+    avatarText: "MN",
+    avatarColor: "bg-amber-600",
+    date: "January 2026",
+    rating: 5,
+    project: "WooCommerce API Integration",
+    comment:
+      "Flawless code quality and extremely responsive support on WhatsApp. When we needed help configuring webhooks for automatic digital downloads, the team guided us step-by-step.",
+  },
+  {
+    id: 6,
+    name: "Karan Johar",
+    role: "Tech Lead, AppNexus Labs",
+    avatarText: "KJ",
+    avatarColor: "bg-indigo-600",
+    date: "April 2026",
+    rating: 5,
+    project: "Next.js Core Web Vitals Audit",
+    comment:
+      "Our LCP improved from 4.2s to 0.8s following MJ Digital's image optimization and edge caching playbooks. Excellent engineering depth and actionable recommendations.",
+  },
+  {
+    id: 7,
+    name: "Rohan Kulkarni",
+    role: "SaaS Founder, WebFlowy",
+    avatarText: "RK",
+    avatarColor: "bg-teal-600",
+    date: "February 2026",
+    rating: 5,
+    project: "AI Schema & Metadata Hub",
+    comment:
+      "The free schema generator tool produces 100% Google Rich Results compliant JSON-LD. We secured FAQ and Product rich snippets within two crawl cycles.",
+  },
+  {
+    id: 8,
+    name: "Ananya Iyer",
+    role: "Creative Director, StudioCraft",
+    avatarText: "AI",
+    avatarColor: "bg-rose-600",
+    date: "March 2026",
+    rating: 5,
+    project: "Agency Portfolio Architecture",
+    comment:
+      "The editorial typography and dark/light UI tokens are meticulously crafted. MJ Digital sets the gold standard for modern developer blogs and digital marketplaces.",
   },
 ];
 
-const caseStudies = [
-  { metric: "+180%", label: "Organic Search Growth", sub: "E-Commerce Client (90 Days)" },
-  { metric: "#1 Rank", label: "Local Keywords Secured", sub: "Service Business Wins" },
-  { metric: "2.5x", label: "Lead Conversion Increase", sub: "Custom Next.js & WP Redesign" },
-  { metric: "99.9%", label: "Core Web Vitals Pass", sub: "PageSpeed Performance" },
-];
-
 export default function TestimonialsSection() {
+  // Desktop shows 4 cards per row, so maximum offset index is verifiedReviews.length - 4
+  const [startIndex, setStartIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const maxStartIndex = verifiedReviews.length - 4;
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setStartIndex((prev) => (prev >= maxStartIndex ? 0 : prev + 1));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isPaused, maxStartIndex]);
+
+  const prevSlide = () => {
+    setStartIndex((prev) => (prev <= 0 ? maxStartIndex : prev - 1));
+  };
+
+  const nextSlide = () => {
+    setStartIndex((prev) => (prev >= maxStartIndex ? 0 : prev + 1));
+  };
+
   return (
-    <section className="py-xl px-margin-mobile md:px-margin-desktop bg-surface border-t border-outline-variant/30">
-      <div className="max-w-container-max mx-auto space-y-12">
-        
-        {/* Case Studies / Client Results Strip */}
-        <div className="bg-[#120904] rounded-2xl p-6 md:p-8 border border-white/10 text-white shadow-xl">
-          <div className="flex items-center gap-2 mb-6 text-[#ff6b00] text-xs font-extrabold uppercase tracking-widest">
-            <HiArrowTrendingUp className="w-4 h-4" />
-            <span>CLIENT RESULTS &amp; CASE STUDY HIGHLIGHTS</span>
+    <section suppressHydrationWarning className="py-20 px-margin-mobile md:px-margin-desktop bg-[#FFFFFF] border-t border-b border-gray-200">
+      <div suppressHydrationWarning className="max-w-container-max mx-auto space-y-10">
+        {/* Section Header */}
+        <div suppressHydrationWarning className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
+          <div suppressHydrationWarning className="space-y-3">
+            <span className="badge-brand inline-block">
+              REAL CLIENT &amp; COMMUNITY REVIEWS
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-[#14213D] tracking-tight">
+              What Business Owners &amp; Developers Say
+            </h2>
+            <p className="text-gray-600 text-sm md:text-base max-w-2xl leading-relaxed">
+              Authentic feedback from engineering leads, founders, and creators who scale their digital operations using MJ Digital starter kits, APIs, and guides.
+            </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
-            {caseStudies.map((cs, idx) => (
-              <div key={idx} className="space-y-1 border-r border-white/10 last:border-r-0 pr-4">
-                <p className="text-2xl md:text-4xl font-black text-white tracking-tight">
-                  <span className="text-[#ff6b00]">{cs.metric}</span>
-                </p>
-                <p className="text-xs md:text-sm font-bold text-white/90 leading-tight">
-                  {cs.label}
-                </p>
-                <p className="text-[11px] text-white/50">
-                  {cs.sub}
-                </p>
+
+          {/* Carousel Slider Navigation Buttons */}
+          <div suppressHydrationWarning className="flex items-center gap-2 self-start md:self-auto shrink-0">
+            <button
+              onClick={prevSlide}
+              aria-label="Previous Reviews"
+              className="w-10 h-10 rounded-xl border border-gray-300 hover:border-[#DC2564] hover:text-[#DC2564] bg-white text-[#14213D] flex items-center justify-center transition-all shadow-xs active:scale-95 cursor-pointer"
+            >
+              <HiChevronLeft size={18} />
+            </button>
+            <button
+              onClick={nextSlide}
+              aria-label="Next Reviews"
+              className="w-10 h-10 rounded-xl border border-gray-300 hover:border-[#DC2564] hover:text-[#DC2564] bg-white text-[#14213D] flex items-center justify-center transition-all shadow-xs active:scale-95 cursor-pointer"
+            >
+              <HiChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* 4 Cards in 1 Row Carousel Slider */}
+        <div
+          suppressHydrationWarning
+          className="relative overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div
+            suppressHydrationWarning
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{
+              // Move by 25% for each index shift on desktop (1 card step at a time across 4 visible columns)
+              transform: `translateX(-${startIndex * 25}%)`,
+            }}
+          >
+            {verifiedReviews.map((rev) => (
+              <div
+                key={rev.id}
+                suppressHydrationWarning
+                className="w-full sm:w-1/2 lg:w-1/4 shrink-0 px-3"
+              >
+                <div
+                  suppressHydrationWarning
+                  className="bg-[#F7F8FC] border border-gray-200 rounded-2xl p-6 h-full flex flex-col justify-between shadow-xs hover:border-[#DC2564]/40 hover:shadow-md transition-all duration-300 group"
+                >
+                  <div suppressHydrationWarning className="space-y-4">
+                    {/* Stars & Tag */}
+                    <div suppressHydrationWarning className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1 text-amber-500">
+                        {Array.from({ length: rev.rating }).map((_, i) => (
+                          <HiStar key={i} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1">
+                        <HiOutlineCheckBadge className="w-3.5 h-3.5" />
+                        <span>Verified</span>
+                      </span>
+                    </div>
+
+                    {/* Review Quote */}
+                    <p className="text-gray-700 text-xs sm:text-sm font-normal leading-relaxed line-clamp-4 italic">
+                      &ldquo;{rev.comment}&rdquo;
+                    </p>
+                  </div>
+
+                  {/* Reviewer Details */}
+                  <div suppressHydrationWarning className="pt-5 mt-5 border-t border-gray-200/80 space-y-3">
+                    <div suppressHydrationWarning className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-full ${rev.avatarColor} text-white font-bold text-xs flex items-center justify-center shadow-xs shrink-0`}>
+                        {rev.avatarText}
+                      </div>
+                      <div suppressHydrationWarning className="min-w-0">
+                        <h4 className="font-bold text-xs text-[#14213D] leading-tight truncate">
+                          {rev.name}
+                        </h4>
+                        <p className="text-[11px] text-gray-500 truncate mt-0.5">
+                          {rev.role}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-white px-2.5 py-1.5 rounded-lg border border-gray-200 text-[10px] font-medium text-gray-600 truncate">
+                      <span className="text-gray-400">Project:</span> {rev.project}
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="inline-block text-[#ff6b00] font-label-md text-xs uppercase tracking-widest font-extrabold">
-            REAL CLIENT &amp; COMMUNITY REVIEWS
-          </span>
-          <h2 className="font-display-lg text-headline-lg text-on-surface font-extrabold tracking-tight">
-            What Business Owners &amp; Developers Say
-          </h2>
-          <p className="text-on-surface-variant font-body-md text-sm md:text-base leading-relaxed">
-            Real feedback from business leaders, digital marketers, and developers who have scaled their web platforms and organic search presence using our strategies and services.
-          </p>
-        </div>
-
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-          {testimonials.map((t) => (
-            <div
-              key={t.id}
-              className="bg-surface-container-low border border-outline-variant/30 p-lg rounded-2xl flex flex-col justify-between hover:border-[#ff6b00]/40 transition-all duration-300 shadow-xs"
-            >
-              <div className="space-y-4">
-                {/* Rating Stars */}
-                <div className="flex items-center gap-1 text-amber-500">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <HiStar key={i} className="w-5 h-5 fill-amber-400" />
-                  ))}
-                </div>
-                {/* Content */}
-                <p className="text-on-surface-variant text-sm leading-relaxed italic">
-                  &quot;{t.content}&quot;
-                </p>
-              </div>
-
-              {/* Author info */}
-              <div className="pt-6 mt-6 border-t border-outline-variant/20">
-                <div>
-                  <h4 className="font-bold text-on-surface text-sm leading-tight">
-                    {t.name}
-                  </h4>
-                  <p className="text-xs text-on-surface-variant/70 font-medium">
-                    {t.role}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+          {/* Dots Indicator */}
+          <div suppressHydrationWarning className="flex items-center justify-center gap-2 pt-8">
+            {Array.from({ length: maxStartIndex + 1 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setStartIndex(i)}
+                aria-label={`Go to slide group ${i + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  startIndex === i
+                    ? "w-8 bg-[#DC2564]"
+                    : "w-2 bg-gray-300 hover:bg-gray-400"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

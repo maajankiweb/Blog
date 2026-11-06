@@ -13,7 +13,7 @@ export default function YoutubeAdCard({ className = "" }: YoutubeAdCardProps) {
       className={`bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden shadow-sm hover:border-primary-container/40 transition-all duration-200 ${className}`}
     >
       <a
-        href="https://www.youtube.com/@Akwebmasterhub"
+        href="https://www.youtube.com/@Ashishkmj"
         target="_blank"
         rel="noopener noreferrer"
         className="block group relative"
@@ -21,7 +21,7 @@ export default function YoutubeAdCard({ className = "" }: YoutubeAdCardProps) {
         <div className="relative w-full aspect-[1/1] overflow-hidden bg-zinc-900">
           <Image
             src="/ak-webmaster-hub-banner.jpg"
-            alt="AK Web Master Hub - YouTube Channel"
+            alt="Ashish Kumar - YouTube Channel"
             fill
             sizes="(max-width: 768px) 100vw, 380px"
             className="object-cover group-hover:scale-105 transition-transform duration-500"

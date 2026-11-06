@@ -1,3 +1,8 @@
+---
+name: NEXUS Agent Activation Prompts
+description: Ready-to-use prompt templates for activating any agent within the NEXUS pipeline. Copy, customize placeholders, and deploy.
+---
+
 # 🎯 NEXUS Agent Activation Prompts
 
 > Ready-to-use prompt templates for activating any agent within the NEXUS pipeline. Copy, customize the `[PLACEHOLDERS]`, and deploy.

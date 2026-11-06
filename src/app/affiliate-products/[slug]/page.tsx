@@ -67,7 +67,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
         {/* Back Link */}
         <Link
           href="/affiliate-products"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-[#ff6b00] transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-[#DC2564] transition-colors mb-8"
         >
           <HiArrowLeft size={16} />
           <span>Back to All Deals</span>
@@ -88,7 +88,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
                 className="object-cover"
               />
               {product.badge && (
-                <span className="absolute top-4 left-4 bg-[#ff6b00] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                <span className="absolute top-4 left-4 bg-[#DC2564] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
                   {product.badge}
                 </span>
               )}
@@ -96,7 +96,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
 
             {/* Product Meta & Buy Section */}
             <div className="lg:col-span-7">
-              <span className="text-xs uppercase font-bold text-[#ff6b00] tracking-wider mb-2 block">
+              <span className="text-xs uppercase font-bold text-[#DC2564] tracking-wider mb-2 block">
                 {product.category}
               </span>
 
@@ -152,9 +152,9 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
 
               {/* Coupon Bar if present */}
               {product.couponCode && (
-                <div className="mb-6 bg-[#ff6b00]/10 border border-[#ff6b00]/30 rounded-xl p-3.5 flex items-center justify-between">
+                <div className="mb-6 bg-[#DC2564]/10 border border-[#DC2564]/30 rounded-xl p-3.5 flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs md:text-sm text-white/90">
-                    <HiTag className="text-[#ff6b00]" size={18} />
+                    <HiTag className="text-[#DC2564]" size={18} />
                     <span>
                       Use Coupon Code:{" "}
                       <strong className="text-white bg-black/40 px-2 py-0.5 rounded font-mono text-sm">
@@ -162,7 +162,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
                       </strong>
                     </span>
                   </div>
-                  <span className="text-xs font-semibold text-[#ff6b00]">
+                  <span className="text-xs font-semibold text-[#DC2564]">
                     Verified Deal
                   </span>
                 </div>
@@ -174,7 +174,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
                   href={product.affiliateUrl}
                   target="_blank"
                   rel="noopener sponsored"
-                  className="flex-1 bg-[#ff6b00] hover:bg-[#e05e00] text-white text-center font-bold px-6 py-4 rounded-xl shadow-lg shadow-[#ff6b00]/30 transition-all flex items-center justify-center gap-2 text-base active:scale-95"
+                  className="flex-1 bg-[#DC2564] hover:bg-[#B81D52] text-white text-center font-bold px-6 py-4 rounded-xl shadow-lg shadow-[#DC2564]/30 transition-all flex items-center justify-center gap-2 text-base active:scale-95"
                 >
                   <span>Claim Discount Deal</span>
                   <HiArrowTopRightOnSquare size={18} />
@@ -210,7 +210,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
                       key={idx}
                       className="flex items-start gap-2.5 text-sm text-white/80 bg-white/5 p-3 rounded-xl border border-white/5"
                     >
-                      <HiCheckCircle size={18} className="text-[#ff6b00] flex-shrink-0 mt-0.5" />
+                      <HiCheckCircle size={18} className="text-[#DC2564] flex-shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -262,7 +262,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
           <div className="lg:col-span-4 space-y-6">
             <div className="bg-[#120904] rounded-2xl border border-white/10 p-6 sticky top-24">
               <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <HiShieldCheck size={20} className="text-[#ff6b00]" />
+                <HiShieldCheck size={20} className="text-[#DC2564]" />
                 <span>Our Disclosure</span>
               </h3>
               <p className="text-xs text-white/60 leading-relaxed mb-6">
@@ -273,7 +273,7 @@ export default async function SingleAffiliateProductPage({ params }: Props) {
                 href={product.affiliateUrl}
                 target="_blank"
                 rel="noopener sponsored"
-                className="w-full bg-[#ff6b00] hover:bg-[#e05e00] text-white text-center font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
+                className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white text-center font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
               >
                 <span>Visit Official Site</span>
                 <HiArrowTopRightOnSquare size={16} />

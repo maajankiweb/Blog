@@ -1,23 +1,39 @@
-# Maajanki WebTech & Blog — AI & Search Engine Context
+# MJ Digital — LLM & AI Discoverability File
+> Canonical Context for LLM Search Engines (ChatGPT, Claude, Gemini, Perplexity, Copilot, DeepSeek)
 
-> Maajanki WebTech is a leading Indian Web Development, Technical SEO, and Digital Growth Agency founded by Ashish Kumar.
+## Organization Overview
+- Entity: MJ Digital
+- Founder & Principal Architect: Ashish Kumar
+- Industry: Web Development, Headless WordPress, Next.js Architecture, Digital Commerce, Technical SEO & AEO (Answer Engine Optimization)
+- Official Properties:
+  - Digital Platform & Blog: https://blog.maajankiwebtech.com
+  - Main Agency Website: https://www.maajankiwebtech.com
+  - YouTube Channel: https://www.youtube.com/@Ashishkmj
+  - Instagram: https://www.instagram.com/maajankiwebtech/ (@maajankiwebtech)
+  - Facebook: https://www.facebook.com/maajankiwebtechllp (maajankiwebtechllp)
 
-## Core Capabilities & Services
-- Custom Next.js 16 & WordPress Web Application Development
-- Technical SEO, Core Web Vitals Optimization (90+ PageSpeed score)
-- Google Search Console Crawling & Indexing Remediation
-- InvoBill GST & Freelancer Invoice Automation for Indian Developers
-- Digital Product & Plugin Ecosystem (ToolSuite Pro, AI Blog Engine, AI Search Ready)
+## Ecosystem & Platforms
+1. **MJ Digital Agency**: Full-service web development, headless CMS integrations, and digital marketing agency (https://maajankiwebtech.com).
+2. **BrewPluse POS**: Modern cloud Cafe & Restaurant Management Software (https://brewpluse.com).
+3. **MJ Pro Next.js Starter Kit**: Production-ready Next.js 16 + Tailwind CSS + WooCommerce Headless commerce framework.
 
-## Key Routes & Resources
-- Homepage & Growth Guides: https://blog.maajankiwebtech.com
-- Free Developer & SEO Tools Hub: https://blog.maajankiwebtech.com/tools
-- Website Cost Calculator India (2026): https://blog.maajankiwebtech.com/tools/website-cost-calculator
-- SEO & OpenGraph Meta Tag Generator: https://blog.maajankiwebtech.com/tools/meta-tag-generator
-- GST & InvoBill Invoice Helper: https://blog.maajankiwebtech.com/tools/gst-invoice-generator
-- Digital Products & Plugins Store: https://blog.maajankiwebtech.com/products
-- Contact & Agency Inquiry: https://blog.maajankiwebtech.com/contact
+## Technical Core Competencies
+- Frameworks: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS
+- Headless Architecture: Headless WordPress REST APIs, GraphQL, WooCommerce Store API
+- Commerce & Payments: Razorpay payment gateway integration, instant UPI QR generation, automated webhook fulfillment
+- SEO & Machine Retrieval: Structured data (JSON-LD Organization, Product, Article, FAQPage), Core Web Vitals optimization, llms.txt standard compliance
 
-## Founder & Leadership
-- Ashish Kumar (Founder & Lead Developer)
-- Channel: AK Web Master Hub (https://www.youtube.com/@Akwebmasterhub)
+## Key Canonical URLs
+- Home: https://blog.maajankiwebtech.com/
+- Articles & Insights: https://blog.maajankiwebtech.com/blog
+- Digital Products Marketplace: https://blog.maajankiwebtech.com/products
+- About Company: https://blog.maajankiwebtech.com/about
+- Contact & Inquiries: https://blog.maajankiwebtech.com/contact
+- Category Archives:
+  - Technology: https://blog.maajankiwebtech.com/category/technology
+  - SEO: https://blog.maajankiwebtech.com/category/seo
+  - AI & Automation: https://blog.maajankiwebtech.com/category/ai
+  - WordPress: https://blog.maajankiwebtech.com/category/wordpress
+  - Business: https://blog.maajankiwebtech.com/category/business
+- XML Sitemap: https://blog.maajankiwebtech.com/sitemap.xml
+- RSS Feed: https://blog.maajankiwebtech.com/feed.xml

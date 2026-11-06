@@ -1,191 +1,162 @@
 import ContactForm from "@/components/ContactForm";
 import FaqSection from "@/components/FaqSection";
-import { Mail, MapPin, ExternalLink, Globe, MessageSquare, Sparkles } from "lucide-react";
-import { FaFacebookF } from "react-icons/fa6";
+import { Mail, MapPin, Phone, MessageSquare, Clock, Globe, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export const metadata = {
-  title: "Contact Us | Maajanki Blog",
+  title: "Contact Us | MJ Digital",
   description:
-    "Have a question about digital marketing, SEO, WordPress, or online growth? We're here to help. Reach out to Maajanki Blog today.",
+    "Get in touch with the MJ Digital engineering and editorial team. Inquire about digital products, custom Next.js development, licensing, and partnerships.",
+  alternates: { canonical: "/contact" },
 };
+
+const contactFaqs = [
+  {
+    question: "How quickly does the team respond to inquiries?",
+    answer:
+      "We typically review and respond to all developer and commercial inquiries within 24 business hours. For urgent digital license issues, our WhatsApp channel is monitored daily.",
+  },
+  {
+    question: "Do you offer custom web development and migration services?",
+    answer:
+      "Yes. MJ Digital specializes in custom Next.js architectures, Headless WordPress development, WooCommerce integration, and performance optimization.",
+  },
+  {
+    question: "Where can I get direct support for purchased digital products?",
+    answer:
+      "You can access all your downloads and licenses anytime in the Customer Portal at /my-account. For direct troubleshooting, email support@maajankiwebtech.com.",
+  },
+];
 
 export default function ContactPage() {
   return (
-    <div className="bg-background text-on-surface min-h-screen">
-      {/* Hero Section */}
-      <section className="pt-xl pb-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-        <div className="max-w-[850px] space-y-md">
-          <span className="inline-block py-1.5 px-3.5 bg-primary-container/10 text-primary-container rounded-full text-label-md font-bold uppercase tracking-wider">
-            REACH OUT TO US
+    <div suppressHydrationWarning className="bg-[#FFFFFF] text-[#14213D] min-h-screen">
+      {/* ── 1. Hero Header ────────────────────────────────────────── */}
+      <section className="bg-gradient-to-b from-[#F7F8FC] to-white border-b border-gray-200 py-16 md:py-20">
+        <div suppressHydrationWarning className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+          <span className="badge-brand inline-block">
+            REACH OUT TO OUR TEAM
           </span>
-          <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg leading-tight font-black">
-            Contact <span className="text-gradient-primary">Maajanki Blog</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#14213D] tracking-tight">
+            Let&apos;s Build Something <span className="text-[#DC2564]">Extraordinary</span>
           </h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-            Have a question about digital marketing, SEO, WordPress, or online growth? <strong>We’re here to help.</strong>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Have a question about our Next.js digital products, licensing terms, or require enterprise custom engineering? We are here to assist.
           </p>
         </div>
       </section>
 
-      {/* Main Grid Content */}
-      <main className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-md">
-        
-        {/* Intro Info Banner Box */}
-        <div className="mb-xl p-6 md:p-8 bg-surface-container-low border border-outline-variant/30 rounded-2xl shadow-sm space-y-4">
-          <p className="text-on-surface text-base md:text-lg leading-relaxed">
-            Maajanki Blog is built to share practical insights and structured strategies. If you need clarification on an article, want to suggest a topic, or are interested in collaboration, feel free to reach out.
-          </p>
-          <p className="text-primary font-semibold text-sm md:text-base">
-            We value meaningful conversations and constructive feedback. Let’s grow smarter.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-xl items-start">
-          {/* Left Column: Contact Form */}
-          <div className="lg:col-span-7 space-y-8">
-            <ContactForm />
-
-            {/* Additional Value Sections */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-md pt-4">
-              <div className="p-5 bg-surface rounded-xl border border-outline-variant/20 space-y-2">
-                <div className="flex items-center gap-2 text-primary font-bold text-base">
-                  <Sparkles className="w-5 h-5 text-primary" />
-                  <span>Collaboration & Contributions</span>
-                </div>
-                <p className="text-xs text-on-surface-variant leading-relaxed">
-                  Interested in contributing content, partnerships, or professional collaboration? Send us a clear message with your proposal, and we’ll review it carefully.
-                </p>
-              </div>
-
-              <div className="p-5 bg-surface rounded-xl border border-outline-variant/20 space-y-2">
-                <div className="flex items-center gap-2 text-primary font-bold text-base">
-                  <MessageSquare className="w-5 h-5 text-primary" />
-                  <span>Feedback Matters</span>
-                </div>
-                <p className="text-xs text-on-surface-variant leading-relaxed">
-                  Your feedback helps us improve and create better content. If you have suggestions or ideas for future topics, don’t hesitate to share them.
-                </p>
-              </div>
+      {/* ── 2. Split Content: Details Left, Form Right ───────────── */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div suppressHydrationWarning className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column: Direct Contact Info & HQ Details */}
+          <div suppressHydrationWarning className="lg:col-span-5 space-y-8">
+            <div suppressHydrationWarning>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#DC2564] font-bold">
+                DIRECT CHANNELS
+              </span>
+              <h2 className="text-2xl font-black text-[#14213D] mt-1">
+                Official Communications
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-600 mt-2">
+                Connect directly with our engineering architects, support desk, or founder.
+              </p>
             </div>
-          </div>
 
-          {/* Right Column: Direct Info & Social Cards */}
-          <aside className="lg:col-span-5 space-y-md">
-            <h3 className="text-xl font-bold text-on-surface flex items-center gap-2">
-              <span>📩 Get in Touch</span>
-            </h3>
-
-            <div className="grid grid-cols-1 gap-md">
-              {/* Primary Email */}
-              <div className="p-md bg-surface-container-low rounded-xl border border-outline-variant/30 flex gap-sm items-start hover:border-primary/40 transition-colors">
-                <div className="p-2.5 bg-primary-fixed-dim/20 text-primary rounded-lg">
-                  <Mail className="h-5 w-5" />
+            <div suppressHydrationWarning className="space-y-4">
+              {/* Card 1: Email */}
+              <div suppressHydrationWarning className="card-saas p-5 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-pink-50 text-[#DC2564] flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-md text-on-surface mb-xs">Email Address</h4>
-                  <a href="mailto:info@maajankiwebtech.com" className="text-primary font-bold text-sm hover:underline flex items-center gap-xs">
-                    info@maajankiwebtech.com <ExternalLink className="h-3 w-3" />
+                <div suppressHydrationWarning>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                    Email Desk
+                  </h3>
+                  <a
+                    href="mailto:info@maajankiwebtech.com"
+                    className="text-sm font-bold text-[#14213D] hover:text-[#DC2564] transition-colors block mt-0.5"
+                  >
+                    info@maajankiwebtech.com
                   </a>
-                  <p className="text-xs text-on-surface-variant mt-1">Secondary: maajankiweb@gmail.com</p>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Average reply time: Under 24h</p>
                 </div>
               </div>
 
-              {/* Website */}
-              <div className="p-md bg-surface-container-low rounded-xl border border-outline-variant/30 flex gap-sm items-start hover:border-primary/40 transition-colors">
-                <div className="p-2.5 bg-tertiary-fixed/20 text-tertiary rounded-lg">
-                  <Globe className="h-5 w-5" />
+              {/* Card 2: Phone & WhatsApp */}
+              <div suppressHydrationWarning className="card-saas p-5 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Phone className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-md text-on-surface mb-xs">Official Blog</h4>
-                  <a href="https://blog.maajankiwebtech.com/" target="_blank" rel="noopener noreferrer" className="text-tertiary font-bold text-sm hover:underline flex items-center gap-xs">
-                    blog.maajankiwebtech.com <ExternalLink className="h-3 w-3" />
+                <div suppressHydrationWarning>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                    Phone &amp; WhatsApp Support
+                  </h3>
+                  <a
+                    href="tel:+919006543913"
+                    className="text-sm font-bold text-[#14213D] hover:text-[#DC2564] transition-colors block mt-0.5"
+                  >
+                    +91 90065 43913
                   </a>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Mon–Sat: 10:00 AM – 7:00 PM IST</p>
                 </div>
               </div>
 
-              {/* Facebook Page */}
-              <div className="p-md bg-surface-container-low rounded-xl border border-outline-variant/30 flex gap-sm items-start hover:border-primary/40 transition-colors">
-                <div className="p-2.5 bg-blue-500/10 text-blue-600 rounded-lg">
-                  <FaFacebookF className="h-5 w-5" />
+              {/* Card 3: Registered Headquarters */}
+              <div suppressHydrationWarning className="card-saas p-5 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                  <MapPin className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-md text-on-surface mb-xs">Facebook Page</h4>
-                  <a href="https://www.facebook.com/maajankiwebtech" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold text-sm hover:underline flex items-center gap-xs">
-                    facebook.com/maajankiwebtech <ExternalLink className="h-3 w-3" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Location Card */}
-              <div className="p-md bg-surface-container-low rounded-xl border border-outline-variant/30 flex gap-sm items-start">
-                <div className="p-2.5 bg-secondary-fixed/20 text-secondary rounded-lg">
-                  <MapPin className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-md text-on-surface mb-xs">Headquarters</h4>
-                  <p className="text-sm text-on-surface-variant font-medium">
-                    Bettiah, West Champaran, Bihar - 845438, India
+                <div suppressHydrationWarning>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                    Operational Headquarters
+                  </h3>
+                  <p className="text-sm font-bold text-[#14213D] mt-0.5">
+                    MJ Digital
                   </p>
-                  <p className="text-xs text-emerald-600 font-bold mt-1">We aim to respond as quickly as possible.</p>
+                  <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">
+                    India
+                  </p>
                 </div>
               </div>
             </div>
-          </aside>
-        </div>
 
-        {/* Embedded Google Maps Section */}
-        <section className="mt-16 space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-            <div>
-              <h2 className="text-2xl font-black text-on-surface tracking-tight">Visit Our Office / Location</h2>
-              <p className="text-sm text-on-surface-variant">Find us on Google Maps — Bettiah, West Champaran, Bihar</p>
+            {/* Quick Link to Customer Account */}
+            <div suppressHydrationWarning className="p-6 bg-[#14213D] text-white rounded-2xl space-y-3">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#DC2564] font-bold">
+                LOOKING FOR PAST PURCHASES?
+              </span>
+              <h3 className="text-base font-bold">Customer Self-Service Portal</h3>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                If you already purchased a starter kit or digital product, access your files, license keys, and receipts directly without waiting.
+              </p>
+              <Link
+                href="/my-account"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#DC2564] hover:text-white transition-colors pt-1"
+              >
+                <span>Go to My Account &amp; Downloads</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-            <a 
-              href="https://maps.google.com/?q=Bettiah,West+Champaran,Bihar,845438" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline"
-            >
-              Open in Google Maps <ExternalLink className="w-3.5 h-3.5" />
-            </a>
           </div>
 
-          <div className="w-full h-[380px] rounded-2xl overflow-hidden border-2 border-outline-variant/30 shadow-sm relative bg-surface-variant/20">
-            <iframe
-              title="Maajanki Web Tech Google Map Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56958.82585250493!2d84.47647242099351!3d26.802871180217036!2m3!1f0!f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3993354b5df01c9b%3A0xb35a74e5e40e70b3!2sBettiah%2C%20Bihar!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full"
-            />
+          {/* Right Column: Interactive Form */}
+          <div suppressHydrationWarning className="lg:col-span-7">
+            <ContactForm />
           </div>
-        </section>
+        </div>
       </main>
 
-      {/* FAQ Section */}
-      <FaqSection
-        faqs={[
-          {
-            question: "How fast do you respond to messages?",
-            answer: "We aim to respond as quickly as possible, usually within 12 to 24 hours during business days.",
-          },
-          {
-            question: "Can I discuss website development & SEO projects?",
-            answer: "Yes! Drop us a message or email info@maajankiwebtech.com directly to discuss your digital growth goals.",
-          },
-          {
-            question: "Do you offer guest posting or content collaboration?",
-            answer: "Yes, we welcome partnerships, content contributions, and professional collaborations in tech, SEO, and web development.",
-          },
-        ]}
-        title="Frequently Asked Questions"
-        description="Quick answers about contacting Maajanki Web Tech."
-      />
+      {/* ── 3. Contact FAQs ────────────────────────────────────────── */}
+      <section className="py-16 bg-[#F7F8FC] border-t border-gray-200">
+        <div suppressHydrationWarning className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FaqSection
+            title="Inquiries &amp; Support FAQs"
+            subtitle="Common questions regarding communication channels, turnaround times, and technical assistance."
+            items={contactFaqs}
+          />
+        </div>
+      </section>
     </div>
   );
 }
-

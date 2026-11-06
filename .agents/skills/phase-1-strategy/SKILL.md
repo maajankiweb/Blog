@@ -1,3 +1,8 @@
+---
+name: NEXUS Phase 1 Strategy
+description: Phase 1 playbook for strategy, architecture, design contracts, budgeting, and quality gates.
+---
+
 # 🏗️ Phase 1 Playbook — Strategy & Architecture
 
 > **Duration**: 5-10 days | **Agents**: 8 | **Gate Keepers**: Studio Producer + Reality Checker

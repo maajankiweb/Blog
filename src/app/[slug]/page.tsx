@@ -137,7 +137,7 @@ export default async function DynamicSlugPage(props: PageProps) {
         </div>
         <h4 class="font-extrabold text-on-surface text-base mb-1">Accelerate Your Digital Growth with Osdire</h4>
         <p class="text-on-surface-variant text-xs leading-relaxed mb-3">Unlock premium digital tools, web optimization, and specialized infrastructure designed for modern businesses.</p>
-        <a href="https://osdire.com/aff/ashish_kumar_dchb-1" target="_blank" rel="noopener sponsored" class="inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-[#e05e00] text-white py-2 px-5 rounded-xl font-bold text-xs transition-all shadow-sm">Explore Osdire Offers →</a>
+        <a href="https://osdire.com/aff/ashish_kumar_dchb-1" target="_blank" rel="noopener sponsored" class="inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-[#B81D52] text-white py-2 px-5 rounded-xl font-bold text-xs transition-all shadow-sm">Explore Osdire Offers →</a>
       </div>
     `;
 
@@ -439,7 +439,7 @@ export default async function DynamicSlugPage(props: PageProps) {
                       className="w-full bg-white/10 border border-white/20 py-2.5 px-3.5 rounded-xl text-white placeholder:text-white/40 outline-none text-xs"
                       required
                     />
-                    <button type="submit" className="w-full py-2.5 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold rounded-xl text-xs transition-all">
+                    <button type="submit" className="w-full py-2.5 bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold rounded-xl text-xs transition-all">
                       Subscribe
                     </button>
                   </form>

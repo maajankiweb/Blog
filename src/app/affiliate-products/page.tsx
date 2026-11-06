@@ -20,7 +20,7 @@ export default async function AffiliateProductsPage() {
   const initialProducts: WPAffiliateProduct[] = await getAffiliateProducts();
 
   return (
-    <main className="min-h-screen bg-[#090503] text-white">
+    <main className="min-h-screen bg-[#FFFFFF] text-white">
       <AffiliateClientPage initialProducts={initialProducts} />
     </main>
   );

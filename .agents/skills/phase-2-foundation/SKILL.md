@@ -1,3 +1,8 @@
+---
+name: NEXUS Phase 2 Foundation
+description: Phase 2 playbook for scaffolding, technical foundation, CI/CD, design systems, and baseline environments.
+---
+
 # ⚙️ Phase 2 Playbook — Foundation & Scaffolding
 
 > **Duration**: 3-5 days | **Agents**: 6 | **Gate Keepers**: DevOps Automator + Evidence Collector

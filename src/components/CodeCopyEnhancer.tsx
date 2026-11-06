@@ -15,7 +15,7 @@ export default function CodeCopyEnhancer() {
 
       const copyBtn = document.createElement("button");
       copyBtn.className =
-        "code-copy-btn absolute top-3 right-3 bg-white/10 hover:bg-[#ff6b00] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg border border-white/20 shadow-md transition-all backdrop-blur-md active:scale-95 cursor-pointer z-10";
+        "code-copy-btn absolute top-3 right-3 bg-white/10 hover:bg-[#DC2564] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg border border-white/20 shadow-md transition-all backdrop-blur-md active:scale-95 cursor-pointer z-10";
       copyBtn.innerText = "Copy Code";
 
       copyBtn.addEventListener("click", () => {

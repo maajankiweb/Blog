@@ -75,16 +75,16 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
     <div className="pb-24 pt-8">
       {/* Hero Header */}
       <section className="relative px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b00]/10 via-purple-900/10 to-transparent blur-3xl -z-10 rounded-full" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#DC2564]/10 via-purple-900/10 to-transparent blur-3xl -z-10 rounded-full" />
 
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff6b00]/15 border border-[#ff6b00]/30 text-[#ff6b00] text-xs font-bold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DC2564]/15 border border-[#DC2564]/30 text-[#DC2564] text-xs font-bold uppercase tracking-wider mb-4">
             <HiSparkles size={16} />
             <span>Verified Affiliate Deals & Recommendations</span>
           </div>
 
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight mb-4">
-            Recommended Tools, Hosting & <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff6b00] to-orange-400">Exclusive Deals</span>
+            Recommended Tools, Hosting & <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DC2564] to-orange-400">Exclusive Deals</span>
           </h1>
 
           <p className="text-base md:text-lg text-white/70 font-normal leading-relaxed mb-8">
@@ -96,7 +96,7 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
               onClick={() => setShowWpGuide(!showWpGuide)}
               className="flex items-center gap-2 text-xs md:text-sm font-semibold text-white/80 hover:text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl border border-white/10 transition-all"
             >
-              <HiQuestionMarkCircle size={18} className="text-[#ff6b00]" />
+              <HiQuestionMarkCircle size={18} className="text-[#DC2564]" />
               <span>How to add products via WordPress CMS?</span>
               <HiChevronDown
                 size={16}
@@ -116,9 +116,9 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-10"
           >
-            <div className="bg-[#180e09] border border-[#ff6b00]/30 rounded-2xl p-6 md:p-8 relative">
+            <div className="bg-[#180e09] border border-[#DC2564]/30 rounded-2xl p-6 md:p-8 relative">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#ff6b00]/20 rounded-xl text-[#ff6b00]">
+                <div className="p-3 bg-[#DC2564]/20 rounded-xl text-[#DC2564]">
                   <HiInformationCircle size={28} />
                 </div>
                 <div className="flex-1">
@@ -131,11 +131,11 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs md:text-sm text-white/80">
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                      <span className="font-bold text-[#ff6b00] block mb-1">1. Category & Tagging</span>
+                      <span className="font-bold text-[#DC2564] block mb-1">1. Category & Tagging</span>
                       Add a post in WordPress and tag or assign it to category <code className="bg-black/40 text-orange-300 px-1 py-0.5 rounded">Affiliate</code> or <code className="bg-black/40 text-orange-300 px-1 py-0.5 rounded">Products</code>.
                     </div>
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                      <span className="font-bold text-[#ff6b00] block mb-1">2. Price & Link Meta</span>
+                      <span className="font-bold text-[#DC2564] block mb-1">2. Price & Link Meta</span>
                       Include metadata in your post content using formatted lines:
                       <br />
                       <code className="text-white/60 block mt-1">Price: ₹2,499</code>
@@ -143,7 +143,7 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
                       <code className="text-white/60 block">Store: Hostinger</code>
                     </div>
                     <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-                      <span className="font-bold text-[#ff6b00] block mb-1">3. Direct Syncing</span>
+                      <span className="font-bold text-[#DC2564] block mb-1">3. Direct Syncing</span>
                       The frontend automatically fetches your published posts from WordPress REST API (<code className="text-orange-300">/wp-json/wp/v2/posts</code>) and renders them cleanly!
                     </div>
                   </div>
@@ -161,14 +161,14 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
           <div className="relative flex-1 max-w-md">
             <HiMagnifyingGlass
               size={18}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ff6b00]"
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#DC2564]"
             />
             <input
               type="text"
               placeholder="Search hosting, SEO tools, plugins..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#ff6b00]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#DC2564]"
             />
           </div>
 
@@ -180,7 +180,7 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3.5 py-2 rounded-xl text-xs md:text-sm font-semibold whitespace-nowrap transition-all ${
                   selectedCategory === cat
-                    ? "bg-[#ff6b00] text-white shadow-lg shadow-[#ff6b00]/30"
+                    ? "bg-[#DC2564] text-white shadow-lg shadow-[#DC2564]/30"
                     : "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white"
                 }`}
               >
@@ -195,7 +195,7 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-white/5 border border-white/10 text-xs md:text-sm text-white/80 rounded-xl px-3 py-2 focus:outline-none focus:border-[#ff6b00]"
+              className="bg-white/5 border border-white/10 text-xs md:text-sm text-white/80 rounded-xl px-3 py-2 focus:outline-none focus:border-[#DC2564]"
             >
               <option value="featured" className="bg-[#130b07]">Featured</option>
               <option value="rating" className="bg-[#130b07]">Highest Rating</option>
@@ -224,11 +224,11 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 15 }}
-                className="group relative bg-[#120904] rounded-2xl border border-white/10 hover:border-[#ff6b00]/50 transition-all duration-300 flex flex-col overflow-hidden shadow-xl"
+                className="group relative bg-[#120904] rounded-2xl border border-white/10 hover:border-[#DC2564]/50 transition-all duration-300 flex flex-col overflow-hidden shadow-xl"
               >
                 {/* Badge Overlay */}
                 {product.badge && (
-                  <span className="absolute top-3 left-3 z-10 bg-[#ff6b00] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                  <span className="absolute top-3 left-3 z-10 bg-[#DC2564] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
                     {product.badge}
                   </span>
                 )}
@@ -254,12 +254,12 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
                 {/* Card Body */}
                 <div className="p-6 flex-1 flex flex-col">
                   {/* Category */}
-                  <span className="text-[11px] uppercase tracking-wider text-[#ff6b00] font-bold mb-1">
+                  <span className="text-[11px] uppercase tracking-wider text-[#DC2564] font-bold mb-1">
                     {product.category}
                   </span>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#ff6b00] transition-colors line-clamp-1">
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#DC2564] transition-colors line-clamp-1">
                     {product.title}
                   </h3>
 
@@ -304,14 +304,14 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
 
                   {/* Coupon Code Pill */}
                   {product.couponCode && (
-                    <div className="mb-4 bg-white/5 border border-dashed border-[#ff6b00]/40 rounded-xl p-2.5 flex items-center justify-between">
+                    <div className="mb-4 bg-white/5 border border-dashed border-[#DC2564]/40 rounded-xl p-2.5 flex items-center justify-between">
                       <div className="flex items-center gap-1.5 text-xs text-white/80">
-                        <HiTag className="text-[#ff6b00]" size={14} />
+                        <HiTag className="text-[#DC2564]" size={14} />
                         <span>Code: <strong className="text-white">{product.couponCode}</strong></span>
                       </div>
                       <button
                         onClick={() => copyToClipboard(product.couponCode!)}
-                        className="text-[11px] font-bold text-[#ff6b00] hover:underline flex items-center gap-1"
+                        className="text-[11px] font-bold text-[#DC2564] hover:underline flex items-center gap-1"
                       >
                         {copiedCoupon === product.couponCode ? (
                           <>
@@ -338,7 +338,7 @@ export default function AffiliateClientPage({ initialProducts }: Props) {
                       href={product.affiliateUrl}
                       target="_blank"
                       rel="noopener sponsored"
-                      className="text-center text-xs font-bold py-2.5 px-3 rounded-xl bg-[#ff6b00] hover:bg-[#e05e00] text-white shadow-lg shadow-[#ff6b00]/25 transition-all flex items-center justify-center gap-1 active:scale-95"
+                      className="text-center text-xs font-bold py-2.5 px-3 rounded-xl bg-[#DC2564] hover:bg-[#B81D52] text-white shadow-lg shadow-[#DC2564]/25 transition-all flex items-center justify-center gap-1 active:scale-95"
                     >
                       <span>Get Deal</span>
                       <HiArrowTopRightOnSquare size={14} />

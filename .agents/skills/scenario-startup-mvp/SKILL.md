@@ -1,3 +1,8 @@
+---
+name: NEXUS Startup MVP Runbook
+description: NEXUS-Sprint runbook for building and launching a verified startup MVP in 4 to 6 weeks.
+---
+
 # 🚀 Runbook: Startup MVP Build
 
 > **Mode**: NEXUS-Sprint | **Duration**: 4-6 weeks | **Agents**: 18-22

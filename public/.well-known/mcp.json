@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+  "name": "blog.maajankiwebtech.com",
+  "version": "1.0.0",
+  "description": "Maajanki WebTech & Blog Model Context Protocol (MCP) Server. Provides tools for technical SEO, article discovery, website cost calculation, and digital developer products.",
+  "endpoint": "https://blog.maajankiwebtech.com/api/mcp",
+  "url": "https://blog.maajankiwebtech.com/api/mcp",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://blog.maajankiwebtech.com/api/mcp"
+    }
+  ],
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "subscribe": false,
+      "listChanged": false
+    },
+    "prompts": {
+      "listChanged": false
+    }
+  }
+}

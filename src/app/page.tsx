@@ -11,10 +11,10 @@ import BreakingNewsTicker from "@/components/BreakingNewsTicker";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import StartHereSection from "@/components/StartHereSection";
 import WhyChooseMaajanki from "@/components/WhyChooseMaajanki";
-import AiSaasSolutions from "@/components/AiSaasSolutions";
 import TrustedTechnologies from "@/components/TrustedTechnologies";
 import FounderSection from "@/components/FounderSection";
 import HomepageFinalCta from "@/components/HomepageFinalCta";
+import HomepageProductsSection from "@/components/HomepageProductsSection";
 import {
   HiArrowRight,
   HiArrowPath,
@@ -159,120 +159,166 @@ export default async function Home(props: PageProps) {
     "BUSINESS GROWTH STRATEGY",
   ];
 
+  // Schema.org Product & Offer structured data for AI agents & search engines
+  const productOfferSchemas = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": "https://blog.maajankiwebtech.com/products#nextjs-blog-starter-kit-pro",
+        name: "Maajanki Pro Next.js & Tailwind Blog Starter Kit",
+        description: "Production-ready, SEO-optimized Next.js 16 blog template with Turbopack, ISR revalidation, dark mode, and RSS feed.",
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
+        category: "Software > Web Development Templates",
+        offers: {
+          "@type": "Offer",
+          url: "https://blog.maajankiwebtech.com/products",
+          price: "2499",
+          priceCurrency: "INR",
+          availability: "https://schema.org/InStock",
+          priceValidUntil: "2027-12-31",
+          seller: {
+            "@type": "Organization",
+            name: "MJ Digital Digital Agency",
+          },
+        },
+      },
+      {
+        "@type": "Product",
+        "@id": "https://blog.maajankiwebtech.com/products#invobill-gst-invoice-plugin-wordpress",
+        name: "InvoBill GST & Freelancer Invoice Helper Plugin",
+        description: "WordPress plugin for Indian agency owners & freelancers to auto-generate 18% GST invoices with SAC code 998314.",
+        image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&auto=format&fit=crop&q=80",
+        category: "Software > WordPress Plugins",
+        offers: {
+          "@type": "Offer",
+          url: "https://blog.maajankiwebtech.com/products",
+          price: "1499",
+          priceCurrency: "INR",
+          availability: "https://schema.org/InStock",
+          priceValidUntil: "2027-12-31",
+          seller: {
+            "@type": "Organization",
+            name: "MJ Digital Digital Agency",
+          },
+        },
+      },
+      {
+        "@type": "Service",
+        "@id": "https://blog.maajankiwebtech.com/#custom-web-development-service",
+        name: "Custom Next.js & WordPress Web Application Development",
+        description: "Full-stack enterprise website engineering, Core Web Vitals remediation, and SEO architecture.",
+        provider: {
+          "@type": "Organization",
+          name: "MJ Digital Digital Agency",
+        },
+        offers: {
+          "@type": "Offer",
+          url: "https://blog.maajankiwebtech.com/tools/website-cost-calculator",
+          price: "15000",
+          priceCurrency: "INR",
+          availability: "https://schema.org/InStock",
+          priceValidUntil: "2027-12-31",
+        },
+      },
+    ],
+  };
+
   return (
-    <div className="bg-background text-on-background min-h-screen selection:bg-[#ff6b00]/20 selection:text-[#ff6b00]">
+    <div className="bg-background text-on-background min-h-screen selection:bg-[#DC2564]/20 selection:text-[#DC2564]">
+      {/* Product & Offer Schema for Search Engines and AI Agents */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productOfferSchemas) }}
+      />
       {/* ═══════════════════════════════════════════
-          1. HERO — Refined Editorial Dark Header
+          1. HERO — Premium Editorial & SaaS Header
       ═══════════════════════════════════════════ */}
-      <section className="bg-[#0f0a08] relative overflow-hidden border-b border-white/10">
-        <div className="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-[72px] md:py-[96px]">
-          <div className="grid md:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* ── Left: Text content ── */}
+      <section className="bg-gradient-to-b from-slate-50 via-white to-white relative overflow-hidden border-b border-slate-200/80">
+        {/* Subtle Ambient Radial Highlight */}
+        <div className="absolute top-0 right-1/4 w-[500px] h-[350px] bg-[#DC2564]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
+          <div className="grid md:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* ── Left: Text Content & Dual CTAs ── */}
             <div className="md:col-span-7 flex flex-col items-start">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/15 text-white/80 text-xs font-medium mb-6 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00] flex-shrink-0" />
-                Practical Growth Guides for Indian Businesses &amp; Developers
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDF2F5] border border-[#FBCFE8] text-[#DC2564] text-xs font-bold uppercase tracking-wider mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DC2564] animate-pulse flex-shrink-0" />
+                Next.js 16 · WordPress · Digital Commerce
               </div>
 
               {/* Headline */}
-              <h1
-                className="font-extrabold text-white leading-[1.08] tracking-tight mb-6 max-w-2xl"
-                style={{
-                  fontSize: "clamp(34px, 4.5vw, 64px)",
-                  letterSpacing: "-0.035em",
-                }}
-              >
-                Master Web Dev, Local SEO &amp;{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-[#ffb693]">
-                  Digital Business Growth
-                </span>
-                .
+              <h1 className="font-black text-slate-900 text-4xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight mb-5 max-w-2xl">
+                Learn. Build. <span className="text-[#DC2564]">Grow.</span>
               </h1>
 
               {/* Paragraph */}
-              <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-xl font-normal">
-                Actionable step-by-step guides on custom Next.js &amp; WordPress web development, ranking #1 on Google, and scaling online client revenues.
+              <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-8 max-w-xl font-normal">
+                Practical digital resources, website development insights, SEO guides and tools to help businesses grow online.
               </p>
 
-              {/* Search bar — Clean responsive inline input */}
+              {/* Dual Primary CTAs */}
+              <div className="flex flex-wrap items-center gap-3.5 mb-8">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center justify-center gap-2 bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold text-sm px-6 py-3.5 rounded-xl transition-all shadow-sm shadow-[#DC2564]/25 active:scale-95"
+                >
+                  <span>Explore Articles</span>
+                  <HiArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/products"
+                  className="inline-flex items-center justify-center gap-2 bg-[#14213D] hover:bg-[#0A1120] text-white font-bold text-sm px-6 py-3.5 rounded-xl transition-all shadow-sm shadow-[#14213D]/15 active:scale-95"
+                >
+                  <HiStar className="text-[#FCA311]" size={16} />
+                  <span>Explore Digital Store</span>
+                </Link>
+              </div>
+
+              {/* Search bar — Clean inline input */}
               <form
                 action="/search"
                 method="GET"
                 className="w-full max-w-lg mb-8"
               >
-                <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-0">
-                  <div className="relative flex-1">
-                    <MdSearch
-                      size={20}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ff6b00] pointer-events-none"
-                    />
-                    <input
-                      type="text"
-                      name="q"
-                      placeholder="Search SEO, WordPress &amp; Dev guides..."
-                      className="w-full bg-white/5 border border-white/15 focus:border-[#ff6b00] focus:bg-white/10 text-white placeholder:text-white/40 rounded-xl !px-12 sm:!pr-[115px] !py-3.5 !text-sm outline-none transition-all duration-200"
-                      required
-                    />
-                  </div>
+                <div className="relative flex items-center">
+                  <MdSearch
+                    size={20}
+                    className="absolute left-4 text-slate-400 pointer-events-none"
+                  />
+                  <input
+                    type="text"
+                    name="q"
+                    placeholder="Search SEO, WordPress &amp; Dev guides..."
+                    className="w-full bg-slate-50 border border-slate-200 focus:border-[#DC2564] focus:bg-white text-slate-900 placeholder:text-slate-400 rounded-xl pl-11 pr-28 py-3 text-xs sm:text-sm outline-none transition-all"
+                    required
+                  />
                   <button
                     type="submit"
-                    className="sm:absolute sm:right-1.5 sm:top-1/2 sm:-translate-y-1/2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 sm:py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 shrink-0"
+                    className="absolute right-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold text-xs px-4 py-2 rounded-lg transition-all"
                   >
-                    <span>Search</span>
-                    <HiArrowRight size={14} />
+                    Search
                   </button>
                 </div>
               </form>
 
-              {/* CTA buttons */}
-              <div className="flex flex-wrap items-center gap-3 mb-10">
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center gap-2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all duration-200 shadow-sm"
-                >
-                  Explore Articles
-                  <HiArrowRight size={16} />
-                </Link>
-                <Link
-                  href="/newsletter"
-                  className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all duration-200"
-                >
-                  <HiEnvelope size={16} />
-                  Subscribe Free
-                </Link>
-              </div>
-
               {/* Subscriber strip */}
-              <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 w-full max-w-lg">
-                <div className="flex -space-x-2">
-                  {["bg-neutral-700", "bg-neutral-600", "bg-neutral-800", "bg-neutral-500"].map((c, i) => (
-                    <div
-                      key={i}
-                      className={`w-8 h-8 rounded-full border-2 border-[#0f0a08] ${c} flex items-center justify-center text-[10px] font-bold text-white/90 flex-shrink-0`}
-                    >
-                      {String.fromCharCode(65 + i)}
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-xs leading-tight">
-                    15,000+ subscriber network
-                  </p>
-                  <p className="text-white/50 text-[11px] leading-tight mt-0.5">
-                    Curated weekly digest
-                  </p>
+              <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-slate-200/80 w-full max-w-lg text-slate-600 text-xs">
+                <div className="inline-flex items-center gap-1.5 text-xs text-slate-700 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  <span>Practical engineering guides, verified starter kits, and actionable SEO breakdowns.</span>
                 </div>
               </div>
             </div>
 
-            {/* ── Right: Restrained editorial floating cards ── */}
-            <div className="md:col-span-5 relative min-h-[320px] sm:min-h-[380px] md:h-[440px] w-full">
+            {/* ── Right: Clean Editorial Preview Cards ── */}
+            <div className="md:col-span-5 relative min-h-[320px] sm:min-h-[380px] md:h-[420px] w-full">
               {/* Primary featured card */}
               {mainFeaturedPost ? (
                 <Link
                   href={`/blog/${mainFeaturedPost.slug}`}
-                  className="absolute top-0 right-0 w-[85%] h-[68%] rounded-xl overflow-hidden block group border border-white/15 bg-neutral-900 shadow-xl transition-all duration-200 hover:border-white/30"
+                  className="absolute top-0 right-0 w-[88%] h-[72%] rounded-2xl overflow-hidden block group border border-slate-200 bg-white shadow-md transition-all duration-200 hover:shadow-xl hover:-translate-y-1"
                 >
                   {mainFeaturedPost._embedded?.["wp:featuredmedia"]?.[0]?.source_url ? (
                     <Image
@@ -284,17 +330,17 @@ export default async function Home(props: PageProps) {
                       loading="eager"
                     />
                   ) : (
-                    <div className="w-full h-full bg-neutral-900" />
+                    <div className="w-full h-full bg-slate-100" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                  <span className="absolute top-3.5 left-3.5 bg-[#ff6b00] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">
-                    Featured
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
+                  <span className="absolute top-3 left-3 bg-[#DC2564] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">
+                    Featured Dispatch
                   </span>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-white font-bold text-sm md:text-base leading-snug line-clamp-2">
+                  <div className="absolute bottom-3.5 left-3.5 right-3.5">
+                    <h3 className="text-white font-bold text-sm sm:text-base leading-snug line-clamp-2">
                       {cleanHtmlText(mainFeaturedPost.title.rendered)}
                     </h3>
-                    <p className="text-white/60 text-[11px] mt-1.5">
+                    <p suppressHydrationWarning className="text-slate-300 text-[11px] mt-1">
                       {new Date(mainFeaturedPost.date).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -305,8 +351,8 @@ export default async function Home(props: PageProps) {
                   </div>
                 </Link>
               ) : (
-                <div className="absolute top-0 right-0 w-[85%] h-[68%] rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center">
-                  <MdArticle className="text-white/20" size={64} />
+                <div className="absolute top-0 right-0 w-[88%] h-[72%] rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+                  <MdArticle className="text-slate-400" size={64} />
                 </div>
               )}
 
@@ -314,7 +360,7 @@ export default async function Home(props: PageProps) {
               {rightFeaturedPosts[0] ? (
                 <Link
                   href={`/blog/${rightFeaturedPosts[0].slug}`}
-                  className="absolute bottom-0 left-0 w-[60%] h-[48%] rounded-xl overflow-hidden block group border border-white/15 bg-neutral-900 shadow-xl transition-all duration-200 hover:border-white/30"
+                  className="absolute bottom-0 left-0 w-[65%] h-[48%] rounded-2xl overflow-hidden block group border border-slate-200 bg-white shadow-lg transition-all duration-200 hover:shadow-xl hover:-translate-y-1"
                 >
                   {rightFeaturedPosts[0]._embedded?.["wp:featuredmedia"]?.[0]?.source_url ? (
                     <Image
@@ -326,10 +372,13 @@ export default async function Home(props: PageProps) {
                       loading="eager"
                     />
                   ) : (
-                    <div className="w-full h-full bg-neutral-800" />
+                    <div className="w-full h-full bg-slate-200" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-                  <div className="absolute bottom-3.5 left-3.5 right-3.5">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <span className="text-[10px] text-[#FBCFE8] font-bold uppercase tracking-wider block mb-0.5">
+                      Recommended
+                    </span>
                     <h3 className="text-white font-semibold text-xs leading-snug line-clamp-2">
                       {cleanHtmlText(rightFeaturedPosts[0].title.rendered)}
                     </h3>
@@ -377,7 +426,7 @@ export default async function Home(props: PageProps) {
         {/* Unified Section Header */}
         <div className="flex justify-between items-end mb-8 pb-4 border-b border-outline-variant/40">
           <div>
-            <span className="text-[#ff6b00] font-bold text-xs uppercase tracking-wider block mb-1">
+            <span className="text-[#DC2564] font-bold text-xs uppercase tracking-wider block mb-1">
               Editor&apos;s Pick
             </span>
             <h2 className="font-extrabold text-on-surface text-2xl md:text-3xl tracking-tight">
@@ -386,7 +435,7 @@ export default async function Home(props: PageProps) {
           </div>
           <Link
             href="/blog"
-            className="hidden sm:flex items-center gap-1.5 text-on-surface font-medium text-xs border border-outline-variant/60 px-4 py-2 rounded-lg hover:border-[#ff6b00] hover:text-[#ff6b00] transition-colors duration-200"
+            className="hidden sm:flex items-center gap-1.5 text-on-surface font-medium text-xs border border-outline-variant/60 px-4 py-2 rounded-lg hover:border-[#DC2564] hover:text-[#DC2564] transition-colors duration-200"
           >
             View all articles <HiArrowRight size={14} />
           </Link>
@@ -416,18 +465,18 @@ export default async function Home(props: PageProps) {
                   <div className="w-full h-full bg-neutral-200" />
                 )}
                 {mainFeaturedPost._embedded?.["wp:term"]?.[0]?.[0] && (
-                  <span className="absolute top-4 left-4 bg-[#ff6b00] text-white px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">
+                  <span className="absolute top-4 left-4 bg-[#DC2564] text-white px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">
                     {mainFeaturedPost._embedded["wp:term"][0][0].name}
                   </span>
                 )}
               </div>
               <div className="p-6 md:p-8 flex flex-col gap-3 flex-grow">
                 <div className="flex items-center gap-2 text-on-surface-variant/80 text-xs font-medium">
-                  <span className="font-semibold text-[#ff6b00]">
+                  <span className="font-semibold text-[#DC2564]">
                     {mainFeaturedPost._embedded?.author?.[0]?.name || "Maajanki Team"}
                   </span>
                   <span>·</span>
-                  <span>
+                  <span suppressHydrationWarning>
                     {new Date(mainFeaturedPost.date).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
@@ -437,7 +486,7 @@ export default async function Home(props: PageProps) {
                   <span>·</span>
                   <span>8 min read</span>
                 </div>
-                <h3 className="font-bold text-on-surface text-xl md:text-2xl group-hover:text-[#ff6b00] transition-colors duration-200 leading-snug">
+                <h3 className="font-bold text-on-surface text-xl md:text-2xl group-hover:text-[#DC2564] transition-colors duration-200 leading-snug">
                   {cleanHtmlText(mainFeaturedPost.title.rendered)}
                 </h3>
                 <p className="text-on-surface-variant text-sm md:text-base line-clamp-2 leading-relaxed">
@@ -445,7 +494,7 @@ export default async function Home(props: PageProps) {
                 </p>
                 <Link
                   href={`/blog/${mainFeaturedPost.slug}`}
-                  className="flex items-center gap-1.5 text-[#ff6b00] font-semibold text-xs mt-auto pt-2 w-fit hover:underline"
+                  className="flex items-center gap-1.5 text-[#DC2564] font-semibold text-xs mt-auto pt-2 w-fit hover:underline"
                 >
                   <span>Continue Reading</span>
                   <HiArrowRight size={14} />
@@ -470,7 +519,7 @@ export default async function Home(props: PageProps) {
                     href={`/blog/${post.slug}`}
                     className="flex gap-4 group items-center p-3.5 rounded-xl bg-surface border border-outline-variant/50 hover:border-outline-variant hover:bg-surface-container-low/60 transition-all duration-200 shadow-sm"
                   >
-                    <span className="text-lg font-bold text-on-surface-variant/40 group-hover:text-[#ff6b00] transition-colors duration-200 flex-shrink-0 w-6 text-center">
+                    <span className="text-lg font-bold text-on-surface-variant/40 group-hover:text-[#DC2564] transition-colors duration-200 flex-shrink-0 w-6 text-center">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
                     <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-surface-variant relative">
@@ -487,13 +536,13 @@ export default async function Home(props: PageProps) {
                       )}
                     </div>
                     <div className="flex flex-col gap-1 min-w-0">
-                      <span className="text-[#ff6b00] text-[10px] font-bold uppercase tracking-wider">
+                      <span className="text-[#DC2564] text-[10px] font-bold uppercase tracking-wider">
                         {catName}
                       </span>
-                      <h4 className="font-semibold text-on-surface text-xs md:text-sm group-hover:text-[#ff6b00] transition-colors duration-200 line-clamp-2 leading-snug">
+                      <h4 className="font-semibold text-on-surface text-xs md:text-sm group-hover:text-[#DC2564] transition-colors duration-200 line-clamp-2 leading-snug">
                         {cleanHtmlText(post.title.rendered)}
                       </h4>
-                      <p className="text-on-surface-variant/70 text-[11px]">
+                      <p suppressHydrationWarning className="text-on-surface-variant/70 text-[11px]">
                         {new Date(post.date).toLocaleDateString("en-US", {
                           month: "short",
                           day: "numeric",
@@ -524,7 +573,7 @@ export default async function Home(props: PageProps) {
             </h2>
             <Link
               href="/blog"
-              className="text-[#ff6b00] text-xs font-semibold flex items-center gap-1 hover:underline"
+              className="text-[#DC2564] text-xs font-semibold flex items-center gap-1 hover:underline"
             >
               View all <HiArrowRight size={14} />
             </Link>
@@ -537,9 +586,9 @@ export default async function Home(props: PageProps) {
                   <Link
                     key={i}
                     href={topic.id ? `/blog?category=${topic.id}` : "/blog"}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-outline-variant/60 bg-surface hover:border-[#ff6b00] hover:text-[#ff6b00] text-on-surface text-xs font-semibold transition-colors duration-200 whitespace-nowrap shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-outline-variant/60 bg-surface hover:border-[#DC2564] hover:text-[#DC2564] text-on-surface text-xs font-semibold transition-colors duration-200 whitespace-nowrap shadow-sm"
                   >
-                    <Icon size={16} className="text-[#ff6b00]" />
+                    <Icon size={16} className="text-[#DC2564]" />
                     {topic.name}
                     {topic.count > 0 && (
                       <span className="bg-surface-container-high text-on-surface-variant text-[10px] font-bold px-1.5 py-0.5 rounded ml-0.5">
@@ -564,7 +613,7 @@ export default async function Home(props: PageProps) {
             {/* Unified Section Header */}
             <div className="flex items-end justify-between mb-8 pb-4 border-b border-outline-variant/40">
               <div>
-                <span className="text-[#ff6b00] font-bold text-xs uppercase tracking-wider block mb-1">
+                <span className="text-[#DC2564] font-bold text-xs uppercase tracking-wider block mb-1">
                   Fresh off the press
                 </span>
                 <h2 className="font-extrabold text-on-surface text-2xl md:text-3xl tracking-tight">
@@ -590,7 +639,7 @@ export default async function Home(props: PageProps) {
             <div className="flex justify-center">
               <Link
                 href="/blog"
-                className="group flex items-center gap-2 bg-on-surface text-white px-8 py-3.5 rounded-xl hover:bg-[#ff6b00] transition-colors duration-200 font-semibold text-xs uppercase tracking-wider"
+                className="group flex items-center gap-2 bg-on-surface text-white px-8 py-3.5 rounded-xl hover:bg-[#DC2564] transition-colors duration-200 font-semibold text-xs uppercase tracking-wider"
               >
                 Load More Articles
                 <HiArrowPath
@@ -607,7 +656,7 @@ export default async function Home(props: PageProps) {
               {/* Trending Widget */}
               <div className="bg-surface border border-outline-variant/60 rounded-xl p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-5 pb-3 border-b border-outline-variant/40">
-                  <MdTrendingUp className="text-[#ff6b00]" size={20} />
+                  <MdTrendingUp className="text-[#DC2564]" size={20} />
                   <h3 className="font-bold text-on-surface text-sm uppercase tracking-wider">
                     Trending this week
                   </h3>
@@ -620,14 +669,14 @@ export default async function Home(props: PageProps) {
                           href={`/blog/${post.slug}`}
                           className="flex gap-3.5 group items-start pb-3.5 border-b border-outline-variant/30 last:border-0 last:pb-0"
                         >
-                          <span className="text-xl font-bold text-outline text-[#ff6b00]/80 group-hover:text-[#ff6b00] transition-colors duration-200 flex-shrink-0 leading-none pt-0.5">
+                          <span className="text-xl font-bold text-outline text-[#DC2564]/80 group-hover:text-[#DC2564] transition-colors duration-200 flex-shrink-0 leading-none pt-0.5">
                             0{idx + 1}
                           </span>
                           <div>
-                            <h4 className="font-semibold text-on-surface text-xs md:text-sm line-clamp-2 group-hover:text-[#ff6b00] transition-colors duration-200 leading-snug">
+                            <h4 className="font-semibold text-on-surface text-xs md:text-sm line-clamp-2 group-hover:text-[#DC2564] transition-colors duration-200 leading-snug">
                               {cleanHtmlText(post.title.rendered)}
                             </h4>
-                            <p className="text-[11px] text-on-surface-variant/70 mt-1">
+                            <p suppressHydrationWarning className="text-[11px] text-on-surface-variant/70 mt-1">
                               {new Date(post.date).toLocaleDateString("en-US", {
                                 month: "short",
                                 day: "numeric",
@@ -657,9 +706,9 @@ export default async function Home(props: PageProps) {
                           key={num}
                           className="flex gap-3.5 group items-start pb-3.5 border-b border-outline-variant/30 last:border-0 last:pb-0 cursor-pointer"
                         >
-                          <span className="text-xl font-bold text-[#ff6b00]/80 flex-shrink-0 leading-none pt-0.5">{num}</span>
+                          <span className="text-xl font-bold text-[#DC2564]/80 flex-shrink-0 leading-none pt-0.5">{num}</span>
                           <div>
-                            <h4 className="font-semibold text-on-surface text-xs md:text-sm line-clamp-2 group-hover:text-[#ff6b00] transition-colors duration-200 leading-snug">
+                            <h4 className="font-semibold text-on-surface text-xs md:text-sm line-clamp-2 group-hover:text-[#DC2564] transition-colors duration-200 leading-snug">
                               {title}
                             </h4>
                             <p className="text-[11px] text-on-surface-variant/70 mt-1">
@@ -679,25 +728,25 @@ export default async function Home(props: PageProps) {
 
               {/* Sidebar Newsletter — Clean restrained container */}
               <div className="bg-[#0f0a08] border border-white/15 rounded-xl p-6 text-white shadow-sm">
-                <div className="w-9 h-9 rounded-lg bg-[#ff6b00]/20 border border-[#ff6b00]/40 text-[#ff6b00] flex items-center justify-center mb-4">
+                <div className="w-9 h-9 rounded-lg bg-[#DC2564]/20 border border-[#DC2564]/40 text-[#DC2564] flex items-center justify-center mb-4">
                   <HiEnvelope size={18} />
                 </div>
                 <h3 className="font-bold text-base mb-1.5 leading-snug">
                   Don&apos;t miss a dispatch.
                 </h3>
                 <p className="text-white/60 text-xs mb-4 leading-relaxed">
-                  Join 15,000+ businesses getting our weekly growth deep dives.
+                  Join Indian developers &amp; business owners getting our weekly growth deep dives.
                 </p>
                 <form action="/newsletter" method="GET" className="space-y-2.5">
                   <input
-                    className="w-full bg-white/5 border border-white/15 focus:border-[#ff6b00] focus:bg-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-white/40 outline-none transition-colors duration-200"
+                    className="w-full bg-white/5 border border-white/15 focus:border-[#DC2564] focus:bg-white/10 rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-white/40 outline-none transition-colors duration-200"
                     placeholder="name@company.com"
                     type="email"
                     required
                   />
                   <button
                     type="submit"
-                    className="w-full bg-[#ff6b00] hover:bg-[#e05e00] text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 text-xs"
+                    className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 text-xs"
                   >
                     Subscribe Free
                   </button>
@@ -712,18 +761,16 @@ export default async function Home(props: PageProps) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          6. NEWSLETTER & COMMUNITY STATS
+          DYNAMIC WORDPRESS PRODUCTS SECTION
+      ═══════════════════════════════════════════ */}
+      <HomepageProductsSection />
+
+      {/* ═══════════════════════════════════════════
+          6. NEWSLETTER & COMMUNITY
       ═══════════════════════════════════════════ */}
       <section className="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low/30 border-t border-outline-variant/30">
         <div className="max-w-container-max mx-auto space-y-8">
           <Newsletter />
-
-          {/* Stat Cards Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.map((s) => (
-              <StatCard key={s.label} {...s} />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -733,12 +780,7 @@ export default async function Home(props: PageProps) {
       <WhyChooseMaajanki />
 
       {/* ═══════════════════════════════════════════
-          8. AI POWERED SAAS SOLUTIONS
-      ═══════════════════════════════════════════ */}
-      <AiSaasSolutions />
-
-      {/* ═══════════════════════════════════════════
-          9. TRUSTED TECHNOLOGIES
+          8. TRUSTED TECHNOLOGIES
       ═══════════════════════════════════════════ */}
       <TrustedTechnologies />
 

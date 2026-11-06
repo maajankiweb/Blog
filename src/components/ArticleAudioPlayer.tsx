@@ -141,18 +141,18 @@ export default function ArticleAudioPlayer({ title, content }: ArticleAudioPlaye
   if (!isSupported) return null;
 
   return (
-    <div className="bg-gradient-to-r from-[#170e09] to-[#120904] border border-[#ff6b00]/30 p-4 md:p-5 rounded-2xl text-white shadow-xl mb-8 relative overflow-hidden group">
+    <div className="bg-gradient-to-r from-[#170e09] to-[#120904] border border-[#DC2564]/30 p-4 md:p-5 rounded-2xl text-white shadow-xl mb-8 relative overflow-hidden group">
       {/* Background Accent */}
-      <div className="absolute right-0 top-0 w-32 h-32 bg-[#ff6b00]/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute right-0 top-0 w-32 h-32 bg-[#DC2564]/10 rounded-full blur-2xl pointer-events-none" />
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 relative z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#ff6b00]/20 border border-[#ff6b00]/40 flex items-center justify-center text-[#ff6b00] shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-[#DC2564]/20 border border-[#DC2564]/40 flex items-center justify-center text-[#DC2564] shrink-0">
             <HiSpeakerWave className="w-5 h-5 animate-pulse" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#ff6b00]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#DC2564]">
                 Audio Article Listener
               </span>
               <span className="text-[11px] bg-white/10 px-2 py-0.5 rounded-full text-white/70">
@@ -169,7 +169,7 @@ export default function ArticleAudioPlayer({ title, content }: ArticleAudioPlaye
           {/* Play/Pause Button */}
           <button
             onClick={togglePlay}
-            className="flex items-center gap-2 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95"
+            className="flex items-center gap-2 bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95"
             aria-label={isPlaying && !isPaused ? "Pause narration" : "Listen to article"}
           >
             {isPlaying && !isPaused ? (
@@ -211,7 +211,7 @@ export default function ArticleAudioPlayer({ title, content }: ArticleAudioPlaye
       {(isPlaying || isPaused || progress > 0) && (
         <div className="mt-3.5 w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
           <div
-            className="bg-[#ff6b00] h-full transition-all duration-300 rounded-full"
+            className="bg-[#DC2564] h-full transition-all duration-300 rounded-full"
             style={{ width: `${Math.min(100, progress)}%` }}
           />
         </div>

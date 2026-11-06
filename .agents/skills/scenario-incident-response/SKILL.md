@@ -1,3 +1,8 @@
+---
+name: NEXUS Incident Response Runbook
+description: NEXUS-Micro runbook for production incident response from rapid detection to root-cause post-mortem.
+---
+
 # 🚨 Runbook: Incident Response
 
 > **Mode**: NEXUS-Micro | **Duration**: Minutes to hours | **Agents**: 3-8

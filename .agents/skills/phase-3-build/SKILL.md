@@ -1,3 +1,8 @@
+---
+name: NEXUS Phase 3 Build
+description: Phase 3 playbook for feature implementation, parallel tracks, Dev-QA verification loops, and sprint builds.
+---
+
 # 🔨 Phase 3 Playbook — Build & Iterate
 
 > **Duration**: 2-12 weeks (varies by scope) | **Agents**: 15-30+ | **Gate Keeper**: Agents Orchestrator

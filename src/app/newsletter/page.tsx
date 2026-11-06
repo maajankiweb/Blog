@@ -228,13 +228,13 @@ export default function NewsletterPage() {
         aria-label="Newsletter subscription"
       >
         <div
-          className="relative rounded-[2.5rem] overflow-hidden p-10 md:p-16 border border-white/10 shadow-2xl"
+          className="relative rounded-[2.5rem] overflow-hidden p-10 md:p-16 border border-gray-200 shadow-2xl"
           style={{ background: "linear-gradient(135deg, #0d0806 0%, #170d08 40%, #241108 100%)" }}
         >
           {/* Decorative orbs */}
           <div
             className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-25 blur-3xl"
-            style={{ background: "radial-gradient(circle, #ff6b00 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(circle, #DC2564 0%, transparent 70%)" }}
             aria-hidden="true"
           />
           <div
@@ -246,7 +246,7 @@ export default function NewsletterPage() {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Copy */}
             <div className="text-white space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-[#ff6b00] text-xs font-bold uppercase tracking-widest backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-[#DC2564] text-xs font-bold uppercase tracking-widest backdrop-blur-md">
                 <Sparkles className="h-4 w-4 animate-pulse" aria-hidden="true" />
                 <span>Free Subscription</span>
               </div>
@@ -256,7 +256,7 @@ export default function NewsletterPage() {
                 style={{ fontSize: "clamp(26px, 3.2vw, 44px)" }}
               >
                 Get insights that{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff6b00] to-amber-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DC2564] to-amber-400">
                   matter most
                 </span>
                 , delivered weekly.
@@ -271,7 +271,7 @@ export default function NewsletterPage() {
                 <div className="flex -space-x-2.5" aria-hidden="true">
                   {[
                     "bg-gradient-to-tr from-amber-500 to-orange-400",
-                    "bg-gradient-to-tr from-[#ff6b00] to-orange-300",
+                    "bg-gradient-to-tr from-[#DC2564] to-orange-300",
                     "bg-gradient-to-tr from-orange-600 to-amber-500",
                     "bg-gradient-to-tr from-amber-600 to-orange-500",
                   ].map((g, i) => (
@@ -283,7 +283,7 @@ export default function NewsletterPage() {
                     </div>
                   ))}
                 </div>
-                <p className="text-white/60 text-sm font-medium">
+                <p className="text-gray-500 text-sm font-medium">
                   Joined by <span className="text-white font-bold">15,000+</span> readers
                 </p>
               </div>
@@ -308,7 +308,7 @@ export default function NewsletterPage() {
             <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-3xl p-8 space-y-6">
               <div className="space-y-1.5">
                 <h3 className="text-xl font-bold text-white">Subscribe now</h3>
-                <p className="text-white/60 text-sm">Your first edition arrives this Sunday.</p>
+                <p className="text-gray-500 text-sm">Your first edition arrives this Sunday.</p>
               </div>
               {/* SubscribeForm is a Client Component */}
               <SubscribeForm />
@@ -469,16 +469,16 @@ export default function NewsletterPage() {
       {/* ── 6. Bottom CTA ────────────────────────────────────────────── */}
       <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
         <div
-          className="p-12 md:p-20 rounded-[2.5rem] space-y-6 text-white border border-white/10 shadow-2xl relative overflow-hidden"
+          className="p-12 md:p-20 rounded-[2.5rem] space-y-6 text-white border border-gray-200 shadow-2xl relative overflow-hidden"
           style={{ background: "linear-gradient(135deg, #0d0806 0%, #1a0e08 50%, #291309 100%)" }}
         >
           <div
             className="pointer-events-none absolute -top-20 left-1/4 w-64 h-64 rounded-full opacity-20 blur-3xl"
-            style={{ background: "radial-gradient(circle, #ff6b00, transparent 70%)" }}
+            style={{ background: "radial-gradient(circle, #DC2564, transparent 70%)" }}
             aria-hidden="true"
           />
           <div className="relative z-10 max-w-[700px] mx-auto space-y-6">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#ff6b00]/20 text-[#ff6b00] border border-[#ff6b00]/30 text-xs font-bold uppercase tracking-widest">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#DC2564]/20 text-[#DC2564] border border-[#DC2564]/30 text-xs font-bold uppercase tracking-widest">
               JOIN 15,000+ READERS
             </span>
             <h2 className="font-headline-lg text-headline-lg text-white font-bold">
@@ -490,7 +490,7 @@ export default function NewsletterPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <a
                 href="#newsletter-email-input"
-                className="inline-flex items-center gap-2 bg-[#ff6b00] text-white px-9 py-4 rounded-full font-bold text-sm hover:bg-[#e05e00] active:scale-95 transition-all duration-200 shadow-xl shadow-[#ff6b00]/30"
+                className="inline-flex items-center gap-2 bg-[#DC2564] text-white px-9 py-4 rounded-full font-bold text-sm hover:bg-[#B81D52] active:scale-95 transition-all duration-200 shadow-xl shadow-[#DC2564]/30"
               >
                 Subscribe Free <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>

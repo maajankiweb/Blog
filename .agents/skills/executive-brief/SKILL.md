@@ -1,3 +1,8 @@
+---
+name: NEXUS Executive Brief
+description: Network of EXperts, Unified in Strategy executive summary, business impact findings, and operational directives.
+---
+
 # 📑 NEXUS Executive Brief
 
 ## Network of EXperts, Unified in Strategy

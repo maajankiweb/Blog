@@ -73,14 +73,14 @@ export default function StatCard({
   return (
     <div
       ref={ref}
-      className="bg-[#140b07] rounded-2xl p-5 md:p-6 flex flex-col gap-2.5 border border-white/10 hover:border-[#ff6b00]/50 transition-all duration-300 hover:-translate-y-1 shadow-xl text-white group"
+      className="bg-[#140b07] rounded-2xl p-5 md:p-6 flex flex-col gap-2.5 border border-white/10 hover:border-[#DC2564]/50 transition-all duration-300 hover:-translate-y-1 shadow-xl text-white group"
     >
-      <div className="w-10 h-10 rounded-xl bg-white/8 flex items-center justify-center border border-white/10 group-hover:bg-[#ff6b00]/20 group-hover:border-[#ff6b00]/40 transition-colors">
-        <IconComponent className="text-[#ff6b00]" size={24} />
+      <div className="w-10 h-10 rounded-xl bg-white/8 flex items-center justify-center border border-white/10 group-hover:bg-[#DC2564]/20 group-hover:border-[#DC2564]/40 transition-colors">
+        <IconComponent className="text-[#DC2564]" size={24} />
       </div>
       <p className="text-white font-black text-2xl md:text-3xl leading-none tabular-nums tracking-tight pt-1">
         {value.toFixed(decimals)}
-        <span className="text-[#ff6b00]">{suffix}</span>
+        <span className="text-[#DC2564]">{suffix}</span>
       </p>
       <p className="text-white/70 text-xs md:text-sm font-medium">{label}</p>
     </div>

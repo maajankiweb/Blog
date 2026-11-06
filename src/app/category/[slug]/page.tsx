@@ -41,7 +41,14 @@ export default async function CategoryArchivePage(props: PageProps) {
       getTags({ perPage: 25 }),
     ]);
 
-    posts = fetchedPosts;
+    // If no direct posts found under mapped category id, fallback to recent posts
+    if (fetchedPosts && fetchedPosts.length > 0) {
+      posts = fetchedPosts;
+    } else {
+      const fallbackAll = await getPosts({ perPage: 12 });
+      posts = fallbackAll;
+    }
+
     categories = fetchedCategories.filter((c) => c.count > 0);
     tags = fetchedTags.filter((t) => t.count > 0);
   } catch (err) {

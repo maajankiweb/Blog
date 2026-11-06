@@ -57,7 +57,7 @@ export default function SubscribeForm() {
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="text-xs text-[#ff6b00] underline font-semibold hover:text-[#ff8533] transition-colors pt-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ff6b00] rounded"
+          className="text-xs text-[#DC2564] underline font-semibold hover:text-[#e64980] transition-colors pt-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#DC2564] rounded"
         >
           Subscribe another email
         </button>
@@ -73,7 +73,7 @@ export default function SubscribeForm() {
           Your email address
         </label>
         <div
-          className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/40 group-focus-within:text-[#ff6b00] transition-colors"
+          className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/40 group-focus-within:text-[#DC2564] transition-colors"
           aria-hidden="true"
         >
           <Mail className="h-5 w-5" />
@@ -96,7 +96,7 @@ export default function SubscribeForm() {
           aria-invalid={status === "error" ? "true" : "false"}
           className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.08] border ${
             status === "error" ? "border-red-500/60" : "border-white/[0.15]"
-          } text-white placeholder:text-white/35 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-2 focus:ring-[#ff6b00]/30 transition-all backdrop-blur-md disabled:opacity-50`}
+          } text-white placeholder:text-white/35 text-sm focus:outline-none focus:border-[#DC2564] focus:ring-2 focus:ring-[#DC2564]/30 transition-all backdrop-blur-md disabled:opacity-50`}
         />
       </div>
 
@@ -115,7 +115,7 @@ export default function SubscribeForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full bg-[#ff6b00] hover:bg-[#e05e00] text-white py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#ff6b00]/30 active:scale-[0.98] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6b00]"
+        className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#DC2564]/30 active:scale-[0.98] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#DC2564]"
         aria-busy={status === "submitting"}
       >
         <span>{status === "submitting" ? "Subscribing…" : "Subscribe — It's Free"}</span>

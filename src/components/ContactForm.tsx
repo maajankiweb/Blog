@@ -1,132 +1,160 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("general");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) {
       setStatus("error");
+      setErrorMessage("Please fill in all required fields.");
       return;
     }
-    
+
     setStatus("submitting");
 
-    // Simulate submission
+    // Simulate submission / dispatch
     setTimeout(() => {
       setStatus("success");
       setName("");
       setEmail("");
+      setPhone("");
       setMessage("");
     }, 1000);
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 border border-outline-variant p-8 md:p-10 rounded-[16px] shadow-sm">
-      {status === "success" && (
-        <div className="flex flex-col items-center justify-center py-6 text-center space-y-4">
-          <div className="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center">
+    <div suppressHydrationWarning className="bg-white border border-gray-200 p-8 sm:p-10 rounded-2xl shadow-xs">
+      {status === "success" ? (
+        <div suppressHydrationWarning className="flex flex-col items-center justify-center py-10 text-center space-y-4">
+          <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center">
             <CheckCircle2 className="h-8 w-8" />
           </div>
-          <h3 className="text-xl font-bold text-on-surface dark:text-zinc-50">Message Sent!</h3>
-          <p className="text-on-surface-variant dark:text-zinc-400 text-sm max-w-sm">
-            Thank you for reaching out. We have received your message and our editorial desk will contact you shortly.
+          <h3 className="text-xl font-black text-[#14213D]">Message Sent Successfully!</h3>
+          <p className="text-gray-600 text-xs sm:text-sm max-w-sm">
+            Thank you for reaching out. Our engineering and editorial team will review your inquiry and get back to you within 24 business hours.
           </p>
           <button
             onClick={() => setStatus("idle")}
-            className="text-primary font-bold text-sm hover:underline pt-2"
+            className="text-[#DC2564] font-bold text-xs hover:underline pt-2"
           >
-            Send another message
+            Send another inquiry →
           </button>
         </div>
-      )}
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5" suppressHydrationWarning>
+          <div suppressHydrationWarning className="border-b border-gray-100 pb-4 mb-2">
+            <h3 className="text-xl font-black text-[#14213D]">Send Us a Message</h3>
+            <p className="text-xs text-gray-500 mt-1">
+              Have questions regarding digital products, licensing, custom Next.js development, or editorial guest articles? We respond quickly.
+            </p>
+          </div>
 
-      {status !== "success" && (
-        <form onSubmit={handleSubmit} className="space-y-6">
           {status === "error" && (
-            <div className="p-4 bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg text-sm font-semibold border border-red-500/20">
-              All fields are required.
+            <div suppressHydrationWarning className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{errorMessage || "An error occurred. Please check your inputs."}</span>
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="font-label-md text-label-md text-on-surface-variant dark:text-zinc-400" htmlFor="name">
-                Full Name
+          <div suppressHydrationWarning className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                Full Name *
               </label>
               <input
-                id="name"
                 type="text"
-                placeholder="Enter your name"
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full bg-surface-container-low dark:bg-zinc-800 border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none text-sm dark:text-zinc-100"
+                placeholder="Ashish Kumar"
+                className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-[#DC2564] focus:ring-2 focus:ring-[#DC2564]/10 transition-all text-[#14213D]"
               />
             </div>
-            <div className="space-y-2">
-              <label className="font-label-md text-label-md text-on-surface-variant dark:text-zinc-400" htmlFor="email">
-                Email Address
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                Email Address *
               </label>
               <input
-                id="email"
                 type="email"
-                placeholder="email@editorial.com"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full bg-surface-container-low dark:bg-zinc-800 border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none text-sm dark:text-zinc-100"
+                placeholder="ashish@example.com"
+                className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-[#DC2564] focus:ring-2 focus:ring-[#DC2564]/10 transition-all text-[#14213D]"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="font-label-md text-label-md text-on-surface-variant dark:text-zinc-400" htmlFor="subject">
-              Subject
-            </label>
-            <select
-              id="subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="w-full bg-surface-container-low dark:bg-zinc-800 border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none text-sm dark:text-zinc-100"
-            >
-              <option value="general">General Inquiry</option>
-              <option value="pitch">Story Pitch</option>
-              <option value="press">Press & Media</option>
-              <option value="partnership">Partnership</option>
-              <option value="other">Other</option>
-            </select>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                Phone / WhatsApp <span className="text-gray-400 font-normal">(Optional)</span>
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+91 90065 43913"
+                className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-[#DC2564] focus:ring-2 focus:ring-[#DC2564]/10 transition-all text-[#14213D]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                Inquiry Topic
+              </label>
+              <select
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-[#DC2564] focus:ring-2 focus:ring-[#DC2564]/10 transition-all text-[#14213D]"
+              >
+                <option value="general">General Question</option>
+                <option value="digital-product">Digital Product &amp; License Support</option>
+                <option value="custom-project">Custom Next.js &amp; Headless Development</option>
+                <option value="editorial">Editorial &amp; Guest Article Proposal</option>
+                <option value="partnership">Agency Partnership &amp; Commercial</option>
+              </select>
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="font-label-md text-label-md text-on-surface-variant dark:text-zinc-400" htmlFor="message">
-              Your Message
+          <div>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+              Message / Project Details *
             </label>
             <textarea
-              id="message"
-              rows={6}
-              placeholder="How can we help?"
+              required
+              rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              required
-              className="w-full bg-surface-container-low dark:bg-zinc-800 border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none text-sm resize-none dark:text-zinc-100"
+              placeholder="Tell us about your requirements or question..."
+              className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-gray-300 bg-white focus:outline-none focus:border-[#DC2564] focus:ring-2 focus:ring-[#DC2564]/10 transition-all text-[#14213D]"
             />
           </div>
 
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="w-full md:w-auto bg-primary-container text-on-primary font-label-md text-label-md px-12 py-4 rounded-full hover:shadow-lg transition-all transform active:scale-95 flex items-center justify-center gap-2 group shadow-lg shadow-primary/20 disabled:opacity-50"
+            className="w-full btn-primary py-3.5 text-xs sm:text-sm font-bold shadow-md justify-center flex items-center gap-2"
           >
-            {status === "submitting" ? "Sending..." : "Send Message"}
-            <Send className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            {status === "submitting" ? (
+              <span>Transmitting Inquiry...</span>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                <span>Submit Inquiry</span>
+              </>
+            )}
           </button>
         </form>
       )}
