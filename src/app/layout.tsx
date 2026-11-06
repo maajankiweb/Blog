@@ -24,23 +24,39 @@ const googleVerification =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "MJ Digital Blog | Digital Growth, SEO & Web Development",
+    default: "MJ Digital Blog | Digital Growth, Technical SEO & Software Architecture",
     template: "%s | MJ Digital Blog",
   },
   description:
-    "Learn web development, technical SEO, content marketing, and growth strategy for businesses. Practical, actionable insights from MJ Digital Digital Agency.",
+    "Learn modern web architecture, technical SEO, content marketing, and growth strategy for businesses. Practical, actionable insights from MJ Digital.",
   keywords: [
-    "SEO", "Technical SEO", "Web Development", "Digital Marketing",
+    "SEO", "Technical SEO", "Modern Web Architecture", "Digital Marketing",
     "Content Marketing", "WordPress", "Next.js", "Online Business Growth",
-    "Maajanki", "MJ Digital",
+    "MJ Digital", "Maajanki", "Ashish Kumar",
   ],
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
+    types: {
+      "application/rss+xml": `${siteUrl}/feed.xml`,
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   openGraph: {
-    title: "MJ Digital Blog | Digital Growth, SEO & Web Development",
+    title: "MJ Digital Blog | Digital Growth, Technical SEO & Software Architecture",
     description:
-      "Practical, actionable insights on SEO, digital marketing, and web development for modern businesses.",
+      "Practical, actionable insights on SEO, digital marketing, and modern software architecture for modern businesses.",
     type: "website",
     locale: "en_IN",
     url: siteUrl,
@@ -50,9 +66,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@maajankiwebtech",
     creator: "@kumarashishweb",
-    title: "MJ Digital Blog | Digital Growth, SEO & Web Development",
+    title: "MJ Digital Blog | Digital Growth, Technical SEO & Software Architecture",
     description:
-      "Practical, actionable insights on SEO, digital marketing, and web development.",
+      "Practical, actionable insights on SEO, digital marketing, and modern software architecture.",
   },
   icons: {
     icon: [
@@ -63,6 +79,10 @@ export const metadata: Metadata = {
   },
   verification: {
     google: googleVerification,
+    yandex: "yandex-verification",
+    other: {
+      "msvalidate.01": "D604E6BC1049FE60A7D40D2F3C012345",
+    },
   },
 };
 
@@ -73,19 +93,19 @@ const structuredData = {
     {
       "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
       "@id": "https://blog.maajankiwebtech.com/#organization",
-      name: "MJ Digital Digital Agency",
-      alternateName: "MJ Digital",
+      name: "MJ Digital",
+      alternateName: "MJ Digital Agency",
       url: "https://blog.maajankiwebtech.com",
       logo: {
         "@type": "ImageObject",
         "@id": "https://blog.maajankiwebtech.com/#logo",
-        url: "https://blog.maajankiwebtech.com/logo.png",
-        width: 200,
-        height: 60,
+        url: "https://blog.maajankiwebtech.com/maajanki-web-tech-logo.webp",
+        width: 300,
+        height: 80,
         caption: "MJ Digital",
       },
       image: "https://blog.maajankiwebtech.com/ashish-kumar.png",
-      description: "Indian Web Development, Technical SEO, and Digital Growth Agency specializing in Next.js 16, WordPress, and developer tools.",
+      description: "Indian Software Architecture, Technical SEO, and Digital Growth Agency specializing in Next.js 16, WordPress, and digital products.",
       telephone: "+91-9006543913",
       email: "info@maajankiwebtech.com",
       priceRange: "₹₹",
@@ -116,7 +136,7 @@ const structuredData = {
         "@type": "Person",
         name: "Ashish Kumar",
         jobTitle: "Founder & Lead Architect",
-        url: "https://blog.maajankiwebtech.com/author/ashish-kumar",
+        url: "https://blog.maajankiwebtech.com/about",
       },
       contactPoint: {
         "@type": "ContactPoint",
@@ -127,10 +147,10 @@ const structuredData = {
         availableLanguage: ["English", "Hindi"],
       },
       sameAs: [
-        "https://www.facebook.com/maajankiwebtech",
+        "https://www.instagram.com/maajankiwebtech/",
+        "https://www.facebook.com/maajankiwebtechllp",
         "https://twitter.com/maajankiwebtech",
         "https://www.linkedin.com/company/maajankiwebtech",
-        "https://github.com/AshishKmj",
         "https://www.youtube.com/@Ashishkmj",
       ],
     },

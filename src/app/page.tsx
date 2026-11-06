@@ -150,7 +150,7 @@ export default async function Home(props: PageProps) {
 
   const marqueeTopics = [
     "LOCAL SEO & SEARCH RANKINGS",
-    "CUSTOM WEB DEVELOPMENT",
+    "CUSTOM WEB ARCHITECTURE",
     "WORDPRESS OPTIMIZATION",
     "NEXT.JS & REACT SYSTEMS",
     "INDIAN FREELANCER INVOICING",
@@ -159,78 +159,8 @@ export default async function Home(props: PageProps) {
     "BUSINESS GROWTH STRATEGY",
   ];
 
-  // Schema.org Product & Offer structured data for AI agents & search engines
-  const productOfferSchemas = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Product",
-        "@id": "https://blog.maajankiwebtech.com/products#nextjs-blog-starter-kit-pro",
-        name: "Maajanki Pro Next.js & Tailwind Blog Starter Kit",
-        description: "Production-ready, SEO-optimized Next.js 16 blog template with Turbopack, ISR revalidation, dark mode, and RSS feed.",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
-        category: "Software > Web Development Templates",
-        offers: {
-          "@type": "Offer",
-          url: "https://blog.maajankiwebtech.com/products",
-          price: "2499",
-          priceCurrency: "INR",
-          availability: "https://schema.org/InStock",
-          priceValidUntil: "2027-12-31",
-          seller: {
-            "@type": "Organization",
-            name: "MJ Digital Digital Agency",
-          },
-        },
-      },
-      {
-        "@type": "Product",
-        "@id": "https://blog.maajankiwebtech.com/products#invobill-gst-invoice-plugin-wordpress",
-        name: "InvoBill GST & Freelancer Invoice Helper Plugin",
-        description: "WordPress plugin for Indian agency owners & freelancers to auto-generate 18% GST invoices with SAC code 998314.",
-        image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&auto=format&fit=crop&q=80",
-        category: "Software > WordPress Plugins",
-        offers: {
-          "@type": "Offer",
-          url: "https://blog.maajankiwebtech.com/products",
-          price: "1499",
-          priceCurrency: "INR",
-          availability: "https://schema.org/InStock",
-          priceValidUntil: "2027-12-31",
-          seller: {
-            "@type": "Organization",
-            name: "MJ Digital Digital Agency",
-          },
-        },
-      },
-      {
-        "@type": "Service",
-        "@id": "https://blog.maajankiwebtech.com/#custom-web-development-service",
-        name: "Custom Next.js & WordPress Web Application Development",
-        description: "Full-stack enterprise website engineering, Core Web Vitals remediation, and SEO architecture.",
-        provider: {
-          "@type": "Organization",
-          name: "MJ Digital Digital Agency",
-        },
-        offers: {
-          "@type": "Offer",
-          url: "https://blog.maajankiwebtech.com/tools/website-cost-calculator",
-          price: "15000",
-          priceCurrency: "INR",
-          availability: "https://schema.org/InStock",
-          priceValidUntil: "2027-12-31",
-        },
-      },
-    ],
-  };
-
   return (
     <div className="bg-background text-on-background min-h-screen selection:bg-[#DC2564]/20 selection:text-[#DC2564]">
-      {/* Product & Offer Schema for Search Engines and AI Agents */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productOfferSchemas) }}
-      />
       {/* ═══════════════════════════════════════════
           1. HERO — Premium Editorial & SaaS Header
       ═══════════════════════════════════════════ */}
@@ -268,11 +198,11 @@ export default async function Home(props: PageProps) {
                   <HiArrowRight size={16} />
                 </Link>
                 <Link
-                  href="/products"
+                  href="/about"
                   className="inline-flex items-center justify-center gap-2 bg-[#14213D] hover:bg-[#0A1120] text-white font-bold text-sm px-6 py-3.5 rounded-xl transition-all shadow-sm shadow-[#14213D]/15 active:scale-95"
                 >
-                  <HiStar className="text-[#FCA311]" size={16} />
-                  <span>Explore Digital Store</span>
+                  <span>About MJ Digital</span>
+                  <HiArrowRight size={16} />
                 </Link>
               </div>
 
@@ -333,14 +263,14 @@ export default async function Home(props: PageProps) {
                     <div className="w-full h-full bg-slate-100" />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
-                  <span className="absolute top-3 left-3 bg-[#DC2564] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">
+                  <span className="absolute top-3 left-3 bg-[#DC2564] text-white text-xs font-bold px-2.5 py-1 rounded-lg">
                     Featured Dispatch
                   </span>
                   <div className="absolute bottom-3.5 left-3.5 right-3.5">
-                    <h3 className="text-white font-bold text-sm sm:text-base leading-snug line-clamp-2">
+                    <h2 className="text-white font-bold text-sm sm:text-base leading-snug line-clamp-2">
                       {cleanHtmlText(mainFeaturedPost.title.rendered)}
-                    </h3>
-                    <p suppressHydrationWarning className="text-slate-300 text-[11px] mt-1">
+                    </h2>
+                    <p suppressHydrationWarning className="text-slate-300 text-xs mt-1">
                       {new Date(mainFeaturedPost.date).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -376,12 +306,12 @@ export default async function Home(props: PageProps) {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3">
-                    <span className="text-[10px] text-[#FBCFE8] font-bold uppercase tracking-wider block mb-0.5">
+                    <span className="text-xs text-[#FBCFE8] font-bold block mb-0.5">
                       Recommended
                     </span>
-                    <h3 className="text-white font-semibold text-xs leading-snug line-clamp-2">
+                    <h2 className="text-white font-semibold text-xs leading-snug line-clamp-2">
                       {cleanHtmlText(rightFeaturedPosts[0].title.rendered)}
-                    </h3>
+                    </h2>
                   </div>
                 </Link>
               ) : null}
@@ -401,7 +331,7 @@ export default async function Home(props: PageProps) {
       ═══════════════════════════════════════════ */}
       <section className="py-6 border-b border-outline-variant/30 bg-surface-container-low/50 overflow-hidden">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-3">
-          <p className="text-center text-[11px] text-on-surface-variant/70 font-semibold uppercase tracking-[0.18em]">
+          <p className="text-center text-xs text-slate-500 font-medium">
             Covering Key Growth Domains for Indian Businesses &amp; Developers
           </p>
         </div>
@@ -639,7 +569,7 @@ export default async function Home(props: PageProps) {
             <div className="flex justify-center">
               <Link
                 href="/blog"
-                className="group flex items-center gap-2 bg-on-surface text-white px-8 py-3.5 rounded-xl hover:bg-[#DC2564] transition-colors duration-200 font-semibold text-xs uppercase tracking-wider"
+                className="group flex items-center gap-2 bg-on-surface text-white px-8 py-3.5 rounded-xl hover:bg-[#DC2564] transition-colors duration-200 font-bold text-sm"
               >
                 Load More Articles
                 <HiArrowPath
@@ -657,8 +587,8 @@ export default async function Home(props: PageProps) {
               <div className="bg-surface border border-outline-variant/60 rounded-xl p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-5 pb-3 border-b border-outline-variant/40">
                   <MdTrendingUp className="text-[#DC2564]" size={20} />
-                  <h3 className="font-bold text-on-surface text-sm uppercase tracking-wider">
-                    Trending this week
+                  <h3 className="font-bold text-slate-900 text-sm">
+                    Trending This Week
                   </h3>
                 </div>
                 <div className="space-y-4">
@@ -676,7 +606,7 @@ export default async function Home(props: PageProps) {
                             <h4 className="font-semibold text-on-surface text-xs md:text-sm line-clamp-2 group-hover:text-[#DC2564] transition-colors duration-200 leading-snug">
                               {cleanHtmlText(post.title.rendered)}
                             </h4>
-                            <p suppressHydrationWarning className="text-[11px] text-on-surface-variant/70 mt-1">
+                            <p suppressHydrationWarning className="text-xs text-on-surface-variant/70 mt-1">
                               {new Date(post.date).toLocaleDateString("en-US", {
                                 month: "short",
                                 day: "numeric",
@@ -751,7 +681,7 @@ export default async function Home(props: PageProps) {
                     Subscribe Free
                   </button>
                 </form>
-                <p className="text-[10px] text-white/40 mt-3">
+                <p className="text-xs text-white/70 mt-3">
                   No spam. Unsubscribe anytime.
                 </p>
               </div>
@@ -761,7 +691,7 @@ export default async function Home(props: PageProps) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          DYNAMIC WORDPRESS PRODUCTS SECTION
+          DYNAMIC WOOCOMMERCE PRODUCTS SECTION
       ═══════════════════════════════════════════ */}
       <HomepageProductsSection />
 

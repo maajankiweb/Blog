@@ -29,7 +29,18 @@ export const metadata = {
   title: "About Us | MJ Digital",
   description:
     "Learn about MJ Digital, our founder Ashish Kumar, our engineering philosophy, and how we help modern digital brands scale with Next.js, Headless WordPress, and AI.",
-  alternates: { canonical: "/about" },
+  alternates: { canonical: "https://blog.maajankiwebtech.com/about" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "About Us | MJ Digital",
     description: "Learn about MJ Digital, our founder Ashish Kumar, our engineering philosophy, and how we help modern digital brands scale.",

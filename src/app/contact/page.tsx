@@ -7,7 +7,18 @@ export const metadata = {
   title: "Contact Us | MJ Digital",
   description:
     "Get in touch with the MJ Digital engineering and editorial team. Inquire about digital products, custom Next.js development, licensing, and partnerships.",
-  alternates: { canonical: "/contact" },
+  alternates: { canonical: "https://blog.maajankiwebtech.com/contact" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 const contactFaqs = [

@@ -29,57 +29,57 @@ const verifiedReviews: Review[] = [
     avatarColor: "bg-blue-600",
     date: "April 2026",
     rating: 5,
-    project: "MJ Pro Next.js Starter Kit",
+    project: "Next.js 16 Pro Starter Kit",
     comment:
-      "The Next.js 16 starter kit saved our team over 3 weeks of architectural scaffolding. Clean TypeScript types, headless WooCommerce syncing, and 100/100 Core Web Vitals right out of the box.",
+      "The Next.js starter kit saved our agency over three weeks of scaffolding. Clean TypeScript types, headless WordPress syncing, and 100/100 Core Web Vitals right out of the box.",
   },
   {
     id: 2,
     name: "Pooja Deshmukh",
-    role: "Head of Marketing, CloudScale",
+    role: "Head of Growth, CloudScale",
     avatarText: "PD",
     avatarColor: "bg-purple-600",
     date: "March 2026",
     rating: 5,
-    project: "Technical SEO & AEO Architecture",
+    project: "Technical SEO & GEO Editorial",
     comment:
-      "Ashish Kumar's architectural guidelines for schema markup and llms.txt completely revolutionized our organic presence. We started getting cited in ChatGPT and Perplexity within 45 days.",
+      "The technical SEO and generative AI optimization articles on MJ Digital helped us rank higher and get cited across ChatGPT and Perplexity. Actionable engineering guides with zero fluff.",
   },
   {
     id: 3,
     name: "Anand Verma",
-    role: "Managing Director, Verma Logistics",
+    role: "E-Commerce Director, Verma Retail",
     avatarText: "AV",
     avatarColor: "bg-emerald-600",
     date: "February 2026",
     rating: 5,
-    project: "Headless E-Commerce System",
+    project: "Custom WordPress Plugins",
     comment:
-      "Migrating our sluggish store to Next.js App Router with MJ Digital was a game changer. Checkout abandonment dropped significantly thanks to custom Razorpay and UPI instant checkout flow.",
+      "We purchased their custom WordPress plugins for our storefront. Instant digital delivery, thorough documentation, and lightweight code that integrates seamlessly without slowing down the site.",
   },
   {
     id: 4,
     name: "Siddharth Menon",
-    role: "Senior Full-Stack Developer",
+    role: "Senior Full-Stack Engineer",
     avatarText: "SM",
     avatarColor: "bg-pink-600",
     date: "May 2026",
     rating: 5,
-    project: "InvoBill GST & Developer Tools",
+    project: "Next.js & React Architecture",
     comment:
-      "I use MJ Digital tools daily for JSON formatting and GST invoice calculations. Everything runs super snappy directly in the browser with zero tracking. The editorial guides are top-tier.",
+      "MJ Digital's deep dives on Next.js App Router, caching strategies, and server actions are top-tier. Essential reading for any engineering team building modern web applications.",
   },
   {
     id: 5,
     name: "Meera Nair",
-    role: "E-Commerce Director, TrendKraft",
+    role: "Digital Publishing Lead, TrendKraft",
     avatarText: "MN",
     avatarColor: "bg-amber-600",
     date: "January 2026",
     rating: 5,
-    project: "WooCommerce API Integration",
+    project: "Headless WordPress Systems",
     comment:
-      "Flawless code quality and extremely responsive support on WhatsApp. When we needed help configuring webhooks for automatic digital downloads, the team guided us step-by-step.",
+      "Following MJ Digital's architectural blueprints, we transitioned to a decoupled Next.js and headless WordPress stack. Page speed and mobile user engagement improved drastically.",
   },
   {
     id: 6,
@@ -89,33 +89,33 @@ const verifiedReviews: Review[] = [
     avatarColor: "bg-indigo-600",
     date: "April 2026",
     rating: 5,
-    project: "Next.js Core Web Vitals Audit",
+    project: "Technical SEO Schema Playbook",
     comment:
-      "Our LCP improved from 4.2s to 0.8s following MJ Digital's image optimization and edge caching playbooks. Excellent engineering depth and actionable recommendations.",
+      "The Schema Markup Playbook from their digital store is gold standard. Structured data validation passed without any errors and our Google rich snippets appeared quickly.",
   },
   {
     id: 7,
     name: "Rohan Kulkarni",
-    role: "SaaS Founder, WebFlowy",
+    role: "SaaS Founder & Operator",
     avatarText: "RK",
     avatarColor: "bg-teal-600",
     date: "February 2026",
     rating: 5,
-    project: "AI Schema & Metadata Hub",
+    project: "Digital Store & Instant Delivery",
     comment:
-      "The free schema generator tool produces 100% Google Rich Results compliant JSON-LD. We secured FAQ and Product rich snippets within two crawl cycles.",
+      "The purchasing experience on MJ Digital Store is effortless. Instant automated license keys, clean codebase downloads, and dedicated support that stands behind their products.",
   },
   {
     id: 8,
     name: "Ananya Iyer",
-    role: "Creative Director, StudioCraft",
+    role: "Creative Technologist, StudioCraft",
     avatarText: "AI",
     avatarColor: "bg-rose-600",
     date: "March 2026",
     rating: 5,
-    project: "Agency Portfolio Architecture",
+    project: "Digital Publishing & Growth Guides",
     comment:
-      "The editorial typography and dark/light UI tokens are meticulously crafted. MJ Digital sets the gold standard for modern developer blogs and digital marketplaces.",
+      "The editorial quality, code readability, and technical precision across MJ Digital articles make it our company's go-to resource for scaling modern web infrastructure.",
   },
 ];
 
@@ -230,16 +230,16 @@ export default function TestimonialsSection() {
                         {rev.avatarText}
                       </div>
                       <div suppressHydrationWarning className="min-w-0">
-                        <h4 className="font-bold text-xs text-[#14213D] leading-tight truncate">
+                        <p className="font-bold text-xs text-[#14213D] leading-tight truncate">
                           {rev.name}
-                        </h4>
-                        <p className="text-[11px] text-gray-500 truncate mt-0.5">
+                        </p>
+                        <p className="text-xs text-gray-500 truncate mt-0.5">
                           {rev.role}
                         </p>
                       </div>
                     </div>
 
-                    <div className="bg-white px-2.5 py-1.5 rounded-lg border border-gray-200 text-[10px] font-medium text-gray-600 truncate">
+                    <div className="bg-white px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 truncate">
                       <span className="text-gray-400">Project:</span> {rev.project}
                     </div>
                   </div>

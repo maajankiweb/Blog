@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const securityHeaders = [
   // AI Agent Content Signals
   { key: "Content-Signal", value: "search=yes, ai-train=no" },
+  // Universal Search Engine Indexing Directives (Google, Bing, AI Bots)
+  { key: "X-Robots-Tag", value: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
   // Prevent clickjacking — disallow site from being embedded in iframes
   { key: "X-Frame-Options", value: "DENY" },
   // Prevent MIME-type sniffing attacks
@@ -72,12 +74,42 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
 
-  // ── Security Headers ──────────────────────────────────────────────
+  // ── Security & Indexing Headers ───────────────────────────────────
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: securityHeaders,
+      },
+      {
+        source: "/api/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/cart",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/checkout",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/my-account/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/my-account",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
       },
     ];
   },
@@ -88,6 +120,16 @@ const nextConfig: NextConfig = {
       {
         source: '/all-blogs',
         destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/rss.xml',
+        destination: '/feed.xml',
+        permanent: true,
+      },
+      {
+        source: '/feed',
+        destination: '/feed.xml',
         permanent: true,
       },
     ];

@@ -116,9 +116,9 @@ export default function Footer() {
 
           {/* Column 2: Editorial Dispatches (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-white">
+            <h3 className="font-bold text-sm text-white">
               Editorial Dispatches
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-sm">
               {editorialLinks.map(({ label, href }) => (
                 <li key={label}>
@@ -135,9 +135,9 @@ export default function Footer() {
 
           {/* Column 3: Digital Marketplace (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-white">
+            <h3 className="font-bold text-sm text-white">
               Digital Store
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-sm">
               {marketplaceLinks.map(({ label, href }) => (
                 <li key={label}>
@@ -154,9 +154,9 @@ export default function Footer() {
 
           {/* Column 4: Trust & Company (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-white">
+            <h3 className="font-bold text-sm text-white">
               Company &amp; Legal
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-sm">
               {legalLinks.map(({ label, href }) => (
                 <li key={label}>

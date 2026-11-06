@@ -45,7 +45,7 @@ export default function HostingerAdCard({ className = "" }: HostingerAdCardProps
         </p>
 
         {/* Features highlights */}
-        <ul className="text-[11px] text-purple-200/90 space-y-1 font-medium pt-1">
+        <ul className="text-xs text-purple-200/90 space-y-1 font-medium pt-1">
           <li className="flex items-center gap-1.5">
             <span className="text-purple-400">✓</span> Free Domain & SSL Included
           </li>

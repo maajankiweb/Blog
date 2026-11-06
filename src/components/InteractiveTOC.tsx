@@ -78,9 +78,9 @@ export default function InteractiveTOC({ content }: InteractiveTOCProps) {
     <div className="bg-[#120904] border border-white/10 p-5 rounded-2xl shadow-xl text-white space-y-4 sticky top-24">
       <div className="flex items-center gap-2 pb-3 border-b border-white/10 text-[#DC2564]">
         <HiListBullet size={18} />
-        <h4 className="font-extrabold text-xs uppercase tracking-widest text-white">
+        <h3 className="font-bold text-sm text-white">
           Table of Contents
-        </h4>
+        </h3>
       </div>
 
       <nav className="space-y-1.5 max-h-[60vh] overflow-y-auto pr-1 text-xs">
@@ -91,7 +91,7 @@ export default function InteractiveTOC({ content }: InteractiveTOCProps) {
               key={item.id}
               onClick={() => scrollToHeading(item.id)}
               className={`w-full text-left py-1.5 px-2.5 rounded-lg transition-all leading-snug font-medium block truncate ${
-                item.level === 3 ? "pl-5 text-[11px]" : ""
+                item.level === 3 ? "pl-5 text-xs text-white/80" : ""
               } ${
                 isActive
                   ? "bg-[#DC2564] text-white font-bold shadow-md"

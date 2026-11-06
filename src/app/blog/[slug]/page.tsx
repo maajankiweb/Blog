@@ -11,6 +11,8 @@ import AdBanner from "@/components/AdBanner";
 import HostingerAdCard from "@/components/HostingerAdCard";
 import InlineAdBanner from "@/components/InlineAdBanner";
 import YoutubeAdCard from "@/components/YoutubeAdCard";
+import MaajankiAdCard from "@/components/MaajankiAdCard";
+import BrewPluseAdCard from "@/components/BrewPluseAdCard";
 import AuthorBioCard from "@/components/AuthorBioCard";
 import AgencyConsultationCta from "@/components/AgencyConsultationCta";
 import ArticleAudioPlayer from "@/components/ArticleAudioPlayer";
@@ -31,39 +33,58 @@ interface PageProps {
 // Generate dynamic metadata for SEO
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { slug } = await props.params;
+  const siteUrl = "https://blog.maajankiwebtech.com";
+  const canonicalUrl = `${siteUrl}/blog/${slug}`;
   
   try {
     const post = await getPostBySlug(slug);
     if (!post) {
       return {
-        title: "Post Not Found | Maajanki",
+        title: "Post Not Found | MJ Digital",
+        robots: { index: false, follow: false },
       };
     }
 
     const seoTitle = post.seo?.seoTitle || cleanHtmlText(post.title.rendered);
     const seoDescription = post.seo?.seoDescription || cleanHtmlText(post.excerpt.rendered).slice(0, 160);
     const keywords = post.seo?.keywords ? post.seo.keywords.split(',').map(k => k.trim()) : undefined;
-    const robots = post.seo?.robots || undefined;
 
     const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
     const imageUrl = post.seo?.ogImage || featuredMedia?.source_url;
 
     return {
-      title: seoTitle,
+      title: `${seoTitle} | MJ Digital`,
       description: seoDescription,
       keywords: keywords,
-      robots: robots,
+      alternates: {
+        canonical: canonicalUrl,
+      },
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+          noimageindex: false,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
       openGraph: {
-        title: post.seo?.ogTitle || seoTitle,
+        title: post.seo?.ogTitle || `${seoTitle} | MJ Digital`,
         description: post.seo?.ogDescription || seoDescription,
         type: "article",
-        url: post.seo?.ogUrl || post.link,
+        url: canonicalUrl,
         publishedTime: post.date,
+        modifiedTime: post.modified || post.date,
+        authors: ["Ashish Kumar"],
         images: imageUrl ? [{ url: imageUrl, alt: post.seo?.ogImage ? seoTitle : (featuredMedia?.alt_text || post.title.rendered) }] : [],
       },
       twitter: {
         card: (post.seo?.twitterCard as any) || "summary_large_image",
-        title: post.seo?.twitterTitle || seoTitle,
+        title: post.seo?.twitterTitle || `${seoTitle} | MJ Digital`,
         description: post.seo?.twitterDescription || seoDescription,
         images: post.seo?.twitterImage ? [post.seo.twitterImage] : (imageUrl ? [imageUrl] : []),
       }
@@ -71,7 +92,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   } catch (err) {
     console.error("Error generating metadata:", err);
     return {
-      title: "Blog Post | Maajanki",
+      title: "Blog Post | MJ Digital",
     };
   }
 }
@@ -140,8 +161,8 @@ export default async function PostPage(props: PageProps) {
   const digitalProductCallout = `
     <div class="my-10 p-6 bg-slate-50 border border-slate-200/90 rounded-2xl shadow-xs not-prose flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="space-y-1">
-        <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 bg-[#FDF2F5] text-[#DC2564] rounded-full border border-[#FBCFE8]">RECOMMENDED STORE ASSET</span>
-        <h4 class="font-extrabold text-slate-900 text-base mb-1">Production Next.js 16 Starter Kit &amp; InvoBill Tools</h4>
+        <span class="text-xs font-bold px-2.5 py-0.5 bg-[#FDF2F5] text-[#DC2564] rounded-full border border-[#FBCFE8]">Recommended Store Asset</span>
+        <p class="font-extrabold text-slate-900 text-base mb-1">Production Next.js 16 Starter Kit &amp; InvoBill Tools</p>
         <p class="text-slate-600 text-xs leading-relaxed max-w-xl">Save 100+ development hours. Pre-configured with Tailwind v4, SEO schema, and verified Razorpay checkout.</p>
       </div>
       <a href="/products" class="inline-flex items-center justify-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white py-2.5 px-4 rounded-xl font-bold text-xs transition-all shadow-xs shrink-0 whitespace-nowrap">View Store Asset →</a>
@@ -165,10 +186,98 @@ export default async function PostPage(props: PageProps) {
 
   const cleanTitle = cleanHtmlText(post.title.rendered);
   const displayAuthorName = author?.name === "Maa janki" || !author?.name ? "Ashish Kumar" : author.name;
-  const authorRole = displayAuthorName === "Ashish Kumar" ? "Founder & Principal Architect, Maajanki Web Tech" : "Technical Contributor";
+  const authorRole = displayAuthorName === "Ashish Kumar" ? "Founder & Principal Architect, MJ Digital" : "Technical Contributor";
+
+  const postJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://blog.maajankiwebtech.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: "https://blog.maajankiwebtech.com/blog",
+          },
+          ...(primaryCategory
+            ? [
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: primaryCategory.name,
+                  item: `https://blog.maajankiwebtech.com/category/${primaryCategory.slug}`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 4,
+                  name: cleanTitle,
+                  item: `https://blog.maajankiwebtech.com/blog/${slug}`,
+                },
+              ]
+            : [
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: cleanTitle,
+                  item: `https://blog.maajankiwebtech.com/blog/${slug}`,
+                },
+              ]),
+        ],
+      },
+      {
+        "@type": "BlogPosting",
+        "@id": `https://blog.maajankiwebtech.com/blog/${slug}#article`,
+        isPartOf: {
+          "@type": "WebPage",
+          "@id": `https://blog.maajankiwebtech.com/blog/${slug}`,
+          url: `https://blog.maajankiwebtech.com/blog/${slug}`,
+          name: cleanTitle,
+        },
+        headline: cleanTitle,
+        description: cleanHtmlText(post.excerpt?.rendered || "").slice(0, 200),
+        url: `https://blog.maajankiwebtech.com/blog/${slug}`,
+        datePublished: post.date,
+        dateModified: post.modified || post.date,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://blog.maajankiwebtech.com/blog/${slug}`,
+        },
+        image: imageUrl || "https://blog.maajankiwebtech.com/ashish-kumar.png",
+        author: {
+          "@type": "Person",
+          name: displayAuthorName,
+          jobTitle: "Founder & Lead Architect",
+          url: "https://blog.maajankiwebtech.com/about",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "MJ Digital",
+          url: "https://blog.maajankiwebtech.com",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://blog.maajankiwebtech.com/maajanki-web-tech-logo.webp",
+          },
+        },
+        articleSection: primaryCategory?.name || "Software Architecture",
+        inLanguage: "en-US",
+      },
+    ],
+  };
 
   return (
     <>
+      {/* Schema.org BlogPosting & Breadcrumb Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
+      />
       <ReadingProgressBar />
 
       <main className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
@@ -186,7 +295,7 @@ export default async function PostPage(props: PageProps) {
             </>
           )}
           <span>/</span>
-          <span className="text-slate-400 truncate max-w-[240px]">{cleanTitle}</span>
+          <span className="text-slate-500 font-medium" aria-current="page">{cleanTitle}</span>
         </nav>
 
         {/* Article Header */}
@@ -286,48 +395,62 @@ export default async function PostPage(props: PageProps) {
               ctaText="Get Started with Hostinger"
             />
 
-            {/* Social Share Bar */}
-            <div className="mt-12 pt-6 border-t border-slate-200">
-              <span className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                Share this Dispatch
-              </span>
-              <div className="flex flex-wrap items-center gap-2">
-                <a
-                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${cleanTitle} https://blog.maajankiwebtech.com/blog/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#25D366] text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaWhatsapp size={14} />
-                  WhatsApp
-                </a>
-                <a
-                  href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0A66C2] text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaLinkedinIn size={13} />
-                  LinkedIn
-                </a>
-                <a
-                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}&text=${encodeURIComponent(cleanTitle)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-black text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaXTwitter size={13} />
-                  X / Twitter
-                </a>
-                <a
-                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1877F2] text-white hover:opacity-90 transition-opacity"
-                >
-                  <FaFacebookF size={13} />
-                  Facebook
-                </a>
+            {/* Social Share & Save for Later Bar */}
+            <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">
+                  Share this Dispatch
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${cleanTitle} https://blog.maajankiwebtech.com/blog/${slug}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#25D366] text-white hover:opacity-90 transition-opacity"
+                  >
+                    <FaWhatsapp size={14} />
+                    WhatsApp
+                  </a>
+                  <a
+                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0A66C2] text-white hover:opacity-90 transition-opacity"
+                  >
+                    <FaLinkedinIn size={13} />
+                    LinkedIn
+                  </a>
+                  <a
+                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}&text=${encodeURIComponent(cleanTitle)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-black text-white hover:opacity-90 transition-opacity"
+                  >
+                    <FaXTwitter size={13} />
+                    X / Twitter
+                  </a>
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://blog.maajankiwebtech.com/blog/${slug}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1877F2] text-white hover:opacity-90 transition-opacity"
+                  >
+                    <FaFacebookF size={13} />
+                    Facebook
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-col sm:items-end gap-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Bookmark Article
+                </span>
+                <BookmarkButton
+                  slug={post.slug}
+                  title={cleanTitle}
+                  excerpt={cleanHtmlText(post.excerpt.rendered).slice(0, 120)}
+                  category={primaryCategory?.name || "Article"}
+                  imageUrl={imageUrl}
+                />
               </div>
             </div>
 
@@ -379,9 +502,15 @@ export default async function PostPage(props: PageProps) {
               {/* Hostinger Sponsored Ad Widget */}
               <HostingerAdCard />
 
+              {/* Maajanki Web Tech Agency Ad */}
+              <MaajankiAdCard />
+
+              {/* BrewPluse Cafe Management Software Ad */}
+              <BrewPluseAdCard />
+
               {/* Related reads column */}
               <div className="bg-slate-50/70 p-5 rounded-2xl border border-slate-200/90 shadow-2xs">
-                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-900 mb-4">
+                <h3 className="font-bold text-sm text-slate-900 mb-4">
                   Related Dispatches
                 </h3>
                 <div className="flex flex-col gap-3.5">

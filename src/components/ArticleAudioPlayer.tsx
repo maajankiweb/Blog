@@ -152,10 +152,10 @@ export default function ArticleAudioPlayer({ title, content }: ArticleAudioPlaye
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#DC2564]">
+              <span className="text-xs font-bold text-[#DC2564]">
                 Audio Article Listener
               </span>
-              <span className="text-[11px] bg-white/10 px-2 py-0.5 rounded-full text-white/70">
+              <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full text-white/70">
                 ~{estimatedMinutes} min listen
               </span>
             </div>

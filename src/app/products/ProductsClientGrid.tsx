@@ -270,6 +270,27 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
         ))}
       </div>
 
+      {/* Empty State */}
+      {displayedProducts.length === 0 && (
+        <div className="text-center py-20 bg-slate-50/60 rounded-3xl border border-dashed border-slate-300 p-8 space-y-4">
+          <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+            <HiOutlineShoppingBag size={28} />
+          </div>
+          <h3 className="text-xl font-bold text-slate-900">No Products Currently Available</h3>
+          <p className="text-slate-500 text-sm max-w-md mx-auto leading-relaxed">
+            All previous products have been removed. We are updating our software catalog with verified production assets.
+          </p>
+          <div className="pt-2">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-xs"
+            >
+              <span>Explore Editorial Articles</span>
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Pagination / Load More */}
       {visibleCount < filteredProducts.length && (
         <div className="text-center pt-6">

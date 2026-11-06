@@ -3,45 +3,71 @@ import type { MetadataRoute } from 'next';
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = 'https://blog.maajankiwebtech.com';
 
+  const disallowList = ['/api/', '/_next/', '/cart', '/checkout', '/my-account'];
+
   return {
     rules: [
       // Standard search engine crawlers (Google, Bing, Yahoo, DuckDuckGo)
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/', '/cart', '/checkout'],
+        disallow: disallowList,
+      },
+      // Google (Googlebot, Mobile, News, Image, Other, AI Gemini)
+      {
+        userAgent: [
+          'Googlebot',
+          'Googlebot-Image',
+          'Googlebot-News',
+          'Google-Extended',
+          'GoogleOther',
+        ],
+        allow: '/',
+        disallow: disallowList,
+      },
+      // Microsoft Bing & IndexNow crawlers
+      {
+        userAgent: ['Bingbot', 'msnbot', 'BingPreview'],
+        allow: '/',
+        disallow: disallowList,
       },
       // OpenAI ChatGPT crawler & Search Agent
       {
         userAgent: ['GPTBot', 'ChatGPT-User', 'OAI-SearchBot'],
         allow: '/',
-        disallow: ['/api/', '/_next/', '/cart', '/checkout'],
-      },
-      // Google Gemini, Vertex AI & Search Generative Experience
-      {
-        userAgent: ['Google-Extended', 'GoogleOther', 'Googlebot'],
-        allow: '/',
-        disallow: ['/api/', '/_next/', '/cart', '/checkout'],
+        disallow: disallowList,
       },
       // Anthropic Claude Crawler & Web Agent
       {
         userAgent: ['ClaudeBot', 'anthropic-ai', 'Claude-Web'],
         allow: '/',
-        disallow: ['/api/', '/_next/', '/cart', '/checkout'],
+        disallow: disallowList,
       },
       // Perplexity AI Search Crawler
       {
         userAgent: ['PerplexityBot'],
         allow: '/',
-        disallow: ['/api/', '/_next/', '/cart', '/checkout'],
+        disallow: disallowList,
       },
-      // Cohere, Meta & Mistral Web Crawlers
+      // Apple, Meta, Cohere, and other crawlers
       {
-        userAgent: ['cohere-ai', 'FacebookBot', 'Bytespider', 'CCBot'],
+        userAgent: [
+          'Applebot',
+          'Applebot-Extended',
+          'cohere-ai',
+          'FacebookBot',
+          'Bytespider',
+          'CCBot',
+          'YandexBot',
+        ],
         allow: '/',
-        disallow: ['/api/', '/_next/', '/cart', '/checkout'],
+        disallow: disallowList,
       },
     ],
-    sitemap: `${siteUrl}/sitemap.xml`,
+    sitemap: [
+      `${siteUrl}/sitemap.xml`,
+      `${siteUrl}/feed.xml`,
+    ],
+    host: siteUrl,
   };
 }

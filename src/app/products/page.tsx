@@ -12,6 +12,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://blog.maajankiwebtech.com/products",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Digital Products Store | MJ Digital",
     description: "Premium Next.js templates, WordPress plugins, and developer toolkits with transparent pricing in INR.",

@@ -34,6 +34,11 @@ yarn-error.log*
 .env*
 !.env.example
 
+# Documentation & Internal Guides (Hidden from GitHub & Hostinger deployment)
+/docs/
+.agents/
+.agent/
+
 # vercel
 .vercel
 

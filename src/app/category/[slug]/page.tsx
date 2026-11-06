@@ -13,9 +13,32 @@ interface PageProps {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { slug } = await props.params;
   const category = await getCategoryBySlug(slug);
+  const siteUrl = "https://blog.maajankiwebtech.com";
+  const canonicalUrl = `${siteUrl}/category/${slug}`;
+
   return {
-    title: category ? `${category.name} | Category Archive` : "Category Archive",
-    description: category?.description || `Explore all posts in our ${slug} archives.`,
+    title: category ? `${category.name} | MJ Digital Category Archive` : "Category Archive | MJ Digital",
+    description: category?.description || `Explore all technical guides and articles in our ${slug} category.`,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    openGraph: {
+      title: category ? `${category.name} | MJ Digital Category Archive` : "Category Archive | MJ Digital",
+      description: category?.description || `Explore all technical guides and articles in our ${slug} category.`,
+      url: canonicalUrl,
+      type: "website",
+    },
   };
 }
 
@@ -55,8 +78,53 @@ export default async function CategoryArchivePage(props: PageProps) {
     console.error("Failed to load category page data:", err);
   }
 
+  const categoryJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://blog.maajankiwebtech.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Editorial Dispatches",
+            item: "https://blog.maajankiwebtech.com/blog",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: category.name,
+            item: `https://blog.maajankiwebtech.com/category/${slug}`,
+          },
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `https://blog.maajankiwebtech.com/category/${slug}#webpage`,
+        url: `https://blog.maajankiwebtech.com/category/${slug}`,
+        name: `${category.name} | MJ Digital Category Archive`,
+        description: category.description || `Explore all technical guides in ${category.name}.`,
+        publisher: {
+          "@type": "Organization",
+          name: "MJ Digital",
+          url: "https://blog.maajankiwebtech.com",
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+      />
       <BlogListingLayout
         initialPosts={posts}
         categories={categories}

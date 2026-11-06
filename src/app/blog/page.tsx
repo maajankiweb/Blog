@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getPosts, getCategories, getTags } from "@/lib/wordpress";
 import BlogListingLayout from "@/components/BlogListingLayout";
 import FaqSection, { FAQItem } from "@/components/FaqSection";
@@ -8,9 +9,33 @@ interface PageProps {
   searchParams: SearchParams;
 }
 
-export const metadata = {
-  title: "The Archive | Insights and Stories",
-  description: "Browse our curated archive of long-form articles, tech reviews, and design analysis.",
+export const metadata: Metadata = {
+  title: "Editorial Dispatches & Articles | MJ Digital",
+  description:
+    "Explore in-depth technical guides on Next.js 16, headless WordPress, SEO algorithms, AI automations, and digital business strategies.",
+  alternates: {
+    canonical: "https://blog.maajankiwebtech.com/blog",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: "Editorial Dispatches & Articles | MJ Digital",
+    description:
+      "Explore in-depth technical guides on Next.js 16, headless WordPress, SEO algorithms, and digital business.",
+    url: "https://blog.maajankiwebtech.com/blog",
+    type: "website",
+  },
 };
 
 const blogFaqs: FAQItem[] = [
