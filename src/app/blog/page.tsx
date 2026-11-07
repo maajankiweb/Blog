@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getPosts, getCategories, getTags } from "@/lib/wordpress";
+import { getProducts } from "@/lib/wordpress/products";
 import BlogListingLayout from "@/components/BlogListingLayout";
 import FaqSection, { FAQItem } from "@/components/FaqSection";
 
@@ -73,9 +74,10 @@ export default async function BlogListingPage(props: PageProps) {
   let posts: any[] = [];
   let categories: any[] = [];
   let tags: any[] = [];
+  let latestProduct: any = null;
 
   try {
-    const [fetchedPosts, fetchedCategories, fetchedTags] = await Promise.all([
+    const [fetchedPosts, fetchedCategories, fetchedTags, products] = await Promise.all([
       getPosts({
         category: activeCategoryId,
         tag: activeTagId,
@@ -83,11 +85,13 @@ export default async function BlogListingPage(props: PageProps) {
       }),
       getCategories({ perPage: 15 }),
       getTags({ perPage: 25 }),
+      getProducts({ perPage: 1 }).catch(() => []),
     ]);
 
     posts = fetchedPosts;
     categories = fetchedCategories.filter((c) => c.count > 0);
     tags = fetchedTags.filter((t) => t.count > 0);
+    latestProduct = products?.[0] || null;
   } catch (err) {
     console.error("Failed to load blog listing data:", err);
   }
@@ -100,6 +104,7 @@ export default async function BlogListingPage(props: PageProps) {
         tags={tags}
         activeCategoryId={activeCategoryId}
         activeTagId={activeTagId}
+        latestProduct={latestProduct}
       />
       <FaqSection
         faqs={blogFaqs}

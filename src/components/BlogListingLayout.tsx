@@ -19,6 +19,7 @@ interface BlogListingLayoutProps {
   tags: WPTag[];
   activeCategoryId?: number;
   activeTagId?: number;
+  latestProduct?: any;
 }
 
 export default function BlogListingLayout({
@@ -27,6 +28,7 @@ export default function BlogListingLayout({
   tags,
   activeCategoryId,
   activeTagId,
+  latestProduct,
 }: BlogListingLayoutProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
@@ -326,24 +328,80 @@ export default function BlogListingLayout({
             </div>
 
             {/* Featured Digital Products Banner */}
-            <div className="bg-gradient-to-br from-slate-900 to-[#14213D] p-6 rounded-2xl border border-slate-800 text-white shadow-md space-y-3">
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
-                OFFICIAL STORE
-              </span>
-              <h4 className="font-extrabold text-base leading-snug">
-                Production-Ready Next.js &amp; WordPress Templates
-              </h4>
-              <p className="text-slate-300 text-xs leading-relaxed">
-                Save 100+ development hours with our verified software starter kits, plugins, and GST billing tools.
-              </p>
-              <Link
-                href="/products"
-                className="inline-flex items-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-xs"
-              >
-                <span>Visit Digital Store</span>
-                <ChevronRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
+            {latestProduct ? (
+              <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#14213D] p-5 sm:p-6 rounded-2xl border border-slate-800 text-white shadow-md space-y-3 group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
+                    {latestProduct.badge || "NEW RELEASE"}
+                  </span>
+                  <span className="text-xs font-black text-white bg-slate-800/80 px-2.5 py-0.5 rounded-md border border-slate-700">
+                    {latestProduct.price}
+                  </span>
+                </div>
+
+                {latestProduct.featuredImage && (
+                  <Link
+                    href={`/products/${latestProduct.slug}`}
+                    className="relative h-36 w-full rounded-xl overflow-hidden bg-slate-800 block border border-slate-700/60"
+                  >
+                    <Image
+                      src={latestProduct.featuredImage}
+                      alt={latestProduct.name}
+                      fill
+                      sizes="320px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </Link>
+                )}
+
+                <div>
+                  <Link
+                    href={`/products/${latestProduct.slug}`}
+                    className="font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FBCFE8] transition-colors line-clamp-2 block mb-1"
+                  >
+                    {latestProduct.name}
+                  </Link>
+                  <p className="text-slate-300 text-xs leading-relaxed line-clamp-2">
+                    {latestProduct.plainShortDescription || latestProduct.shortDescription?.replace(/<[^>]*>/g, "")}
+                  </p>
+                </div>
+
+                <div className="pt-1 flex items-center justify-between gap-2">
+                  <Link
+                    href={`/products/${latestProduct.slug}`}
+                    className="inline-flex items-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-xs"
+                  >
+                    <span>{latestProduct.buttonText || "Get Product"}</span>
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
+                  <Link
+                    href="/products"
+                    className="text-[11px] font-medium text-slate-400 hover:text-white transition-colors"
+                  >
+                    Browse All →
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-gradient-to-br from-slate-900 to-[#14213D] p-6 rounded-2xl border border-slate-800 text-white shadow-md space-y-3">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
+                  OFFICIAL STORE
+                </span>
+                <h4 className="font-extrabold text-base leading-snug">
+                  Explore Digital Products &amp; Resources
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed">
+                  Verified software blueprints, high-converting templates, and business guides for founders.
+                </p>
+                <Link
+                  href="/products"
+                  className="inline-flex items-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-xs"
+                >
+                  <span>Visit Digital Store</span>
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            )}
 
             {/* Popular Tags */}
             {tags && tags.length > 0 && (

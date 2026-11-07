@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getComments, getPosts, WPPost, cleanHtmlText } from "@/lib/wordpress";
+import { getProducts, WordPressProduct } from "@/lib/wordpress/products";
 import CommentForm from "@/components/CommentForm";
 import FaqSection from "@/components/FaqSection";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
@@ -103,10 +104,17 @@ export default async function PostPage(props: PageProps) {
   let post = null;
   let comments: any[] = [];
   let relatedPosts: WPPost[] = [];
+  let latestProduct: WordPressProduct | null = null;
   let errorMsg = "";
 
   try {
-    post = await getPostBySlug(slug);
+    const [fetchedPost, products] = await Promise.all([
+      getPostBySlug(slug),
+      getProducts({ perPage: 1 }).catch(() => []),
+    ]);
+
+    post = fetchedPost;
+    latestProduct = products?.[0] || null;
     
     if (post) {
       const postCategories = post._embedded?.['wp:term']?.[0] || [];
@@ -156,26 +164,56 @@ export default async function PostPage(props: PageProps) {
     return `<h2 id="heading-${headingIndex++}">`;
   });
 
-  // Inject in-content Digital Product Recommendation Banner after 3rd paragraph
+  // Inject dynamic in-content Digital Product Recommendation Banner after 3rd paragraph
   let paragraphCount = 0;
-  const digitalProductCallout = `
-    <div class="my-10 p-6 bg-slate-50 border border-slate-200/90 rounded-2xl shadow-xs not-prose flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div class="space-y-1">
-        <span class="text-xs font-bold px-2.5 py-0.5 bg-[#FDF2F5] text-[#DC2564] rounded-full border border-[#FBCFE8]">Recommended Store Asset</span>
-        <p class="font-extrabold text-slate-900 text-base mb-1">Production Next.js 16 Starter Kit &amp; InvoBill Tools</p>
-        <p class="text-slate-600 text-xs leading-relaxed max-w-xl">Save 100+ development hours. Pre-configured with Tailwind v4, SEO schema, and verified Razorpay checkout.</p>
-      </div>
-      <a href="/products" class="inline-flex items-center justify-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white py-2.5 px-4 rounded-xl font-bold text-xs transition-all shadow-xs shrink-0 whitespace-nowrap">View Store Asset →</a>
-    </div>
-  `;
+  if (latestProduct) {
+    const rawExcerpt = latestProduct.plainShortDescription || latestProduct.shortDescription?.replace(/<[^>]*>/g, "") || "";
+    const cleanExcerpt = rawExcerpt.length > 150 ? rawExcerpt.slice(0, 147) + "..." : rawExcerpt;
+    const badgeText = latestProduct.badge || "RECOMMENDED ASSET";
+    const btnLabel = latestProduct.buttonText || "View Details";
+    const productUrl = `/products/${latestProduct.slug}`;
 
-  contentWithHeadingIds = contentWithHeadingIds.replace(/<\/p>/g, (match) => {
-    paragraphCount++;
-    if (paragraphCount === 3) {
-      return match + digitalProductCallout;
-    }
-    return match;
-  });
+    const digitalProductCallout = `
+    <div class="my-10 p-5 sm:p-6 bg-slate-50 border border-slate-200/90 rounded-2xl shadow-xs not-prose flex flex-col sm:flex-row items-center gap-5">
+      ${latestProduct.featuredImage ? `
+        <a href="${productUrl}" class="relative w-full sm:w-28 h-36 sm:h-28 shrink-0 rounded-xl overflow-hidden bg-slate-200 block border border-slate-200/80 group">
+          <img src="${latestProduct.featuredImage}" alt="${cleanHtmlText(latestProduct.name)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+        </a>
+      ` : ''}
+      <div class="space-y-1.5 flex-1 min-w-0">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-[10px] font-bold px-2.5 py-0.5 bg-[#FDF2F5] text-[#DC2564] rounded-full border border-[#FBCFE8] uppercase tracking-wider">
+            ${badgeText}
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full uppercase tracking-wider border border-slate-200">
+            ${latestProduct.category || "Store"}
+          </span>
+          <span class="text-xs font-black text-slate-900 ml-auto sm:ml-0">
+            ${latestProduct.price}
+          </span>
+        </div>
+        <a href="${productUrl}" class="block font-extrabold text-slate-900 text-base leading-snug hover:text-[#DC2564] transition-colors">
+          ${cleanHtmlText(latestProduct.name)}
+        </a>
+        <p class="text-slate-600 text-xs leading-relaxed line-clamp-2">
+          ${cleanHtmlText(cleanExcerpt)}
+        </p>
+      </div>
+      <a href="${productUrl}" class="inline-flex items-center justify-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white py-2.5 px-4 rounded-xl font-bold text-xs transition-all shadow-sm shadow-[#DC2564]/20 shrink-0 whitespace-nowrap active:scale-95">
+        <span>${btnLabel}</span>
+        <span>→</span>
+      </a>
+    </div>
+    `;
+
+    contentWithHeadingIds = contentWithHeadingIds.replace(/<\/p>/g, (match) => {
+      paragraphCount++;
+      if (paragraphCount === 3) {
+        return match + digitalProductCallout;
+      }
+      return match;
+    });
+  }
 
   contentWithHeadingIds = contentWithHeadingIds
     .replace(/<div[^>]*class="[^"]*(sharedaddy|sd-sharing|heateor|social-share|xs_social_share_widget|wslu-style-2)[^"]*"[\s\S]*?<\/div>\s*<\/div>/gi, '')
@@ -476,25 +514,81 @@ export default async function PostPage(props: PageProps) {
               {/* Interactive Dynamic Table of Contents */}
               <InteractiveTOC content={post.content.rendered} />
 
-              {/* Sidebar Store Callout */}
-              <div className="bg-gradient-to-br from-slate-900 to-[#14213D] p-5 rounded-2xl border border-slate-800 text-white shadow-sm space-y-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
-                  MAAJANKI COMMERCE
-                </span>
-                <h4 className="font-extrabold text-sm leading-snug">
-                  Explore Pre-built Next.js &amp; WordPress Templates
-                </h4>
-                <p className="text-slate-300 text-xs leading-relaxed">
-                  Get high-performance, SEO-verified starter kits with instant digital download and GST invoicing.
-                </p>
-                <Link
-                  href="/products"
-                  className="inline-flex items-center gap-1 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-xs"
-                >
-                  <span>Browse Templates</span>
-                  <ArrowRight className="h-3 w-3" />
-                </Link>
-              </div>
+              {/* Dynamic Sidebar Store Callout */}
+              {latestProduct ? (
+                <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-[#14213D] p-5 rounded-2xl border border-slate-800 text-white shadow-sm space-y-3.5 group">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
+                      {latestProduct.badge || "NEW RELEASE"}
+                    </span>
+                    <span className="text-xs font-black text-white bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-700">
+                      {latestProduct.price}
+                    </span>
+                  </div>
+
+                  {latestProduct.featuredImage && (
+                    <Link
+                      href={`/products/${latestProduct.slug}`}
+                      className="relative h-36 w-full rounded-xl overflow-hidden bg-slate-800 block border border-slate-700/60"
+                    >
+                      <Image
+                        src={latestProduct.featuredImage}
+                        alt={latestProduct.name}
+                        fill
+                        sizes="320px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </Link>
+                  )}
+
+                  <div>
+                    <Link
+                      href={`/products/${latestProduct.slug}`}
+                      className="font-extrabold text-sm leading-snug text-white group-hover:text-[#FBCFE8] transition-colors line-clamp-2 block mb-1"
+                    >
+                      {latestProduct.name}
+                    </Link>
+                    <p className="text-slate-300 text-xs leading-relaxed line-clamp-2">
+                      {latestProduct.plainShortDescription || latestProduct.shortDescription?.replace(/<[^>]*>/g, "")}
+                    </p>
+                  </div>
+
+                  <div className="pt-1 flex items-center justify-between gap-2">
+                    <Link
+                      href={`/products/${latestProduct.slug}`}
+                      className="inline-flex items-center gap-1.5 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-xs"
+                    >
+                      <span>{latestProduct.buttonText || "Get Product"}</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                    <Link
+                      href="/products"
+                      className="text-[11px] font-medium text-slate-400 hover:text-white transition-colors"
+                    >
+                      All Products →
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-gradient-to-br from-slate-900 to-[#14213D] p-5 rounded-2xl border border-slate-800 text-white shadow-sm space-y-3">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FBCFE8] bg-white/10 px-2.5 py-0.5 rounded-full inline-block">
+                    MAAJANKI COMMERCE
+                  </span>
+                  <h4 className="font-extrabold text-sm leading-snug">
+                    Explore Digital Products &amp; Resources
+                  </h4>
+                  <p className="text-slate-300 text-xs leading-relaxed">
+                    High-converting eBooks, business tools, and verified templates for startup founders and developers.
+                  </p>
+                  <Link
+                    href="/products"
+                    className="inline-flex items-center gap-1 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-xs"
+                  >
+                    <span>Browse Store</span>
+                    <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              )}
 
               {/* YouTube Channel Banner */}
               <YoutubeAdCard />
