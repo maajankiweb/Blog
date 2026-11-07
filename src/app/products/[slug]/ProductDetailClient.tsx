@@ -113,21 +113,21 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
           </div>
         </div>
 
-        {/* Right Column: Purchase Card (5 cols) */}
-        <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xs sticky top-24">
-          {/* Header Metadata Pill Row */}
-          <div className="space-y-3">
+        {/* Right Column: Purchase Card (5 cols) — Styled exactly like wpwebtemplates.com with MJ Digital brand colors */}
+        <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 space-y-5 shadow-xs sticky top-24">
+          {/* Header Metadata Pill Row (wph-nexus-pill-row) */}
+          <div className="space-y-2.5">
             <div className="flex items-center justify-between flex-wrap gap-2 text-xs">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider">
-                  <HiCheckBadge className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDF2F5] text-[#DC2564] border border-[#FBCFE8] uppercase tracking-wider">
+                  <HiCheckBadge className="w-3.5 h-3.5 text-[#DC2564]" />
                   <span>Verified Edition</span>
                 </span>
-                <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700 uppercase tracking-wider border border-slate-200">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 uppercase tracking-wider border border-slate-200">
                   {product.category}
                 </span>
                 {isExternal && (
-                  <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100/80 text-amber-800 uppercase tracking-wider border border-amber-300">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FDF2F5] text-[#DC2564] uppercase tracking-wider border border-[#FBCFE8]">
                     Amazon India
                   </span>
                 )}
@@ -140,60 +140,67 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               </div>
             </div>
 
-            {/* Product Title (H1) */}
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
+            {/* Product Title (H1 - wph-nexus-title) */}
+            <h1 className="text-2xl sm:text-[1.85rem] font-extrabold text-slate-900 tracking-tight leading-[1.25]">
               {product.name}
             </h1>
 
-            {/* Short Description (Exact HTML from WordPress) */}
+            {/* Short Pitch (Exact HTML from WordPress - wph-nexus-short-pitch) */}
             {product.shortDescription && (
               <div
-                className="text-xs sm:text-sm text-slate-600 leading-relaxed [&_strong]:font-semibold [&_strong]:text-slate-900 [&_p]:mb-1.5"
+                className="text-xs sm:text-[13.5px] text-slate-600 leading-relaxed [&_strong]:font-bold [&_strong]:text-slate-900 [&_p]:mb-1.5"
                 dangerouslySetInnerHTML={{ __html: product.shortDescription }}
               />
             )}
           </div>
 
-          {/* Pricing Box (wpwebtemplates.com style) */}
-          <div className="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-2">
+          {/* Pricing Box (wph-nexus-price-card with MJ Digital Brand Palette) */}
+          <div className="bg-slate-50/90 border border-slate-200/90 rounded-xl p-4 sm:p-5 flex flex-col gap-1.5">
             <div className="flex items-baseline justify-between flex-wrap gap-2">
-              <div className="flex items-baseline gap-2.5">
-                <span className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                  {product.price}
-                </span>
+              <div className="flex items-baseline gap-2">
                 {product.regularPrice && (
-                  <span className="text-base text-slate-400 line-through font-medium">
+                  <del className="text-slate-400 line-through text-sm sm:text-base font-medium">
                     {product.regularPrice}
-                  </span>
+                  </del>
                 )}
+                <ins className="text-3xl sm:text-[2rem] font-bold text-slate-900 no-underline tracking-tight">
+                  {product.price}
+                </ins>
                 {product.discountPercent && product.discountPercent > 0 && (
-                  <span className="bg-[#DC2564]/10 text-[#DC2564] text-xs font-bold px-2 py-0.5 rounded-md border border-[#DC2564]/20">
+                  <span className="bg-[#DC2564]/10 text-[#DC2564] text-xs font-bold px-2 py-0.5 rounded border border-[#DC2564]/20 ml-1">
                     Save {product.discountPercent}%
                   </span>
                 )}
               </div>
+
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider font-mono">
-                {isExternal ? "Amazon Listing" : "One-Time Payment"}
+                {isExternal ? "Amazon Store" : "One-Time Payment"}
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium">
+
+            <p className="text-xs font-bold text-[#DC2564] mt-1">
               {isExternal
-                ? "Available in Kindle Edition & Paperback format. Fast delivery & Amazon Buyer Protection."
+                ? "Available on Amazon India • Official Kindle Edition & Paperback"
                 : "One-time payment • Full access & lifetime updates included."}
+            </p>
+            <p className="text-[11px] text-slate-500 leading-tight">
+              {isExternal
+                ? "Instant Kindle 1-Click access. Orders fulfilled securely by Amazon."
+                : "Instant digital download upon checkout. 100% genuine license."}
             </p>
           </div>
 
-          {/* Action Button (Strictly WordPress Button Name for Affiliate Products) */}
+          {/* Action Button (wph-nexus-btn-buynow styled with our brand color #DC2564) */}
           {isExternal ? (
             <div className="space-y-2">
               <a
                 href={product.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="w-full bg-[#FF9900] hover:bg-[#E88B00] text-slate-950 font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2.5 shadow-md shadow-amber-500/25 active:scale-[0.98] transition-all text-sm sm:text-base uppercase tracking-wider"
+                className="w-full bg-[#DC2564] hover:bg-[#B81D52] border border-[#DC2564] text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-[#DC2564]/20 active:scale-[0.99] transition-all text-sm uppercase tracking-wider"
               >
                 <span>{product.buttonText || "Buy Product"}</span>
-                <HiArrowTopRightOnSquare className="w-5 h-5 shrink-0" />
+                <HiArrowTopRightOnSquare className="w-4 h-4 shrink-0 text-white" />
               </a>
               <p className="text-[11px] text-center text-slate-400">
                 Official store listing. Purchases are fulfilled securely by Amazon / Author.
@@ -220,34 +227,57 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
             </div>
           )}
 
-          {/* Trust Grid (3 Cards like wpwebtemplates.com) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-slate-100">
-            <div className="bg-slate-50 border border-slate-200/70 rounded-xl p-3 text-center space-y-1">
-              <HiCheckBadge className="w-5 h-5 text-emerald-600 mx-auto" />
-              <p className="text-xs font-bold text-slate-800">100% Genuine</p>
-              <p className="text-[10px] text-slate-500">Official verified edition</p>
+          {/* Trust Grid (3 Cards — wph-nexus-trust-grid with brand #DC2564 icons) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-slate-100">
+            <div className="bg-slate-50/80 border border-slate-200/90 rounded-xl p-2.5 flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#FDF2F5] border border-[#FBCFE8] flex items-center justify-center text-[#DC2564] shrink-0">
+                <HiCheckBadge size={16} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-slate-900 leading-tight">30 Days Support</p>
+                <p className="text-[10px] text-slate-500 leading-tight truncate">Author Assistance</p>
+              </div>
             </div>
-            <div className="bg-slate-50 border border-slate-200/70 rounded-xl p-3 text-center space-y-1">
-              <HiBolt className="w-5 h-5 text-amber-500 mx-auto" />
-              <p className="text-xs font-bold text-slate-800">Instant Access</p>
-              <p className="text-[10px] text-slate-500">Kindle 1-Click &amp; Print</p>
+
+            <div className="bg-slate-50/80 border border-slate-200/90 rounded-xl p-2.5 flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#FDF2F5] border border-[#FBCFE8] flex items-center justify-center text-[#DC2564] shrink-0">
+                <HiBolt size={16} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-slate-900 leading-tight">100% Genuine</p>
+                <p className="text-[10px] text-slate-500 leading-tight truncate">Publisher Edition</p>
+              </div>
             </div>
-            <div className="bg-slate-50 border border-slate-200/70 rounded-xl p-3 text-center space-y-1">
-              <HiShieldCheck className="w-5 h-5 text-[#DC2564] mx-auto" />
-              <p className="text-xs font-bold text-slate-800">Safe Purchase</p>
-              <p className="text-[10px] text-slate-500">Amazon Buyer Protection</p>
+
+            <div className="bg-slate-50/80 border border-slate-200/90 rounded-xl p-2.5 flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#FDF2F5] border border-[#FBCFE8] flex items-center justify-center text-[#DC2564] shrink-0">
+                <HiShieldCheck size={16} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-slate-900 leading-tight">Safe Purchase</p>
+                <p className="text-[10px] text-slate-500 leading-tight truncate">Buyer Protection</p>
+              </div>
             </div>
           </div>
 
-          {/* Performance & Quality Vitals Pill */}
-          <div className="flex items-center gap-3 bg-emerald-50/70 border border-emerald-200/80 rounded-xl p-3 text-xs text-emerald-900">
-            <div className="w-7 h-7 rounded-full bg-emerald-600 text-white font-black flex items-center justify-center text-xs shrink-0 shadow-2xs">
-              ✓
+          {/* Vitals Pill (wph-nexus-vitals-pill with brand #DC2564 / #FDF2F5 palette) */}
+          <div className="flex items-center justify-between gap-3 bg-[#FDF2F5] border border-[#FBCFE8] rounded-xl p-3 text-xs">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="w-8 h-8 rounded-full bg-[#DC2564] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                95+
+              </span>
+              <div className="min-w-0">
+                <span className="font-bold text-slate-900 block text-xs leading-tight truncate">
+                  Google Core Web Vitals 95+
+                </span>
+                <span className="text-slate-600 block text-[11px] leading-tight truncate">
+                  SEO-friendly architecture &amp; fast access
+                </span>
+              </div>
             </div>
-            <div>
-              <span className="font-bold block">Verified Content Quality</span>
-              <span className="text-emerald-700 text-[11px]">7-step practical framework for startup founders</span>
-            </div>
+            <span className="bg-white border border-[#FBCFE8] text-[#DC2564] font-extrabold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
+              Grade A+
+            </span>
           </div>
         </div>
       </div>
@@ -284,9 +314,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
           dangerouslySetInnerHTML={{ __html: product.description }}
         />
 
-        {/* High-Converting Bottom Action Banner */}
+        {/* High-Converting Bottom Action Banner styled with MJ Digital palette */}
         {isExternal && (
-          <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 bg-amber-50/60 p-6 rounded-2xl border border-amber-200/80">
+          <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#FDF2F5] p-6 rounded-2xl border border-[#FBCFE8]">
             <div>
               <h3 className="font-bold text-slate-900 text-base">
                 Get &quot;{product.name}&quot;
@@ -299,10 +329,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               href={product.externalUrl}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="bg-[#FF9900] hover:bg-[#E88B00] text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center gap-2 text-xs uppercase tracking-wider shrink-0 shadow-xs active:scale-95 transition-all"
+              className="bg-[#DC2564] hover:bg-[#B81D52] text-white font-bold px-6 py-3.5 rounded-xl flex items-center gap-2 text-xs uppercase tracking-wider shrink-0 shadow-sm shadow-[#DC2564]/20 active:scale-95 transition-all"
             >
               <span>{product.buttonText || "Buy Product"}</span>
-              <HiArrowTopRightOnSquare className="w-4 h-4" />
+              <HiArrowTopRightOnSquare className="w-4 h-4 text-white" />
             </a>
           </div>
         )}
