@@ -34,6 +34,9 @@ export interface WordPressProduct {
   downloadUrl?: string;
   featured: boolean;
   features?: string[];
+  type?: "simple" | "external" | "grouped" | "variable" | string;
+  externalUrl?: string;
+  buttonText?: string;
   seo?: {
     title?: string;
     description?: string;
@@ -53,11 +56,34 @@ export interface GetProductsParams {
 }
 
 /**
+ * Helper to strip HTML and decode common entities
+ */
+function cleanProductText(str?: string): string {
+  if (!str) return "";
+  return str
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&quot;/g, '"')
+    .replace(/&#038;/g, "&")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
  * Format raw WooCommerce Store API or v3 product into clean WordPressProduct model
  */
 function normalizeWcProduct(raw: any): WordPressProduct {
+  const isExternal = raw.type === "external" || Boolean(raw.external_url);
+  const externalUrl = raw.external_url || raw.add_to_cart?.url || undefined;
+  const buttonText = raw.button_text || raw.add_to_cart?.text || (isExternal ? "Buy on Amazon" : "Buy Now");
+
   // Handle WooCommerce Store API price format (prices in minor units, e.g. 249900 cents)
-  let priceStr = "₹0";
+  let priceStr = isExternal ? "Amazon / Kindle" : "₹0";
   let regStr: string | undefined = undefined;
   let saleStr: string | undefined = undefined;
   let numericPrice = 0;
@@ -65,7 +91,7 @@ function normalizeWcProduct(raw: any): WordPressProduct {
   if (raw.prices) {
     const rawPrice = parseInt(raw.prices.price || "0", 10) / (raw.prices.currency_minor_unit ? 10 ** raw.prices.currency_minor_unit : 100);
     numericPrice = rawPrice;
-    priceStr = rawPrice === 0 ? "FREE" : `₹${rawPrice.toLocaleString("en-IN")}`;
+    priceStr = rawPrice === 0 ? (isExternal ? "Amazon / Kindle" : "FREE") : `₹${rawPrice.toLocaleString("en-IN")}`;
 
     if (raw.prices.regular_price) {
       const reg = parseInt(raw.prices.regular_price, 10) / (raw.prices.currency_minor_unit ? 10 ** raw.prices.currency_minor_unit : 100);
@@ -73,20 +99,28 @@ function normalizeWcProduct(raw: any): WordPressProduct {
         regStr = `₹${reg.toLocaleString("en-IN")}`;
       }
     }
-  } else if (raw.price !== undefined) {
+  } else if (raw.price !== undefined && raw.price !== "") {
     numericPrice = parseFloat(raw.price) || 0;
-    priceStr = numericPrice === 0 ? "FREE" : `₹${numericPrice.toLocaleString("en-IN")}`;
+    priceStr = numericPrice === 0 ? (isExternal ? "Amazon / Kindle" : "FREE") : `₹${numericPrice.toLocaleString("en-IN")}`;
     if (raw.regular_price && parseFloat(raw.regular_price) > numericPrice) {
       regStr = `₹${parseFloat(raw.regular_price).toLocaleString("en-IN")}`;
     }
   }
 
-  const categoryName = raw.categories?.[0]?.name || "Plugins";
-  const featuredImg =
-    raw.images?.[0]?.src ||
-    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80";
+  const categoryName = raw.categories?.[0]?.name || (isExternal ? "Ebooks" : "Plugins");
 
-  const gallery = Array.isArray(raw.images)
+  // Extract featured image with regex fallback for HTML embedded images
+  let featuredImg = raw.images?.[0]?.src;
+  if (!featuredImg) {
+    const descMatch = (raw.description || raw.short_description || "").match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (descMatch && descMatch[1]) {
+      featuredImg = descMatch[1];
+    } else {
+      featuredImg = "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80";
+    }
+  }
+
+  const gallery = Array.isArray(raw.images) && raw.images.length > 0
     ? raw.images.map((img: any) => img.src || img).filter(Boolean)
     : [featuredImg];
 
@@ -105,6 +139,9 @@ function normalizeWcProduct(raw: any): WordPressProduct {
     }
   }
 
+  const cleanedDesc = cleanProductText(raw.description) || cleanProductText(raw.short_description) || "";
+  const cleanedShortDesc = cleanProductText(raw.short_description) || (cleanedDesc ? cleanedDesc.slice(0, 140) + "..." : "");
+
   return {
     id: raw.id,
     name: raw.name || "WordPress Product",
@@ -117,10 +154,10 @@ function normalizeWcProduct(raw: any): WordPressProduct {
     regularPrice: regStr,
     salePrice: saleStr,
     numericPrice,
-    isFree: numericPrice === 0,
+    isFree: !isExternal && numericPrice === 0,
     currency: "INR",
-    description: raw.description?.replace(/<[^>]*>/g, "").trim() || raw.short_description?.replace(/<[^>]*>/g, "").trim() || "",
-    shortDescription: raw.short_description?.replace(/<[^>]*>/g, "").trim() || (raw.description?.replace(/<[^>]*>/g, "").slice(0, 140) + "...") || "",
+    description: cleanedDesc,
+    shortDescription: cleanedShortDesc,
     featuredImage: featuredImg,
     galleryImages: gallery,
     inStock: raw.is_in_stock !== undefined ? Boolean(raw.is_in_stock) : true,
@@ -128,12 +165,15 @@ function normalizeWcProduct(raw: any): WordPressProduct {
     rating: raw.average_rating ? parseFloat(raw.average_rating) : 4.9,
     reviewsCount: raw.review_count || 45,
     salesCount: raw.total_sales || 110,
-    badge: raw.featured ? "FEATURED" : undefined,
-    demoUrl: raw.permalink || undefined,
+    badge: raw.featured ? "FEATURED" : (isExternal ? "AMAZON EBOOK" : undefined),
+    demoUrl: externalUrl || raw.permalink || undefined,
     featured: Boolean(raw.featured),
+    type: raw.type || (isExternal ? "external" : "simple"),
+    externalUrl,
+    buttonText,
     seo: {
-      title: seoTitle || `${raw.name} | Maajanki WebTech`,
-      description: seoDesc || raw.short_description?.replace(/<[^>]*>/g, "").slice(0, 160),
+      title: seoTitle || `${raw.name} | MJ Digital`,
+      description: seoDesc || cleanedShortDesc.slice(0, 160),
       focusKeyword,
       canonicalUrl: canonicalUrl || `https://blog.maajankiwebtech.com/products/${raw.slug}`,
     },

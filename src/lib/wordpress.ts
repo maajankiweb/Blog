@@ -789,8 +789,12 @@ export interface WooDigitalProduct {
   downloadUrl?: string;
   badge?: string;
   rating?: number;
+  reviewsCount?: number;
   salesCount?: number;
   features?: string[];
+  type?: "simple" | "external" | "grouped" | "variable" | string;
+  externalUrl?: string;
+  buttonText?: string;
 }
 
 const mockDigitalProducts: WooDigitalProduct[] = [

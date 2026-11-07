@@ -73,6 +73,26 @@ const nextConfig: NextConfig = {
         hostname: "mjbytech.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images-na.ssl-images-amazon.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.media-amazon.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cms.maajankiwebtech.com",
+        pathname: "/**",
+      },
     ],
   },
   compress: true,

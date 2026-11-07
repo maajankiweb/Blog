@@ -67,12 +67,21 @@ export default async function HomepageProductsSection() {
                 {/* Details */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#DC2564] bg-[#FDF2F5] px-2 py-0.5 rounded-md">
-                      {product.category || "Digital Asset"}
-                    </span>
-                    <span className="text-[11px] font-medium text-emerald-600 flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#DC2564] bg-[#FDF2F5] px-2 py-0.5 rounded-md">
+                        {product.category || "Digital Asset"}
+                      </span>
+                      {product.externalUrl && (
+                        <span className="text-amber-800 font-bold uppercase tracking-wider text-[9px] bg-amber-100/90 px-1.5 py-0.5 rounded border border-amber-300">
+                          Amazon
+                        </span>
+                      )}
+                    </div>
+                    <span className={`text-[11px] font-medium flex items-center gap-1 ${
+                      product.externalUrl ? "text-amber-700" : "text-emerald-600"
+                    }`}>
                       <HiCheckBadge className="w-3.5 h-3.5" />
-                      Instant Delivery
+                      {product.externalUrl ? "Amazon Kindle" : "Instant Delivery"}
                     </span>
                   </div>
 
@@ -93,7 +102,7 @@ export default async function HomepageProductsSection() {
               <div className="pt-3 border-t border-slate-100 mt-4 flex items-center justify-between">
                 <div>
                   <span className="text-[10px] text-slate-400 block uppercase font-mono">
-                    Lifetime License
+                    {product.externalUrl ? "Amazon Listing" : "Lifetime License"}
                   </span>
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-lg font-black text-slate-900">{product.price}</span>

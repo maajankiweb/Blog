@@ -13,6 +13,7 @@ import {
   HiOutlineShoppingBag,
   HiCreditCard,
   HiSparkles,
+  HiArrowTopRightOnSquare,
 } from "react-icons/hi2";
 import { useCart } from "@/context/CartContext";
 
@@ -115,9 +116,16 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
         <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm sticky top-24">
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="px-3 py-1 rounded-full bg-[#FDF2F5] text-[#DC2564] font-bold uppercase tracking-wider border border-[#FBCFE8]">
-                {product.category}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="px-3 py-1 rounded-full bg-[#FDF2F5] text-[#DC2564] font-bold uppercase tracking-wider border border-[#FBCFE8]">
+                  {product.category}
+                </span>
+                {product.externalUrl && (
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider border border-amber-300">
+                    Amazon Store
+                  </span>
+                )}
+              </div>
               <div className="flex items-center gap-1 text-[#FCA311] font-bold">
                 <HiStar size={16} className="fill-current" />
                 <span className="text-slate-800">{product.rating || 4.9}</span>
@@ -135,10 +143,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
           </div>
 
           {/* Pricing Box */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-baseline justify-between">
+          <div className={`p-4 rounded-xl border flex items-baseline justify-between ${
+            product.externalUrl ? "bg-amber-50/70 border-amber-200/80" : "bg-slate-50 border-slate-200"
+          }`}>
             <div>
-              <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">
-                Total Price (One-Time)
+              <span className={`text-[10px] uppercase font-mono tracking-wider block ${
+                product.externalUrl ? "text-amber-800 font-bold" : "text-slate-400"
+              }`}>
+                {product.externalUrl ? "Available On Amazon India" : "Total Price (One-Time)"}
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-black text-slate-900">{product.price}</span>
@@ -149,45 +161,85 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                 )}
               </div>
             </div>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-              Lifetime Access
+            <span className={`text-xs font-bold px-2.5 py-1 rounded-md border ${
+              product.externalUrl
+                ? "text-amber-900 bg-amber-100 border-amber-300"
+                : "text-emerald-600 bg-emerald-50 border-emerald-200"
+            }`}>
+              {product.externalUrl ? "Amazon Verified" : "Lifetime Access"}
             </span>
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-2.5">
-            <Link
-              href={`/checkout?product=${product.id}`}
-              onClick={() => addToCart(product)}
-              className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm shadow-[#DC2564]/20 active:scale-95 transition-all"
-            >
-              <HiCreditCard size={18} />
-              <span>Buy Now with Razorpay / UPI</span>
-            </Link>
+          {product.externalUrl ? (
+            <div className="space-y-3">
+              <a
+                href={product.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="w-full bg-[#FF9900] hover:bg-[#E88B00] text-slate-950 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm shadow-amber-500/20 active:scale-95 transition-all"
+              >
+                <span>{product.buttonText || "Buy on Amazon"}</span>
+                <HiArrowTopRightOnSquare size={18} className="shrink-0 text-slate-950" />
+              </a>
+              <p className="text-[11px] text-center text-slate-500">
+                Direct link to Amazon India. Secure purchase fulfilled by Amazon / Author.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              <Link
+                href={`/checkout?product=${product.id}`}
+                onClick={() => addToCart(product)}
+                className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm shadow-[#DC2564]/20 active:scale-95 transition-all"
+              >
+                <HiCreditCard size={18} />
+                <span>Buy Now with Razorpay / UPI</span>
+              </Link>
 
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all"
-            >
-              <HiOutlineShoppingBag size={18} />
-              <span>Add to Shopping Cart</span>
-            </button>
-          </div>
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all"
+              >
+                <HiOutlineShoppingBag size={18} />
+                <span>Add to Shopping Cart</span>
+              </button>
+            </div>
+          )}
 
           {/* Security & Delivery Guarantees */}
           <div className="space-y-2.5 pt-4 border-t border-slate-100 text-xs text-slate-600">
-            <div className="flex items-center gap-2.5">
-              <HiShieldCheck size={18} className="text-[#DC2564] shrink-0" />
-              <span>Verified 256-Bit SSL Payment by Razorpay</span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <HiArrowDownTray size={18} className="text-[#DC2564] shrink-0" />
-              <span>Instant ZIP download &amp; license key delivery</span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <HiGlobeAlt size={18} className="text-[#DC2564] shrink-0" />
-              <span>GST-compliant Indian business invoice included</span>
-            </div>
+            {product.externalUrl ? (
+              <>
+                <div className="flex items-center gap-2.5">
+                  <HiShieldCheck size={18} className="text-amber-600 shrink-0" />
+                  <span>Official Amazon Store Listing &amp; Buyer Protection</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <HiArrowDownTray size={18} className="text-amber-600 shrink-0" />
+                  <span>Instant Kindle 1-Click download &amp; Paperback delivery</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <HiGlobeAlt size={18} className="text-amber-600 shrink-0" />
+                  <span>Fulfilled and supported directly by Amazon India</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2.5">
+                  <HiShieldCheck size={18} className="text-[#DC2564] shrink-0" />
+                  <span>Verified 256-Bit SSL Payment by Razorpay</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <HiArrowDownTray size={18} className="text-[#DC2564] shrink-0" />
+                  <span>Instant ZIP download &amp; license key delivery</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <HiGlobeAlt size={18} className="text-[#DC2564] shrink-0" />
+                  <span>GST-compliant Indian business invoice included</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

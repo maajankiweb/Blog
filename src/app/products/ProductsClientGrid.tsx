@@ -13,6 +13,7 @@ import {
   HiEye,
   HiAdjustmentsHorizontal,
   HiOutlineShoppingBag,
+  HiArrowTopRightOnSquare,
 } from "react-icons/hi2";
 import { useCart } from "@/context/CartContext";
 
@@ -197,9 +198,16 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
               {/* Body Details */}
               <div className="p-5 space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#DC2564] font-bold uppercase tracking-wider text-[10px] bg-[#FDF2F5] px-2 py-0.5 rounded-md">
-                    {product.category}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[#DC2564] font-bold uppercase tracking-wider text-[10px] bg-[#FDF2F5] px-2 py-0.5 rounded-md">
+                      {product.category}
+                    </span>
+                    {product.externalUrl && (
+                      <span className="text-amber-800 font-bold uppercase tracking-wider text-[9px] bg-amber-100/90 px-1.5 py-0.5 rounded border border-amber-300">
+                        Amazon
+                      </span>
+                    )}
+                  </div>
                   <div className="flex items-center gap-1 text-[#FCA311] font-bold">
                     <HiStar size={14} className="fill-current" />
                     <span className="text-slate-700 text-xs">{product.rating || 4.9}</span>
@@ -234,7 +242,7 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
             <div className="p-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
               <div>
                 <span className="text-[10px] text-slate-400 block font-mono uppercase">
-                  Price
+                  {product.externalUrl ? "Platform" : "Price"}
                 </span>
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-lg font-black text-slate-900">
@@ -248,23 +256,36 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className="p-2.5 rounded-xl border border-slate-200 hover:border-[#DC2564] text-slate-700 hover:text-[#DC2564] transition-colors"
-                  title="Add to Cart"
-                  aria-label="Add to Cart"
+              {product.externalUrl ? (
+                <a
+                  href={product.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="bg-[#FF9900] hover:bg-[#E88B00] text-slate-950 text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
+                  title={product.buttonText || "Buy on Amazon"}
                 >
-                  <HiOutlineShoppingBag size={18} />
-                </button>
+                  <span>{product.buttonText || "Buy on Amazon"}</span>
+                  <HiArrowTopRightOnSquare size={14} className="shrink-0 text-slate-950" />
+                </a>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="p-2.5 rounded-xl border border-slate-200 hover:border-[#DC2564] text-slate-700 hover:text-[#DC2564] transition-colors"
+                    title="Add to Cart"
+                    aria-label="Add to Cart"
+                  >
+                    <HiOutlineShoppingBag size={18} />
+                  </button>
 
-                <button
-                  onClick={() => setActiveCheckoutProduct(product)}
-                  className="bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-xs"
-                >
-                  Buy Now
-                </button>
-              </div>
+                  <button
+                    onClick={() => setActiveCheckoutProduct(product)}
+                    className="bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-xs"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}
