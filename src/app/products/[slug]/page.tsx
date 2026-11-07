@@ -162,23 +162,23 @@ export default async function ProductDetailPage(props: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-container-max mx-auto space-y-8">
-        {/* Breadcrumb Navigation */}
+      <div className="max-w-[1250px] mx-auto space-y-6">
+        {/* Breadcrumb Navigation (wpwebtemplates style) */}
         <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs text-slate-500 font-medium overflow-x-auto whitespace-nowrap">
-          <Link href="/" className="hover:text-slate-900 flex items-center gap-1">
-            <HiHome size={14} />
+          <Link href="/" className="hover:text-slate-900 flex items-center gap-1.5">
+            <HiHome size={14} className="text-slate-400" />
             <span>Home</span>
           </Link>
-          <HiChevronRight size={12} className="text-slate-300" />
-          <Link href="/products" className="hover:text-slate-900">
-            Products
+          <span className="text-slate-300">/</span>
+          <Link href="/products/" className="hover:text-slate-900">
+            Templates
           </Link>
-          <HiChevronRight size={12} className="text-slate-300" />
-          <Link href={`/products?category=${encodeURIComponent(product.category)}`} className="hover:text-[#DC2564]">
+          <span className="text-slate-300">/</span>
+          <Link href={`/products/?category=${encodeURIComponent(product.category)}`} className="hover:text-slate-900">
             {product.category}
           </Link>
-          <HiChevronRight size={12} className="text-slate-300" />
-          <span className="text-slate-400 line-clamp-1 max-w-[200px] sm:max-w-none">{product.name}</span>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-900 font-semibold line-clamp-1 max-w-[200px] sm:max-w-none">{product.name}</span>
         </nav>
 
         {/* Client Interactive Product View */}

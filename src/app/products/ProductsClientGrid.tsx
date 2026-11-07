@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { WooDigitalProduct } from "@/lib/wordpress";
@@ -10,10 +10,13 @@ import {
   HiXMark,
   HiCreditCard,
   HiMagnifyingGlass,
-  HiEye,
   HiAdjustmentsHorizontal,
   HiOutlineShoppingBag,
   HiArrowTopRightOnSquare,
+  HiCheckBadge,
+  HiLockClosed,
+  HiArrowsPointingOut,
+  HiHome,
 } from "react-icons/hi2";
 import { useCart } from "@/context/CartContext";
 
@@ -29,8 +32,30 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
   const [activeCheckoutProduct, setActiveCheckoutProduct] = useState<WooDigitalProduct | null>(null);
   const { addToCart } = useCart();
   const [addedToast, setAddedToast] = useState<string | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const categories = ["All", "Templates", "Plugins", "AI Tools", "Ebooks"];
+  // Keyboard shortcut (⌘K or Ctrl+K) to focus search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Compute distinct categories and real-time count badges
+  const { categories, categoryCounts } = useMemo(() => {
+    const counts: Record<string, number> = { All: initialProducts.length };
+    initialProducts.forEach((p) => {
+      const cat = p.category || "General";
+      counts[cat] = (counts[cat] || 0) + 1;
+    });
+    const uniqueCats = ["All", ...Object.keys(counts).filter((c) => c !== "All")];
+    return { categories: uniqueCats, categoryCounts: counts };
+  }, [initialProducts]);
 
   // Filter & Sort Pipeline
   const filteredProducts = useMemo(() => {
@@ -45,13 +70,14 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
           p.name.toLowerCase().includes(q) ||
           p.description.toLowerCase().includes(q) ||
           (p.shortDescription && p.shortDescription.toLowerCase().includes(q)) ||
+          (p.plainShortDescription && p.plainShortDescription.toLowerCase().includes(q)) ||
           p.category.toLowerCase().includes(q);
 
         return matchesCategory && matchesSearch;
       })
       .sort((a, b) => {
         const getNumeric = (priceStr: string) => {
-          if (!priceStr || priceStr.toLowerCase().includes("free")) return 0;
+          if (!priceStr || priceStr.toLowerCase().includes("free") || priceStr.toLowerCase().includes("amazon")) return 0;
           return parseFloat(priceStr.replace(/[^0-9.]/g, "")) || 0;
         };
 
@@ -91,71 +117,129 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
         </div>
       )}
 
-      {/* Search, Filter & Sort Toolbar */}
-      <div className="bg-slate-50/70 p-5 rounded-2xl border border-slate-200/90 space-y-4 shadow-2xs">
-        <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
-          {/* Search Input */}
-          <div className="relative flex-1 max-w-md">
-            <HiMagnifyingGlass className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search templates, plugins, ebooks..."
-              className="w-full bg-white border border-slate-200 focus:border-[#DC2564] rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs"
-              >
-                ✕
-              </button>
-            )}
+      {/* ── Catalog Hero (wpwebtemplates.com style) ── */}
+      <header className="flex flex-col gap-4 pb-4">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+          <Link href="/" className="hover:text-slate-900 flex items-center gap-1.5">
+            <HiHome size={14} className="text-slate-400" />
+            <span>Home</span>
+          </Link>
+          <span className="text-slate-300 font-normal">/</span>
+          <span className="text-slate-900 font-semibold" aria-current="page">
+            Templates
+          </span>
+        </nav>
+
+        {/* Hero Meta Badges */}
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-[11.5px] font-extrabold uppercase tracking-wider text-emerald-800 font-mono">
+              {initialProducts.length} Production-Ready Assets &amp; Templates
+            </span>
           </div>
 
-          {/* Sort Dropdown */}
-          <div className="flex items-center gap-2">
-            <HiAdjustmentsHorizontal className="text-[#DC2564]" size={18} />
-            <span className="text-xs text-slate-500 font-medium">Sort:</span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-slate-200 focus:border-[#DC2564] text-xs text-slate-800 rounded-xl px-3 py-2.5 outline-none cursor-pointer"
-            >
-              <option value="featured">Featured &amp; Bestsellers</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
-            </select>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600 text-white text-[11.5px] font-bold shadow-xs">
+            <HiCheckBadge className="w-3.5 h-3.5 text-emerald-100" />
+            <span>Verified Code · Instant Download</span>
           </div>
         </div>
 
-        {/* Category Pills & Count */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200/70">
-          <div className="flex flex-wrap items-center gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
-                  selectedCategory === cat
-                    ? "bg-[#DC2564] text-white border-[#DC2564] shadow-xs"
-                    : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+        {/* Headings & Search Box */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pt-1">
+          <div className="max-w-2xl space-y-1.5">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              Templates &amp; Digital Store
+            </h1>
+            <p className="text-sm text-slate-600 font-normal leading-relaxed">
+              Curated Next.js starter blueprints, custom WordPress plugins, eBooks, and verified developer toolkits with transparent pricing.
+            </p>
           </div>
 
-          <span className="text-xs text-slate-500">
-            Showing <strong className="text-slate-800">{displayedProducts.length}</strong> of <strong className="text-slate-800">{filteredProducts.length}</strong> assets
-          </span>
+          {/* Quick Search Form with ⌘K Badge */}
+          <div className="relative w-full lg:max-w-md">
+            <div className="relative flex items-center">
+              <HiMagnifyingGlass className="absolute left-4 text-slate-400 pointer-events-none" size={18} />
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search templates, plugins, ebooks..."
+                className="w-full h-11 pl-11 pr-20 bg-white border border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 rounded-full text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all shadow-2xs"
+                aria-label="Search templates"
+              />
+              {searchQuery ? (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-12 text-slate-400 hover:text-slate-600 text-xs p-1"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              ) : null}
+              <div className="absolute right-3.5 pointer-events-none hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-bold text-slate-400 bg-slate-100 border border-slate-200 rounded">
+                ⌘K
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ── Sticky Category & Sort Bar (wpwebtemplates.com style) ── */}
+      <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md py-3 border-y border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-2xs">
+        {/* Horizontal Category Pills */}
+        <nav aria-label="Categories" className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+          {categories.map((cat) => {
+            const count = categoryCounts[cat] || 0;
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 border ${
+                  isActive
+                    ? "bg-slate-900 text-white border-slate-900 shadow-2xs"
+                    : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-white hover:text-slate-900 hover:border-slate-300"
+                }`}
+              >
+                <span>{cat === "All" ? "All Templates" : cat}</span>
+                <span
+                  className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
+                    isActive ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Sort Controls */}
+        <div className="flex items-center justify-end gap-2 shrink-0">
+          <HiAdjustmentsHorizontal className="text-slate-400" size={16} />
+          <span className="text-xs text-slate-500 font-medium">Sort:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="bg-white border border-slate-200 focus:border-slate-400 text-xs text-slate-800 rounded-lg px-2.5 py-1.5 outline-none cursor-pointer font-medium"
+          >
+            <option value="featured">Featured &amp; Bestsellers</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+          </select>
         </div>
       </div>
 
-      {/* Empty State */}
+      {/* ── Empty State ── */}
       {displayedProducts.length === 0 && (
         <div className="text-center py-16 bg-slate-50 rounded-2xl border border-dashed border-slate-200 space-y-3">
           <p className="text-slate-500 text-sm">No products found matching your search or category filter.</p>
@@ -171,160 +255,172 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
         </div>
       )}
 
-      {/* Products Grid */}
+      {/* ── Products Grid (wph-card layout from wpwebtemplates.com) ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {displayedProducts.map((product) => (
-          <div
-            key={product.id}
-            className="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-slate-300 transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md hover:-translate-y-1"
-          >
-            <div>
-              {/* Product Thumbnail */}
-              <Link href={`/products/${product.slug}`} className="relative h-48 w-full bg-slate-100 overflow-hidden block border-b border-slate-100">
-                {product.badge && (
-                  <span className="absolute top-3 left-3 z-10 bg-[#DC2564] text-white text-[10px] font-bold px-2.5 py-1 rounded-md shadow-xs uppercase tracking-wider">
-                    {product.badge}
-                  </span>
-                )}
-                <Image
-                  src={product.featuredImage || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80"}
-                  alt={product.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </Link>
+        {displayedProducts.map((product) => {
+          const isExternal = Boolean(product.externalUrl) || product.type === "external";
+          return (
+            <div
+              key={product.id}
+              className="group relative bg-white rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1"
+            >
+              <div>
+                {/* 1. Browser Mockup Header Bar */}
+                <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-50/90 border-b border-slate-100">
+                  <div className="flex items-center gap-1.5" aria-hidden="true">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block" />
+                  </div>
 
-              {/* Body Details */}
-              <div className="p-5 space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[#DC2564] font-bold uppercase tracking-wider text-[10px] bg-[#FDF2F5] px-2 py-0.5 rounded-md">
-                      {product.category}
-                    </span>
-                    {product.externalUrl && (
-                      <span className="text-amber-800 font-bold uppercase tracking-wider text-[9px] bg-amber-100/90 px-1.5 py-0.5 rounded border border-amber-300">
-                        Amazon
+                  <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-white border border-slate-200 text-[10px] font-mono text-slate-500 max-w-[170px] truncate">
+                    <HiLockClosed className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+                    <span className="truncate">{isExternal ? "amzn.in" : "maajankiwebtech.com"}</span>
+                  </div>
+
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="text-slate-400 hover:text-slate-700 p-1"
+                    title="View Product Page"
+                    aria-label="View Product"
+                  >
+                    <HiArrowsPointingOut size={13} />
+                  </Link>
+                </div>
+
+                {/* 2. Card Viewport Thumbnail with Hover Zoom */}
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="relative h-52 w-full bg-slate-100/70 overflow-hidden block border-b border-slate-100 p-4"
+                >
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={product.featuredImage || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80"}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
+                    />
+                  </div>
+
+                  {/* Top Overlay Badge */}
+                  <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5">
+                    {isExternal ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold uppercase tracking-wider shadow-2xs">
+                        <span>Amazon Store</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300 text-[10px] font-bold uppercase tracking-wider shadow-2xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                        <span>Instant Delivery</span>
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-1 text-[#FCA311] font-bold">
-                    <HiStar size={14} className="fill-current" />
-                    <span className="text-slate-700 text-xs">{product.rating || 4.9}</span>
-                  </div>
-                </div>
-
-                <Link href={`/products/${product.slug}`}>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#DC2564] transition-colors leading-snug line-clamp-2">
-                    {product.name}
-                  </h3>
                 </Link>
 
-                <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                  {product.plainShortDescription || product.shortDescription?.replace(/<[^>]*>/g, "") || product.description?.replace(/<[^>]*>/g, "")}
-                </p>
+                {/* 3. Card Body Details */}
+                <div className="p-5 space-y-3">
+                  {/* Meta row: Star rating + Category Tag */}
+                  <div className="flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-1 text-[#FCA311] font-bold text-xs">
+                      <HiStar size={14} className="fill-current" />
+                      <span className="text-slate-800">{product.rating || 4.9}</span>
+                      <span className="text-slate-400 font-normal">({product.reviewsCount || 45})</span>
+                    </div>
 
-                {/* Features Mini Checklist */}
-                {product.features && product.features.length > 0 && (
-                  <ul className="space-y-1 pt-1">
-                    {product.features.slice(0, 3).map((feat, i) => (
-                      <li key={i} className="flex items-center gap-1.5 text-xs text-slate-600">
-                        <HiCheckCircle size={14} className="text-emerald-500 shrink-0" />
-                        <span className="truncate">{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md border border-slate-200">
+                      {product.category}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <Link href={`/products/${product.slug}`}>
+                    <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
+                      {product.name}
+                    </h3>
+                  </Link>
+
+                  {/* Excerpt */}
+                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
+                    {product.plainShortDescription || product.shortDescription?.replace(/<[^>]*>/g, "") || product.description?.replace(/<[^>]*>/g, "")}
+                  </p>
+
+                  {/* Features Mini Checklist */}
+                  <div className="flex items-center gap-2 pt-1 flex-wrap">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-[10px] text-slate-600 font-medium">
+                      <HiCheckBadge size={12} className="text-emerald-600 shrink-0" />
+                      <span>Verified Release</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-[10px] text-slate-600 font-medium">
+                      <HiCheckCircle size={12} className="text-emerald-600 shrink-0" />
+                      <span>{isExternal ? "Kindle / Print" : "Full Source"}</span>
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Footer Pricing & CTA */}
-            <div className="p-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-              <div>
-                <span className="text-[10px] text-slate-400 block font-mono uppercase">
-                  {product.externalUrl ? "Platform" : "Price"}
-                </span>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-lg font-black text-slate-900">
-                    {product.price}
-                  </span>
+              {/* 4. Footer Pricing & CTA Row (wph-card-actions-row) */}
+              <div className="p-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+                <div className="flex items-baseline gap-2">
                   {product.regularPrice && (
-                    <span className="text-xs text-slate-400 line-through">
+                    <span className="text-xs text-slate-400 line-through font-medium">
                       {product.regularPrice}
                     </span>
                   )}
+                  <span className="text-lg font-black text-slate-900 tracking-tight">
+                    {product.price}
+                  </span>
                 </div>
+
+                {isExternal ? (
+                  <a
+                    href={product.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#FF9900] hover:bg-[#E88B00] text-slate-950 text-xs font-black uppercase tracking-wider transition-all shadow-xs active:scale-95"
+                    title={product.buttonText || "Buy on Amazon"}
+                  >
+                    <span>{product.buttonText || "Buy Product"}</span>
+                    <HiArrowTopRightOnSquare size={14} className="shrink-0" />
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className="p-2.5 rounded-xl border border-slate-200 hover:border-slate-400 text-slate-700 hover:text-slate-900 transition-colors"
+                      title="Add to Cart"
+                      aria-label="Add to Cart"
+                    >
+                      <HiOutlineShoppingBag size={16} />
+                    </button>
+
+                    <button
+                      onClick={() => setActiveCheckoutProduct(product)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-xs"
+                    >
+                      Buy Now
+                    </button>
+                  </div>
+                )}
               </div>
-
-              {product.externalUrl ? (
-                <a
-                  href={product.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer sponsored"
-                  className="bg-[#FF9900] hover:bg-[#E88B00] text-slate-950 text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
-                  title={product.buttonText || "Buy on Amazon"}
-                >
-                  <span>{product.buttonText || "Buy on Amazon"}</span>
-                  <HiArrowTopRightOnSquare size={14} className="shrink-0 text-slate-950" />
-                </a>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="p-2.5 rounded-xl border border-slate-200 hover:border-[#DC2564] text-slate-700 hover:text-[#DC2564] transition-colors"
-                    title="Add to Cart"
-                    aria-label="Add to Cart"
-                  >
-                    <HiOutlineShoppingBag size={18} />
-                  </button>
-
-                  <button
-                    onClick={() => setActiveCheckoutProduct(product)}
-                    className="bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-xs"
-                  >
-                    Buy Now
-                  </button>
-                </div>
-              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-
-      {/* Empty State */}
-      {displayedProducts.length === 0 && (
-        <div className="text-center py-20 bg-slate-50/60 rounded-3xl border border-dashed border-slate-300 p-8 space-y-4">
-          <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
-            <HiOutlineShoppingBag size={28} />
-          </div>
-          <h3 className="text-xl font-bold text-slate-900">No Products Currently Available</h3>
-          <p className="text-slate-500 text-sm max-w-md mx-auto leading-relaxed">
-            All previous products have been removed. We are updating our software catalog with verified production assets.
-          </p>
-          <div className="pt-2">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 bg-[#DC2564] hover:bg-[#B81D52] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-xs"
-            >
-              <span>Explore Editorial Articles</span>
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Pagination / Load More */}
       {visibleCount < filteredProducts.length && (
-        <div className="text-center pt-6">
+        <div className="text-center pt-4">
           <button
             onClick={() => setVisibleCount((prev) => prev + 6)}
-            className="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-xs"
+            className="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-all shadow-xs"
           >
-            Load More Products
+            Load More Templates ({filteredProducts.length - visibleCount} remaining)
           </button>
         </div>
       )}
 
-      {/* Instant Checkout / Buy Modal */}
+      {/* Instant Checkout / Buy Modal (Only for internal products) */}
       {activeCheckoutProduct && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-200 shadow-2xl relative space-y-6">
@@ -337,7 +433,7 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
             </button>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-bold text-[#DC2564] uppercase tracking-wider bg-[#FDF2F5] px-2 py-0.5 rounded-md">
+              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md">
                 Fast Checkout
               </span>
               <h3 className="text-xl font-bold text-slate-900">
@@ -375,7 +471,7 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
                   addToCart(activeCheckoutProduct);
                   setActiveCheckoutProduct(null);
                 }}
-                className="w-full bg-[#DC2564] hover:bg-[#B81D52] text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all"
               >
                 <HiCreditCard size={18} />
                 <span>Pay Securely via Razorpay / UPI</span>

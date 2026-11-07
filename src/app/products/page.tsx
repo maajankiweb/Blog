@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { getProducts } from "@/lib/wordpress/products";
-import { HiSparkles } from "react-icons/hi2";
 import ProductsClientGrid from "./ProductsClientGrid";
 
 export const revalidate = 60; // ISR revalidation every 60 seconds
@@ -8,9 +7,9 @@ export const revalidate = 60; // ISR revalidation every 60 seconds
 export const metadata: Metadata = {
   title: "Digital Products & WordPress Plugins Store | MJ Digital",
   description:
-    "Buy production-ready Next.js 16 templates, custom WordPress plugins, and SEO playbooks. Instant license keys and automated delivery by MJ Digital.",
+    "Explore production-ready Next.js starter templates, custom WordPress plugins, and verified eBooks. Instant access and automated delivery by MJ Digital.",
   alternates: {
-    canonical: "https://blog.maajankiwebtech.com/products",
+    canonical: "https://blog.maajankiwebtech.com/products/",
   },
   robots: {
     index: true,
@@ -24,10 +23,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Digital Products Store | MJ Digital",
-    description: "Premium Next.js templates, WordPress plugins, and developer toolkits with transparent pricing in INR.",
+    title: "Templates & Digital Products Store | MJ Digital",
+    description: "Premium Next.js blueprints, custom WordPress plugins, and digital books with transparent pricing in INR.",
     type: "website",
-    url: "https://blog.maajankiwebtech.com/products",
+    url: "https://blog.maajankiwebtech.com/products/",
   },
 };
 
@@ -40,23 +39,23 @@ export default async function ProductsStorePage() {
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": "https://blog.maajankiwebtech.com/products#webpage",
-        name: "Digital Products & Templates Store",
-        url: "https://blog.maajankiwebtech.com/products",
+        "@id": "https://blog.maajankiwebtech.com/products/#webpage",
+        name: "Templates & Digital Products Store",
+        url: "https://blog.maajankiwebtech.com/products/",
         description: "Explore ready-made Next.js starter templates, custom WordPress plugins, and digital SEO playbooks.",
       },
       ...products.map((p) => ({
         "@type": "Product",
-        "@id": `https://blog.maajankiwebtech.com/products/${p.slug}`,
+        "@id": `https://blog.maajankiwebtech.com/products/${p.slug}/`,
         name: p.name,
-        description: p.shortDescription || p.description,
+        description: p.plainShortDescription || p.seo?.description || p.name,
         image: p.featuredImage,
         offers: {
           "@type": "Offer",
           price: p.numericPrice > 0 ? String(p.numericPrice) : "0",
           priceCurrency: "INR",
           availability: p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          url: `https://blog.maajankiwebtech.com/products/${p.slug}`,
+          url: p.externalUrl || `https://blog.maajankiwebtech.com/products/${p.slug}/`,
           seller: {
             "@type": "Organization",
             name: "MJ Digital Digital Agency",
@@ -67,31 +66,14 @@ export default async function ProductsStorePage() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 py-12 md:py-16 px-margin-mobile md:px-margin-desktop">
+    <main className="min-h-screen bg-white text-slate-900 py-6 md:py-10 px-margin-mobile md:px-margin-desktop">
       {/* Product Catalog & Offer Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchemas) }}
       />
 
-      <div className="max-w-container-max mx-auto space-y-10">
-        {/* Header */}
-        <div className="max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDF2F5] border border-[#FBCFE8] text-[#DC2564] text-xs font-bold uppercase tracking-wider">
-            <HiSparkles size={14} />
-            <span>OFFICIAL DIGITAL STORE &amp; LICENSES</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            Production Templates, <span className="text-[#DC2564]">Plugins &amp; Assets</span>
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
-            High-performance Next.js 16 starter kits, custom WordPress plugins, and verified developer toolkits synced directly from WooCommerce. Instant payment via Razorpay / UPI with automated download delivery.
-          </p>
-        </div>
-
-        {/* Client Filter & Checkout Grid */}
+      <div className="max-w-[1250px] mx-auto">
         <ProductsClientGrid initialProducts={products} />
       </div>
     </main>
