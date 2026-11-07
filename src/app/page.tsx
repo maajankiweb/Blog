@@ -401,25 +401,30 @@ export default async function Home(props: PageProps) {
           {/* Main hero card */}
           {mainFeaturedPost ? (
             <article className="lg:col-span-7 group bg-surface border border-outline-variant/60 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex flex-col">
-              <div className="h-64 md:h-80 overflow-hidden relative bg-surface-variant">
+              {/* Clickable Featured Image */}
+              <Link
+                href={`/blog/${mainFeaturedPost.slug}`}
+                className="block h-64 md:h-80 overflow-hidden relative bg-surface-variant cursor-pointer"
+                aria-label={cleanHtmlText(mainFeaturedPost.title.rendered)}
+              >
                 {mainFeaturedPost._embedded?.["wp:featuredmedia"]?.[0]?.source_url ? (
                   <Image
                     src={mainFeaturedPost._embedded["wp:featuredmedia"][0].source_url}
                     alt={mainFeaturedPost.title.rendered}
                     fill
                     sizes="(max-width: 768px) 100vw, 700px"
-                    className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-300"
                     loading="eager"
                   />
                 ) : (
                   <div className="w-full h-full bg-neutral-200" />
                 )}
                 {mainFeaturedPost._embedded?.["wp:term"]?.[0]?.[0] && (
-                  <span className="absolute top-4 left-4 bg-[#DC2564] text-white px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">
+                  <span className="absolute top-4 left-4 bg-[#DC2564] text-white px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider shadow-sm">
                     {mainFeaturedPost._embedded["wp:term"][0][0].name}
                   </span>
                 )}
-              </div>
+              </Link>
               <div className="p-6 md:p-8 flex flex-col gap-3 flex-grow">
                 <div className="flex items-center gap-2 text-on-surface-variant/80 text-xs font-medium">
                   <span className="font-semibold text-[#DC2564]">
@@ -436,12 +441,16 @@ export default async function Home(props: PageProps) {
                   <span>·</span>
                   <span>8 min read</span>
                 </div>
-                <h3 className="font-bold text-on-surface text-xl md:text-2xl group-hover:text-[#DC2564] transition-colors duration-200 leading-snug">
-                  {cleanHtmlText(mainFeaturedPost.title.rendered)}
-                </h3>
+                {/* Clickable Article Title */}
+                <Link href={`/blog/${mainFeaturedPost.slug}`} className="block group/title">
+                  <h3 className="font-bold text-on-surface text-xl md:text-2xl group-hover/title:text-[#DC2564] group-hover:text-[#DC2564] transition-colors duration-200 leading-snug">
+                    {cleanHtmlText(mainFeaturedPost.title.rendered)}
+                  </h3>
+                </Link>
                 <p className="text-on-surface-variant text-sm md:text-base line-clamp-2 leading-relaxed">
                   {cleanHtmlText(mainFeaturedPost.excerpt.rendered).substring(0, 160)}…
                 </p>
+                {/* Clickable Continue Reading */}
                 <Link
                   href={`/blog/${mainFeaturedPost.slug}`}
                   className="flex items-center gap-1.5 text-[#DC2564] font-semibold text-xs mt-auto pt-2 w-fit hover:underline"

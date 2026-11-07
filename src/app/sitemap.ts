@@ -46,34 +46,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Core Static Routes (Excludes all deleted /tools)
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: 'https://blog.maajankiwebtech.com/', lastModified: currentDate, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${siteUrl}/blog`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
-    { url: `${siteUrl}/products`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
-    { url: `${siteUrl}/about`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${siteUrl}/contact`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${siteUrl}/newsletter`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${siteUrl}/privacy-policy`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
-    { url: `${siteUrl}/terms`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
-    { url: `${siteUrl}/refund-policy`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
-    { url: `${siteUrl}/digital-delivery-policy`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${siteUrl}/`, lastModified: currentDate, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${siteUrl}/blog/`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
+    { url: `${siteUrl}/products/`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
+    { url: `${siteUrl}/about/`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${siteUrl}/contact/`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${siteUrl}/newsletter/`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${siteUrl}/privacy-policy/`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${siteUrl}/terms/`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${siteUrl}/refund-policy/`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${siteUrl}/digital-delivery-policy/`, lastModified: currentDate, changeFrequency: 'yearly', priority: 0.4 },
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${siteUrl}/blog/${post.slug}`,
+    url: `${siteUrl}/blog/${post.slug}/`,
     lastModified: new Date(post.date),
     changeFrequency: 'weekly',
     priority: 0.8,
   }));
 
   const categoryRoutes: MetadataRoute.Sitemap = categories.map((cat) => ({
-    url: `${siteUrl}/category/${cat.slug}`,
+    url: `${siteUrl}/category/${cat.slug}/`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
     priority: 0.85,
   }));
 
   const productRoutes: MetadataRoute.Sitemap = products.map((prod) => ({
-    url: `${siteUrl}/products/${prod.slug}`,
+    url: `${siteUrl}/products/${prod.slug}/`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
     priority: 0.85,
