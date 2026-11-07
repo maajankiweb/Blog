@@ -34,7 +34,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const title = product.seo?.title || `${product.name} | MJ Digital`;
   const description =
     product.seo?.description ||
-    product.shortDescription ||
+    product.plainShortDescription ||
     `Buy ${product.name} with instant download and commercial license.`;
   const canonicalUrl = product.seo?.canonicalUrl || `https://blog.maajankiwebtech.com/products/${product.slug}`;
 
@@ -126,7 +126,7 @@ export default async function ProductDetailPage(props: PageProps) {
         "@type": "Product",
         "@id": `https://blog.maajankiwebtech.com/products/${product.slug}#product`,
         name: product.name,
-        description: product.description || product.shortDescription,
+        description: product.plainShortDescription || product.seo?.description || product.name,
         image: product.featuredImage,
         sku: product.sku || `MJ-${product.id}`,
         category: product.category,

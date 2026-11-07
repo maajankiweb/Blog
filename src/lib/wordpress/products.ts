@@ -17,11 +17,13 @@ export interface WordPressProduct {
   price: string;
   regularPrice?: string;
   salePrice?: string;
+  discountPercent?: number;
   numericPrice: number;
   isFree: boolean;
   currency: string;
   description: string;
   shortDescription: string;
+  plainShortDescription?: string;
   featuredImage: string;
   galleryImages: string[];
   inStock: boolean;
@@ -58,7 +60,7 @@ export interface GetProductsParams {
 /**
  * Helper to strip HTML and decode common entities
  */
-function cleanProductText(str?: string): string {
+export function cleanProductText(str?: string): string {
   if (!str) return "";
   return str
     .replace(/<[^>]*>/g, " ")
@@ -75,18 +77,35 @@ function cleanProductText(str?: string): string {
 }
 
 /**
+ * Decode HTML entities without stripping HTML tags
+ */
+export function decodeHtmlEntities(str?: string): string {
+  if (!str) return "";
+  return str
+    .replace(/&amp;/g, "&")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&quot;/g, '"')
+    .replace(/&#038;/g, "&")
+    .replace(/&nbsp;/g, " ");
+}
+
+/**
  * Format raw WooCommerce Store API or v3 product into clean WordPressProduct model
  */
 function normalizeWcProduct(raw: any): WordPressProduct {
   const isExternal = raw.type === "external" || Boolean(raw.external_url);
   const externalUrl = raw.external_url || raw.add_to_cart?.url || undefined;
-  const buttonText = raw.button_text || raw.add_to_cart?.text || (isExternal ? "Buy on Amazon" : "Buy Now");
+  const buttonText = raw.button_text || raw.add_to_cart?.text || (isExternal ? "Buy Product" : "Buy Now");
 
   // Handle WooCommerce Store API price format (prices in minor units, e.g. 249900 cents)
   let priceStr = isExternal ? "Amazon / Kindle" : "₹0";
   let regStr: string | undefined = undefined;
   let saleStr: string | undefined = undefined;
   let numericPrice = 0;
+  let discountPercent: number | undefined = undefined;
 
   if (raw.prices) {
     const rawPrice = parseInt(raw.prices.price || "0", 10) / (raw.prices.currency_minor_unit ? 10 ** raw.prices.currency_minor_unit : 100);
@@ -97,13 +116,16 @@ function normalizeWcProduct(raw: any): WordPressProduct {
       const reg = parseInt(raw.prices.regular_price, 10) / (raw.prices.currency_minor_unit ? 10 ** raw.prices.currency_minor_unit : 100);
       if (reg > rawPrice) {
         regStr = `₹${reg.toLocaleString("en-IN")}`;
+        discountPercent = Math.round(((reg - rawPrice) / reg) * 100);
       }
     }
   } else if (raw.price !== undefined && raw.price !== "") {
     numericPrice = parseFloat(raw.price) || 0;
     priceStr = numericPrice === 0 ? (isExternal ? "Amazon / Kindle" : "FREE") : `₹${numericPrice.toLocaleString("en-IN")}`;
     if (raw.regular_price && parseFloat(raw.regular_price) > numericPrice) {
-      regStr = `₹${parseFloat(raw.regular_price).toLocaleString("en-IN")}`;
+      const regNum = parseFloat(raw.regular_price);
+      regStr = `₹${regNum.toLocaleString("en-IN")}`;
+      discountPercent = Math.round(((regNum - numericPrice) / regNum) * 100);
     }
   }
 
@@ -139,12 +161,15 @@ function normalizeWcProduct(raw: any): WordPressProduct {
     }
   }
 
-  const cleanedDesc = cleanProductText(raw.description) || cleanProductText(raw.short_description) || "";
-  const cleanedShortDesc = cleanProductText(raw.short_description) || (cleanedDesc ? cleanedDesc.slice(0, 140) + "..." : "");
+  // Preserve FULL RICH HTML for detail page rendering, provide plain text for SEO & cards
+  const richDesc = raw.description || raw.short_description || "";
+  const richShortDesc = raw.short_description || (richDesc ? richDesc.slice(0, 300) : "");
+  const plainDesc = cleanProductText(raw.description) || cleanProductText(raw.short_description) || "";
+  const plainShort = cleanProductText(raw.short_description) || (plainDesc ? plainDesc.slice(0, 160) : "");
 
   return {
     id: raw.id,
-    name: raw.name || "WordPress Product",
+    name: decodeHtmlEntities(raw.name) || "WordPress Product",
     slug: raw.slug || `product-${raw.id}`,
     permalink: `/products/${raw.slug || raw.id}`,
     category: categoryName,
@@ -153,11 +178,13 @@ function normalizeWcProduct(raw: any): WordPressProduct {
     price: priceStr,
     regularPrice: regStr,
     salePrice: saleStr,
+    discountPercent,
     numericPrice,
     isFree: !isExternal && numericPrice === 0,
     currency: "INR",
-    description: cleanedDesc,
-    shortDescription: cleanedShortDesc,
+    description: richDesc,
+    shortDescription: richShortDesc,
+    plainShortDescription: plainShort,
     featuredImage: featuredImg,
     galleryImages: gallery,
     inStock: raw.is_in_stock !== undefined ? Boolean(raw.is_in_stock) : true,
@@ -172,8 +199,8 @@ function normalizeWcProduct(raw: any): WordPressProduct {
     externalUrl,
     buttonText,
     seo: {
-      title: seoTitle || `${raw.name} | MJ Digital`,
-      description: seoDesc || cleanedShortDesc.slice(0, 160),
+      title: seoTitle || `${decodeHtmlEntities(raw.name)} | MJ Digital`,
+      description: seoDesc || plainShort,
       focusKeyword,
       canonicalUrl: canonicalUrl || `https://blog.maajankiwebtech.com/products/${raw.slug}`,
     },

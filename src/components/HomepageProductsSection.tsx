@@ -93,7 +93,7 @@ export default async function HomepageProductsSection() {
                   </Link>
 
                   <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed">
-                    {product.shortDescription}
+                    {product.plainShortDescription || product.shortDescription?.replace(/<[^>]*>/g, "")}
                   </p>
                 </div>
               </div>

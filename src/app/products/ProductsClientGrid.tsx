@@ -221,7 +221,7 @@ export default function ProductsClientGrid({ initialProducts }: ProductsClientGr
                 </Link>
 
                 <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                  {product.shortDescription || product.description}
+                  {product.plainShortDescription || product.shortDescription?.replace(/<[^>]*>/g, "") || product.description?.replace(/<[^>]*>/g, "")}
                 </p>
 
                 {/* Features Mini Checklist */}

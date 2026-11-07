@@ -784,6 +784,7 @@ export interface WooDigitalProduct {
   salePrice?: string;
   description: string;
   shortDescription?: string;
+  plainShortDescription?: string;
   featuredImage?: string;
   demoUrl?: string;
   downloadUrl?: string;
@@ -791,6 +792,7 @@ export interface WooDigitalProduct {
   rating?: number;
   reviewsCount?: number;
   salesCount?: number;
+  discountPercent?: number;
   features?: string[];
   type?: "simple" | "external" | "grouped" | "variable" | string;
   externalUrl?: string;
